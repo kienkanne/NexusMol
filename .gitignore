@@ -1,0 +1,120 @@
+# -------------------------
+
+# Python
+
+# -------------------------
+
+**pycache**/
+*.py[cod]
+*.pyo
+*.so
+
+# Virtual environments
+
+venv/
+.env/
+.conda/
+env/
+ENV/
+
+# Jupyter
+
+.ipynb_checkpoints/
+
+# IDE / Editor
+
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS clutter
+
+.DS_Store
+Thumbs.db
+
+# Logs
+
+*.log
+logs/
+
+# Temporary
+
+tmp/
+temp/
+scratch/
+artifacts/
+results/
+*.tmp
+*.bak
+
+# Testing / coverage
+
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Build artifacts
+
+build/
+dist/
+*.egg-info/
+
+# -------------------------
+
+# Scientific outputs
+
+# -------------------------
+
+outputs/
+results/
+trajectories/
+checkpoints/
+
+# MD trajectories
+
+*.dcd
+*.xtc
+*.trr
+*.nc
+*.mdcrd
+
+# Restart / checkpoint
+
+*.rst
+*.rst7
+*.ncrst
+*.chk
+*.cpt
+
+# QM outputs
+
+*.gbw
+*.densities
+*.hess
+*.engrad
+*.prop
+*.tmp*
+
+# Large tables / dumps
+
+*.npy
+*.npz
+*.pkl
+*.pickle
+*.pt
+*.pth
+*.joblib
+
+# Cluster scheduler outputs
+
+slurm-*.out
+*.out
+*.err
+
+# Secrets
+
+.env
+secrets.yaml
+credentials.json
+tokens.txt

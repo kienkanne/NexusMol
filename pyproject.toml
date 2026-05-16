@@ -1,0 +1,19 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "compdd"
+version = "1.1.0"
+
+[project.scripts]
+compdd = "compdd.cli.main:main"
+
+[project.optional-dependencies]
+test = ["pytest>=8.0"]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+molsim_platform = ["**/*.txt", "**/*.com"]

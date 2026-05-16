@@ -1,0 +1,13 @@
+name: in_house_docking
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - python=3.11
+  - pyyaml
+  - parallel
+  - openbabel
+  - vina
+  - pydantic
+  - pymol-open-source
+  - pytest

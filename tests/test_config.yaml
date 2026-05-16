@@ -1,0 +1,35 @@
+libs:
+  chimerax: "/usr/local/chimerax/bin/ChimeraX"
+  chimera: "/usr/local/chimera/chimera-1.8/bin/chimera"
+
+  mgltools: "/home/kbui/Apps/mgltools_1.5.7/mgltools_x86_64Linux2_1.5.7/"
+  dock_home: "/localscratch/kbui/Apps/dock6/"
+
+  obabel: "obabel"
+  parallel: "parallel"
+  vina: "vina"
+
+common:
+  working_dir: "/localscratch/kbui/Comp_DD/tests/artifacts"
+  logger: "/home/kbui/Comp_DD/tests/artifacts/logger.log"
+  manifest: "/home/kbui/Comp_DD/tests/artifacts/manifest.log"
+  runstate: "/home/kbui/Comp_DD/tests/artifacts/runstate.log"
+  results_dir: "/home/kbui/Comp_DD/tests/results/"
+
+  receptor: "/home/kbui/Comp_DD/tests/data/6W63.pdb"
+  ligands_csv: "data/ligands_list.csv"
+  pocket_selection: "chain A and resi 41+145+140+143+144+145+163+166"
+  padding: 5.0
+  n_jobs: 16
+  max_poses: 8
+
+vina:
+  exhaustiveness: 1
+  num_modes: 8
+  reference: "data/ref_ligand.pdb" # Set to None if use pocket_selection
+  cpu: 8
+  write_box: True
+
+dock6:
+  max_orientations: 500
+  radius: 10.0
