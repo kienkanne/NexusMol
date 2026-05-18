@@ -166,6 +166,17 @@ dock6:
 
 DOCK6 jobs are single-core; set `common.n_jobs` to the total number of CPU cores you want to use (for example, the number of available CPU cores on the machine).
 
+## Validation
+
+CASF validation uses a separate CLI:
+
+```bash
+validate run_vina --config sample_configs/sample_validation.yaml
+validate run_dock6 --config sample_configs/sample_validation.yaml
+```
+
+Validation writes `validation_results.csv` for successful entries and `validation_failures.csv` for unsupported or failed entries. DOCK6 `reference` inputs must be protein pocket atoms, such as CASF `_pocket.pdb` files, not ligand coordinates.
+
 ## Outputs
 
 The results directory contains selected final files:

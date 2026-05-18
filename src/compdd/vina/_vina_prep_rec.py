@@ -51,11 +51,15 @@ def _vina_prep_rec(cfg):
             exhaustiveness = cfg.vina.exhaustiveness
             num_modes = cfg.vina.num_modes
             
-            if cfg.vina.reference is not None:
-                input = cfg.vina.reference
-                pocket_selection = f"all"
-            else: 
-                input = prepped_receptor_pdbqt
+            if cfg.common.pocket_option == "reference":
+                if cfg.common.reference is None:
+                    raise ValueError("common.reference is required when pocket_option is 'reference'")
+                input_file = cfg.common.reference
+                pocket_selection = "all"
+            else:
+                if cfg.common.pocket_selection is None:
+                    raise ValueError("common.pocket_selection is required when pocket_option is 'selection'")
+                input_file = prepped_receptor_pdbqt
                 pocket_selection = cfg.common.pocket_selection
 
             with open(Path(__file__).resolve().parents[0] / "templates" / "vina_config_template.txt") as f:
@@ -65,7 +69,7 @@ def _vina_prep_rec(cfg):
             import numpy as np
             with pymol2.PyMOL() as pymol:
                 pymol.start()
-                pymol.cmd.load(input, "receptor")
+                pymol.cmd.load(input_file, "receptor")
                 stored = {"xyz": []}
                 pymol.cmd.iterate_state(
                     1,
@@ -75,13 +79,13 @@ def _vina_prep_rec(cfg):
                 )
 
                 coords = np.array(stored["xyz"])
+                if len(coords) == 0:
+                    raise ValueError(f"No atoms matched selection:\n{pocket_selection}")
+
                 minv = coords.min(axis=0)
                 maxv = coords.max(axis=0)
                 size = (maxv - minv) + padding
                 center = (minv + maxv) / 2
-
-                if len(coords) == 0:
-                    raise ValueError(f"No atoms matched selection:\n{pocket_selection}")
 
                 vina_config = Template(vina_config_template).substitute(
                     center_x=center[0],center_y=center[1],center_z=center[2],

@@ -29,15 +29,18 @@ class CommonConfig(BaseModel):
     padding: Optional[float] = 5.0
     n_jobs: int = 1
     max_poses: int = 8
+    pocket_option: Literal["selection", "reference"] = "selection"
     pocket_selection: Optional[str] = None
+    reference: Optional[Path] = None
     program: Optional[Literal["vina", "dock6"]] = None
 
 
 class VinaConfig(BaseModel):
+    model_config = ConfigDict(extra='allow')
+
     exhaustiveness: Optional[int] = 32
     num_modes: Optional[int] = 8
     cpu: Optional[int] = 1
-    reference: Optional[Path] = None
     write_box : Optional[bool] = True
 
 
@@ -68,9 +71,14 @@ def load_docking_config(path):
         data = yaml.safe_load(f)
     cfg = RootConfig.model_validate(data)
     
+    if getattr(cfg.vina, "reference", None) is not None and cfg.common.reference is None:
+        cfg.common.reference = cfg.vina.reference
+
     cfg.common.working_dir = _expand_path(cfg.common.working_dir) / cfg.common.project_name
     cfg.common.results_dir = _expand_path(cfg.common.results_dir) / cfg.common.project_name
     cfg.common.receptor = _expand_path(cfg.common.receptor)
+    if cfg.common.reference is not None:
+        cfg.common.reference = _expand_path(cfg.common.reference)
 
     for field_name in LibsConfig.model_fields:
         setattr(cfg.libs, field_name, _expand_path(getattr(cfg.libs, field_name)))

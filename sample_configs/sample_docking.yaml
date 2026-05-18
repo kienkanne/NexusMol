@@ -11,11 +11,13 @@ libs:
 
 common:
   project_name: dock6_meeko_mpro_cat
-  working_dir: "/home/kbui/COMPDD/artifacts"
-  results_dir: "/home/kbui/COMPDD/results"
+  working_dir: "/localscratch/kbui/COMPDD/artifacts"
+  results_dir: "/localscratch/kbui/COMPDD/results"
 
-  receptor: "/home/kbui/COMPDD/data/6W63.pdb"
+  receptor: "/localscratch/kbui/COMPDD/data/6W63.pdb"
   prepared_suffix: "prepped"
+  pocket_option: "selection" # or "reference"
+  reference: # required when pocket_option is "reference"
   
   pocket_selection: "chain A and resi 25+26+41+42+49+54+119+140+141+142+143+144+145+163+164+165+166+167+168+172+187+188+189+190+191+192"
   padding: 6.0
@@ -25,7 +27,6 @@ common:
 vina:
   exhaustiveness: 64
   num_modes: 16
-  reference:  # Set to None if use pocket_selection
   cpu: 1
   write_box: True
 

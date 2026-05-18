@@ -8,6 +8,7 @@ version = "1.2.0"
 
 [project.scripts]
 compdd = "compdd.cli.main:main"
+validate = "compdd.validation.cli:main"
 
 [project.optional-dependencies]
 test = ["pytest>=8.0"]

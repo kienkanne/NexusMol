@@ -11,13 +11,13 @@ libs:
 
 common:
   project_name: "x77"
-  working_dir: "/home/kbui/Comp_DD/tests/artifacts"
-  logger: "/home/kbui/Comp_DD/tests/artifacts/logger.log"
-  manifest: "/home/kbui/Comp_DD/tests/artifacts/manifest.log"
-  runstate: "/home/kbui/Comp_DD/tests/artifacts/runstate.log"
-  results_dir: "/home/kbui/Comp_DD/tests/results/"
+  working_dir: "/localscratch/kbui/COMPDD/tests/artifacts"
+  logger: "/localscratch/kbui/COMPDD/tests/artifacts/logger.log"
+  manifest: "/localscratch/kbui/COMPDD/tests/artifacts/manifest.log"
+  runstate: "/localscratch/kbui/COMPDD/tests/artifacts/runstate.log"
+  results_dir: "/localscratch/kbui/COMPDD/tests/results/"
 
-  receptor: "/home/kbui/Comp_DD/tests/data/6W63.pdb"
+  receptor: "/localscratch/kbui/COMPDD/tests/data/6W63.pdb"
   prepared_suffix: "prepped"
   pocket_selection: "chain A and resi 41+145+140+143+144+145+163+166"
   padding: 5.0

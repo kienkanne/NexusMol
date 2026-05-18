@@ -40,3 +40,8 @@ This document explains the per-run data flow from inputs to final outputs.
    - `run.log` — combined console/file log produced by `setup_logger`.
    - `manifest.json` — stage timings and final status.
    - `state.json` — per-stage checkpoint outputs.
+
+
+## CASF Validation
+
+The `validate` CLI discovers CASF entry folders, creates one isolated working directory per entry, resolves ligand SMILES from cached RCSB API responses, reuses the existing ligand/receptor/docking helpers, and writes `validation_results.csv` plus `validation_failures.csv`. Successful rows include top score-ordered pose scores/RMSDs and `min_rmsd_all`; unsupported or failed entries are excluded from results and written to failures.

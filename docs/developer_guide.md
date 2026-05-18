@@ -35,3 +35,15 @@ Check `artifacts/` and `results/` for produced files during development.
 - Check `run.log` in the configured `working_dir` for runtime output and stack traces.
 - Inspect `manifest.json` and `state.json` to see which stages completed and their timings.
 - When developing, use small ligand CSVs and reduce `n_jobs` to iterate quickly.
+
+
+## Validation Development
+
+Use the validation CLI for CASF-style runs:
+
+```bash
+validate run_vina --config sample_configs/sample_validation.yaml
+validate run_dock6 --config sample_configs/sample_validation.yaml
+```
+
+Keep external-tool tests small; most validation code should be covered with mocked RCSB responses and fixture molecules.

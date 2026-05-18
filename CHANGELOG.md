@@ -2,6 +2,7 @@
 
 ## 1.2.0
 
+- Added CASF validation workflow with a separate `validate` CLI.
 - Split docking and ligand configuration into separate YAML files.
 - Replaced full pipeline commands with `compdd run_vina --config ... --ligands ...` and `compdd run_dock6 --config ... --ligands ...`.
 - Added ligand `source: smiles|files`, `prepared_suffix`, and `prepare_tool: obabel|meeko` support.

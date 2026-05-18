@@ -11,19 +11,23 @@ libs:
 
 common:
   project_name: compdd_validation
-  working_dir: "/home/kbui/COMPDD/artifacts"
-  results_dir: "/home/kbui/COMPDD/results"
+  working_dir: "/localscratch/kbui/COMPDD/artifacts"
+  results_dir: "/localscratch/kbui/COMPDD/results"
   
   validation_data: "/home/kbui/coreset"
   prepare_tool: "meeko" # or "obabel"
+  prepared_suffix: "prepped"
+  pocket_option: "reference"
 
   padding: 6.0
-  n_jobs: 16
+  n_jobs: 16 # entry-level validation parallelism
   max_poses: 16
+  num_analysis: 3
 
 vina:
   exhaustiveness: 64
   num_modes: 16
+  cpu: 1
 
 dock6:
   max_orientations: 5000

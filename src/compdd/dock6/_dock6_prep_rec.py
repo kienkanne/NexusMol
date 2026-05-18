@@ -34,20 +34,30 @@ def _dock6_prep_rec(cfg):
         charge_rec()
 
 
-        @base(cfg, "generate_site()")
-        def generate_site():
-            pocket_selection = cfg.common.pocket_selection
+        if cfg.common.pocket_option == "reference":
+            @shell(cfg)
+            def generate_site_from_reference():
+                if cfg.common.reference is None:
+                    raise ValueError("common.reference is required when pocket_option is 'reference'")
+                return ([cfg.libs.obabel, cfg.common.reference, "-O", "binding_site.mol2"], None)
+            generate_site_from_reference()
+        else:
+            @base(cfg, "generate_site()")
+            def generate_site():
+                pocket_selection = cfg.common.pocket_selection
+                if pocket_selection is None:
+                    raise ValueError("common.pocket_selection is required when pocket_option is 'selection'")
 
-            import pymol2
-            with pymol2.PyMOL() as pymol:
-                pymol.start()
-                pymol.cmd.load(prepped_receptor_noH_pdb, "target")
-                pymol.cmd.select("to_delete", f"target and not ({pocket_selection})")
-                pymol.cmd.remove("to_delete")
-                pymol.cmd.save("binding_site.mol2", "target")
+                import pymol2
+                with pymol2.PyMOL() as pymol:
+                    pymol.start()
+                    pymol.cmd.load(prepped_receptor_noH_pdb, "target")
+                    pymol.cmd.select("to_delete", f"target and not ({pocket_selection})")
+                    pymol.cmd.remove("to_delete")
+                    pymol.cmd.save("binding_site.mol2", "target")
 
-            return None
-        generate_site()
+                return None
+            generate_site()
 
 
         @shell(cfg)
