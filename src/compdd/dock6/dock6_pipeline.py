@@ -18,6 +18,6 @@ class DOCK6Pipeline():
         pairs = matchmixer(prepped_recs, lig_files, self.cfg.common.prepared_suffix)
 
         out_files = dock6_docking(self.cfg, pairs)
-        docking_summary = write_summary_csv(self.cfg, out_files)
+        docking_summary = write_summary_csv(self.cfg, out_files, prepped_recs)
 
         copy_to_results(self.cfg, prepped_recs, docking_summary, out_files)

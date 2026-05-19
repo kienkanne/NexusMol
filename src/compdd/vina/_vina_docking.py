@@ -24,6 +24,7 @@ def _vina_config_path(item):
 def _build_vina_docking_commands(cfg, pairs):
     vina = cfg.libs.vina
     suffix = cfg.common.prepared_suffix
+    mode = getattr(cfg.common, "mode", "mix")
 
     out_files = []
     cmds = []
@@ -33,7 +34,11 @@ def _build_vina_docking_commands(cfg, pairs):
         vina_config = _vina_config_path(prepped_rec)
         receptor_name = _strip_prepared_suffix(str(receptor_path), suffix)
         ligand_name = _strip_prepared_suffix(prepped_lig, suffix)
-        output_name = f"{receptor_name}_{ligand_name}_scored.pdbqt"
+        if mode == "match":
+            # receptor and ligand share the same name; produce single-name outputs
+            output_name = f"{ligand_name}_scored.pdbqt"
+        else:
+            output_name = f"{receptor_name}_{ligand_name}_scored.pdbqt"
 
         out_files.append(output_name)
         cmds.append([

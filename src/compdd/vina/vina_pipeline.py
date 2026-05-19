@@ -19,7 +19,7 @@ class VinaPipeline():
         pairs = matchmixer(prepped_recs, prepped_ligs, self.cfg.common.prepared_suffix)
 
         out_files = vina_docking(self.cfg, pairs)
-        docking_summary = write_summary_csv(self.cfg, out_files)
+        docking_summary = write_summary_csv(self.cfg, out_files, prepped_recs)
 
         config_files = [bundle.vina_config for bundle in prepped_recs]
         copy_to_results(self.cfg, prepped_recs, docking_summary, out_files, config_files)

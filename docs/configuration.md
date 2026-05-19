@@ -44,13 +44,4 @@ See `sample_configs/sample_docking.yaml` and `sample_configs/sample_ligands.yaml
 
 ## Validation Config
 
-CASF validation uses the separate `validate` command:
-
-```bash
-validate run_vina --config sample_configs/sample_validation.yaml
-validate run_dock6 --config sample_configs/sample_validation.yaml
-```
-
-Validation configs reuse `libs`, `vina`, and `dock6`, while `common.validation_data` points to CASF-style entry folders. `common.prepare_tool` chooses `obabel` or `meeko`, `common.num_analysis` controls the reported top score-ordered poses, and `common.n_jobs` controls entry-level parallelism. Each entry runs in its own working directory with internal docking `n_jobs=1`.
-
-For DOCK6, `common.reference` must be protein pocket atoms such as CASF `_pocket.pdb`, not a ligand. Vina can use either `pocket_option: reference` or `pocket_option: selection`.
+The CASF-style validation and RCSB parsing previously documented here are omitted because the validation tooling was removed from the public documentation. The core docking and ligand preparation configuration remains unchanged; see the sections above for details on `libs`, `common`, `vina`, `dock6`, and ligand preparation options.

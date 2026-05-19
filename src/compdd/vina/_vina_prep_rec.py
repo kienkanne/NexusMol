@@ -44,17 +44,17 @@ def _prep_rec(cfg, receptor):
             if cfg.receptors.reference is None:
                 raise ValueError("receptors.reference is required when pocket_option is 'reference'")
             input_file = cfg.receptors.reference
-            pocket_selection = "all"
+            selection = "all"
         else:
-            if cfg.receptors.pocket_selection is None:
-                raise ValueError("receptors.pocket_selection is required when pocket_option is 'selection'")
+            if cfg.receptors.selection is None:
+                raise ValueError("receptors.selection is required when pocket_option is 'selection'")
             input_file = cleaned_receptor_pdb
-            pocket_selection = cfg.receptors.pocket_selection
+            selection = cfg.receptors.selection
 
             with pymol2.PyMOL() as pymol:
                 pymol.start()
                 pymol.cmd.load(input_file, "target")
-                pymol.cmd.select("to_delete", f"target and not ({pocket_selection})")
+                pymol.cmd.select("to_delete", f"target and not ({selection})")
                 pymol.cmd.remove("to_delete")
                 pymol.cmd.save(f"{name}_pocket.pdb", "target")
 

@@ -2,7 +2,7 @@
 
 ## Introduction
 
-Current package version: `1.2.0`.
+Current package version: `1.3.1`.
 
 This repository runs end-to-end molecular docking workflows from a receptor config plus a separate ligand config. It currently supports:
 
@@ -166,16 +166,9 @@ dock6:
 
 DOCK6 jobs are single-core; set `common.n_jobs` to the total number of CPU cores you want to use (for example, the number of available CPU cores on the machine).
 
-## Validation
+## Note about Validation
 
-CASF validation uses a separate CLI:
-
-```bash
-validate run_vina --config sample_configs/sample_validation.yaml
-validate run_dock6 --config sample_configs/sample_validation.yaml
-```
-
-Validation writes `validation_results.csv` for successful entries and `validation_failures.csv` for unsupported or failed entries. DOCK6 `reference` inputs must be protein pocket atoms, such as CASF `_pocket.pdb` files, not ligand coordinates.
+Previous versions documented a separate CASF-style `validate` command that relied on RCSB parsing and a dedicated validation dataset. That functionality proved unreliable and is no longer described or recommended in this documentation. The core docking pipelines (`run_vina` and `run_dock6`) remain fully supported; validation tooling may be re-introduced later as a separate, standalone project.
 
 ## Outputs
 

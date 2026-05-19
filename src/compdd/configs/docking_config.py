@@ -22,6 +22,7 @@ class CommonConfig(BaseModel):
     working_dir: Path
     results_dir: Path
     prepared_suffix: str = "prepped"
+    mode: Optional[Literal["mix", "match"]] = "mix"
 
     padding: Optional[float] = 5.0
     n_jobs: int = 1
@@ -45,7 +46,7 @@ class ReceptorsConfig(BaseModel):
 
     pdbs: list[Path] | Path | None = None
     pocket_option: Literal["selection", "reference"] = "selection"
-    pocket_selection: Optional[str] = None
+    selection: Optional[str] = None
     reference: Optional[Path] = None
 
     existing_dir: Optional[Path] = None
@@ -67,6 +68,7 @@ class RootConfig(BaseModel):
     dock6: DOCK6Config
     receptors: ReceptorsConfig
     ligands: LigandsConfig
+    
     
 
 

@@ -48,15 +48,15 @@ def _prep_rec(cfg, receptor):
     else:
         @base(cfg, "generate_site()")
         def generate_site():
-            pocket_selection = cfg.receptors.pocket_selection
-            if pocket_selection is None:
-                raise ValueError("common.pocket_selection is required when pocket_option is 'selection'")
+            selection = cfg.receptors.selection
+            if selection is None:
+                raise ValueError("common.selection is required when pocket_option is 'selection'")
 
             import pymol2
             with pymol2.PyMOL() as pymol:
                 pymol.start()
                 pymol.cmd.load(prepped_receptor_noH_pdb, "target")
-                pymol.cmd.select("to_delete", f"target and not ({pocket_selection})")
+                pymol.cmd.select("to_delete", f"target and not ({selection})")
                 pymol.cmd.remove("to_delete")
                 pymol.cmd.save(f"{name}_pocket.mol2", "target")
 

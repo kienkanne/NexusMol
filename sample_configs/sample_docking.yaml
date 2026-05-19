@@ -33,7 +33,7 @@ receptors:
   pdbs: ["/localscratch/kbui/COMPDD/data/6W63.pdb", "/localscratch/kbui/COMPDD/data/6W63_copy.pdb"]
   pocket_option: "selection" # or "reference"
   reference: # required when pocket_option is "reference"
-  pocket_selection: "chain A and resi 25+26+41+42+49+54+119+140+141+142+143+144+145+163+164+165+166+167+168+172+187+188+189+190+191+192"
+  selection: "chain A and resi 25+26+41+42+49+54+119+140+141+142+143+144+145+163+164+165+166+167+168+172+187+188+189+190+191+192"
   
   # existing
   existing_path: "/localscratch/kbui/COMPDD/data/6W63.pdb"

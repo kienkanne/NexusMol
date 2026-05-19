@@ -39,11 +39,4 @@ Check `artifacts/` and `results/` for produced files during development.
 
 ## Validation Development
 
-Use the validation CLI for CASF-style runs:
-
-```bash
-validate run_vina --config sample_configs/sample_validation.yaml
-validate run_dock6 --config sample_configs/sample_validation.yaml
-```
-
-Keep external-tool tests small; most validation code should be covered with mocked RCSB responses and fixture molecules.
+The previous CASF/RCSB-based validation subsystem is not documented here any more. If you want to develop validation tooling in the future, place it in a separate package and cover external API interactions with mocks and fixtures.

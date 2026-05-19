@@ -25,6 +25,7 @@ def _build_dock6_docking_commands(cfg, pairs):
     dock_home = cfg.libs.dock_home
     max_orientations = cfg.dock6.max_orientations
     suffix = cfg.common.prepared_suffix
+    mode = getattr(cfg.common, "mode", "mix")
 
     out_files = []
     cmds = []
@@ -45,7 +46,10 @@ def _build_dock6_docking_commands(cfg, pairs):
             flex_template = f.read()
 
         ligand_name = _strip_prepared_suffix(prepped_lig, suffix)
-        output_prefix = f"{receptor_name}_{ligand_name}"
+        if mode == "match":
+            output_prefix = f"{ligand_name}"
+        else:
+            output_prefix = f"{receptor_name}_{ligand_name}"
 
         out_files.append(f"{output_prefix}_scored.mol2")
 
