@@ -37,7 +37,7 @@ grid_score_rep_rad_scale                                     1
 grid_score_vdw_scale                                         1
 grid_score_es_scale                                          1
 grid_lig_efficiency                                          no
-grid_score_grid_prefix                                       grid
+grid_score_grid_prefix                                       ${receptor_name}_grid
 minimize_ligand                                              yes
 minimize_anchor                                              yes
 minimize_flexible_growth                                     yes

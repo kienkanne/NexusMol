@@ -1,4 +1,4 @@
-from compdd.docking_utils._ligands_common import _strip_prepared_suffix
+from compdd.ligands._ligands_common import _strip_prepared_suffix
 
 
 def test_strip_prepared_suffix_for_vina_names():

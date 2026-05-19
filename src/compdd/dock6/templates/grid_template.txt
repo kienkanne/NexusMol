@@ -12,7 +12,7 @@ dielectric_factor              4
 bump_filter                    yes
 bump_overlap                   0.75
 receptor_file                  $prepped_receptor
-box_file                       rec_box.pdb
+box_file                       ${name}_rec_box.pdb
 vdw_definition_file            $dock_home/parameters/vdw_AMBER_parm99.defn
-score_grid_prefix              grid
+score_grid_prefix              ${name}_grid
 allow_non_integral_charges     no

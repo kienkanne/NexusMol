@@ -1,8 +1,8 @@
 import pytest
 
 from compdd.configs.ligands_config import LigandsConfig, load_ligands_config
-from compdd.docking_utils._ligands_common import _discover_prepared_ligands
-from compdd.docking_utils._ligands_prep import _parse_ligands_csv
+from compdd.ligands._ligands_common import _discover_prepared_ligands
+from compdd.ligands.ligands_prep import _parse_ligands_csv
 
 
 def test_parse_ligands_csv_preserves_smiles_name_pairs(tmp_path):

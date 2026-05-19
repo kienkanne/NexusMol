@@ -1,4 +1,4 @@
-from compdd.docking_utils._ligands_common import _prepared_filename
+from compdd.ligands._ligands_common import _prepared_filename
 
 
 def test_prepared_filename_adds_separator_before_suffix():

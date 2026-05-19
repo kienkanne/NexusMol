@@ -28,7 +28,7 @@ def parse_scores(output, max_poses, program):
     return scores
 
 
-def _write_summary_csv(cfg, out_files):
+def write_summary_csv(cfg, out_files):
 
     @main_tracker(cfg, "Write summary csv")
     @base(cfg)

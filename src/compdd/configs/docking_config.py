@@ -43,7 +43,7 @@ class DOCK6Config(BaseModel):
 class ReceptorsConfig(BaseModel):
     source: Optional[Literal["pdb", "existing"]] = "pdb"
 
-    pdb: Optional[Path] = None
+    pdbs: list[Path] | Path | None = None
     pocket_option: Literal["selection", "reference"] = "selection"
     pocket_selection: Optional[str] = None
     reference: Optional[Path] = None
@@ -55,7 +55,7 @@ class LigandsConfig(BaseModel):
     source: Literal["smiles", "sdf","existing"] = "smiles"
 
     smiles_csv: Optional[Path] = None
-    sdf_dir: Optional[Path] = None
+    sdfs: list[Path] | Path | None = None
     output_dir : Optional[Path] = None
     existing_dir: Optional[Path] = None
 
