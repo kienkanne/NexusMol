@@ -1,5 +1,14 @@
 # Changelog
 
+## 1.4.0
+- Added the new validation module with `compdd validate_run_vina` and `compdd validate_run_dock6`.
+- Validation mode now loads receptor and ligand sets from a validation data root and forces matched docking mode.
+- Added RMSD analysis for validation outputs:
+  - Vina uses `pdbqt` pose parsing.
+  - DOCK6 uses `mol2` pose parsing.
+- Recommended validation dataset layout: a coreset root with recursive `_protein.pdb`, `_pocket.pdb`, and `_ligand.sdf` entries.
+- Added dedicated docs for validation and test-set structure.
+
 ## 1.3.2
 - Receptor configuration is now fully normalized and resolved at config-load time via `validate_and_normalize_receptors()` in `src/compdd/configs/config_helpers.py`.
 - Per-receptor selection CSVs are parsed during config loading (not during prep), eliminating runtime selection string parsing bugs and improving error reporting.

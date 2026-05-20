@@ -2,12 +2,13 @@
 
 ## Introduction
 
-Current package version: `1.3.2`.
+Current package version: `1.4.0`.
 
-This repository runs end-to-end molecular docking workflows from a receptor config plus a separate ligand config. It currently supports:
+This repository runs end-to-end molecular docking workflows from a unified YAML config file. It currently supports:
 
 - AutoDock Vina
 - DOCK6
+- Validation workflows for Vina and DOCK6
 
 The pipeline prepares the receptor, resolves or prepares ligands, docks ligands in parallel with GNU parallel, copies selected outputs to a results folder, and writes a docking summary CSV sorted by the best pose score.
 
@@ -55,6 +56,13 @@ Use the CLI with a single unified config YAML file:
 ```bash
 compdd run_vina --config sample_configs/sample_docking.yaml
 compdd run_dock6 --config sample_configs/sample_docking.yaml
+```
+
+Run validation workflows with the same config:
+
+```bash
+compdd validate_run_vina --config sample_configs/sample_docking.yaml
+compdd validate_run_dock6 --config sample_configs/sample_docking.yaml
 ```
 
 ## Ligand CSV
@@ -220,9 +228,22 @@ dock6:
 
 DOCK6 jobs are single-core; set `common.n_jobs` to the total number of CPU cores you want to use (for example, the number of available CPU cores on the machine).
 
-## Note about Validation
+## Validation
 
-Previous versions documented a separate CASF-style `validate` command that relied on RCSB parsing and a dedicated validation dataset. That functionality proved unreliable and is no longer described or recommended in this documentation. The core docking pipelines (`run_vina` and `run_dock6`) remain fully supported; validation tooling may be re-introduced later as a separate, standalone project.
+The repository now supports dedicated validation workflows via:
+
+```bash
+compdd validate_run_vina --config sample_configs/sample_docking.yaml
+compdd validate_run_dock6 --config sample_configs/sample_docking.yaml
+```
+
+Validation mode reuses the same config file, but `validation.data` is used to load:
+
+- receptor proteins from `*_protein.pdb`
+- reference pockets from `*_pocket.pdb`
+- ligands from `*_ligand.sdf`
+
+For recommended dataset layout and formatting, see `docs/validation.md`.
 
 ## Outputs
 

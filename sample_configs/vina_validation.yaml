@@ -1,0 +1,54 @@
+libs:
+  chimerax: "/usr/local/chimerax/bin/ChimeraX"
+  chimera: "/usr/local/chimera/chimera-1.8/bin/chimera"
+
+  dock_home: "/localscratch/kbui/Apps/dock6"
+
+  obabel: "obabel"
+  parallel: "parallel"
+  vina: "vina"
+
+common:
+  project_name: Vina_Validation
+  working_dir: "/localscratch/kbui/COMPDD/artifacts"
+  results_dir: "/localscratch/kbui/COMPDD/results"
+  prepared_suffix: "prepped"
+
+  padding: 3.0
+  n_jobs: 16
+  max_poses: 16
+
+vina:
+  exhaustiveness: 64
+  num_modes: 16
+
+dock6:
+  max_orientations: 5000
+  radius: 10.0
+
+receptors:
+  source: "pdb"
+
+  pdbs: "/localscratch/kbui/COMPDD/tests/data"
+  pocket_option: "selection" # or "reference"
+  reference: null
+  selection: /localscratch/kbui/COMPDD/tests/data/selection_strings.csv
+  
+  # existing
+  existing_dir: "/localscratch/kbui/COMPDD/data/6W63.pdb"
+  
+ligands:
+  source: "existing" # or "sdf" or "smiles"
+
+  output_dir: /localscratch/kbui/COMPDD/data/vina_meeko_prepped_test
+  # used if source == "smiles"
+  smiles_csv: /localscratch/kbui/COMPDD/data/ligands_list.csv
+  # used if source == "sdf"
+  sdfs: /localscratch/kbui/COMPDD/data/all_ligands.sdf
+
+  # used if source == "existing"
+  existing_dir: /localscratch/kbui/COMPDD/data/dock6_meeko_prepped
+
+validation:
+  ### Only used in validation mode
+  data: "/localscratch/kbui/coreset"

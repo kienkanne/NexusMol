@@ -5,11 +5,13 @@ CompDD now uses two Pydantic-backed YAML configs:
 - Root config: loaded with `load_config(path)` from `src/compdd/configs/root_config.py` (unified docking config). The loader calls `validate_and_normalize_receptors()` which parses per-receptor selection CSVs and matches references at config-load time, building receptor bundles and attaching them to `cfg.receptors.bundles`.
 - Ligand config: loaded internally by the pipeline based on the program selected from the CLI.
 
-Run commands pass the docking program into both configs at runtime:
+Run commands use a single unified config YAML file, and validation commands reuse the same config with test-set data:
 
 ```bash
-compdd run_vina --config sample_configs/sample_docking.yaml --ligands sample_configs/sample_ligands.yaml
-compdd run_dock6 --config sample_configs/sample_docking.yaml --ligands sample_configs/sample_ligands.yaml
+compdd run_vina --config sample_configs/sample_docking.yaml
+compdd run_dock6 --config sample_configs/sample_docking.yaml
+compdd validate_run_vina --config sample_configs/sample_docking.yaml
+compdd validate_run_dock6 --config sample_configs/sample_docking.yaml
 ```
 
 ## Docking Config
@@ -35,6 +37,9 @@ At config-load time, `validate_and_normalize_receptors()` normalizes these field
 - If `pocket_option: reference` and multiple references are provided, matches them to receptors by base name.
 - Builds `ReceptorConfigBundle` objects containing the resolved selection string or reference path for each receptor.
 - Attaches these bundles to `cfg.receptors.bundles` so prep functions can use them directly.
+
+### Docking options
+
 - `vina` — `exhaustiveness`, `num_modes`, `cpu`, and `write_box`.
 - `dock6` — `max_orientations` and `radius`.
 
@@ -55,4 +60,37 @@ See `sample_configs/sample_docking.yaml` and `sample_configs/sample_ligands.yaml
 
 ## Validation Config
 
-The CASF-style validation and RCSB parsing previously documented here are omitted because the validation tooling was removed from the public documentation. The core docking and ligand preparation configuration remains unchanged; see the sections above for details on `libs`, `common`, `vina`, `dock6`, and ligand preparation options.
+Validation mode reuses the same unified config file, but the validation loader overwrites receptor and ligand inputs when `cfg.validation.data` is set.
+
+- `validation.data` — path to a validation dataset root.
+
+The validation loader expects a recursive data tree containing:
+
+- receptor proteins as `*_protein.pdb`
+- reference pockets as `*_pocket.pdb`
+- ligand definitions as `*_ligand.sdf`
+
+For example, the recommended structure under `/localscratch/kbui/coreset` is:
+
+```text
+/localscratch/kbui/coreset/
+  entry1/
+    entry1_protein.pdb
+    entry1_pocket.pdb
+    entry1_ligand.sdf
+  entry2/
+    entry2_protein.pdb
+    entry2_pocket.pdb
+    entry2_ligand.sdf
+```
+
+This layout is recommended for other test sets as well, since the validation loader scans recursively and matches entries by suffix.
+
+During validation:
+
+- receptors are loaded from `*_protein.pdb`
+- reference pockets are loaded from `*_pocket.pdb`
+- ligands are loaded from `*_ligand.sdf`
+- `common.mode` is set to `match`
+
+See `docs/validation.md` for the validation workflow, command usage, and expected dataset structure.

@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "compdd"
-version = "1.3.2"
+version = "1.4.0"
 
 [project.scripts]
 compdd = "compdd.cli.main:main"

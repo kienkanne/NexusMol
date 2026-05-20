@@ -31,11 +31,3 @@ def load_validation_config(path):
     validate_and_normalize_receptors(cfg, cfg.receptors.reference_suffix)
 
     return cfg
-
-# test
-
-cfg = load_validation_config("/localscratch/kbui/COMPDD/sample_configs/sample_docking.yaml")
-
-from compdd.vina.vina_pipeline import VinaPipeline
-
-VinaPipeline(cfg).run()

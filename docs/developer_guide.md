@@ -64,4 +64,10 @@ This design ensures that all selection CSV parsing and reference matching happen
 
 ## Validation Development
 
-The previous CASF/RCSB-based validation subsystem is not documented here any more. If you want to develop validation tooling in the future, place it in a separate package and cover external API interactions with mocks and fixtures.
+Version 1.4.0 introduces the new validation module. The validation workflow is implemented in `src/compdd/validation_coreset` and includes:
+
+- `validation_config.py` for loading a validation dataset and overwriting receptor/ligand inputs.
+- `rmsd.py` for computing per-pose RMSDs for Vina (`.pdbqt`) and DOCK6 (`.mol2`).
+- CLI support via `validate_run_vina` and `validate_run_dock6`.
+
+The validation dataset structure is intentionally generic and is recommended for future test sets. Use a single root folder containing recursive validation entries with `_protein.pdb`, `_pocket.pdb`, and `_ligand.sdf` files.

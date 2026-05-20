@@ -25,13 +25,14 @@ This document explains the per-run data flow from inputs to final outputs.
 
 3. Pipeline orchestration
 
-   - CLI triggers one of the pipeline classes (e.g., `VinaPipeline`, `DOCK6Pipeline`).
+   - CLI triggers one of the pipeline classes (e.g., `VinaPipeline`, `DOCK6Pipeline`) or validation workflows (`validate_run_vina`, `validate_run_dock6`).
    - Each pipeline executes a fixed sequence of stages:
      - Resolve or prepare ligands.
      - Prepare receptors (using pre-built bundles from `cfg.receptors.bundles` that already contain resolved selections/references).
      - Docking.
      - Write summary CSV.
      - Copy outputs.
+   - Validation workflows additionally compute per-receptor RMSD CSVs for the scored poses.
 
 4. Parallel execution
 
