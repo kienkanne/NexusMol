@@ -14,7 +14,6 @@ class VinaReceptorBundle:
 
 
 def _prep_rec(cfg, receptor_bundle):
-    # receptor_bundle may be either a Path (legacy) or a ReceptorConfigBundle-like object
     if hasattr(receptor_bundle, "receptor"):
         receptor = receptor_bundle.receptor
         bundle = receptor_bundle
@@ -68,6 +67,7 @@ def _prep_rec(cfg, receptor_bundle):
                 cleaned_receptor_pdb,
                 "-o",
                 f"{name}_{suffix}",
+                "-a",
                 "-p",  # Generate receptor PDBQT
                 "-v",
                 f"{name}_{suffix}_vina_config.txt",  # Generate Vina config file

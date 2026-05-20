@@ -33,7 +33,14 @@ def _prep_rec(cfg, receptor_bundle):
 
         with open(Path(__file__).resolve().parents[0] / "templates" / "dock6_charge_rec_template.com") as f:
             dock6_charge_rec_template = f.read()     
-
+        """
+        open $receptor
+        dockprep
+        save ${prepped_receptor_mol2}
+        delete H
+        save ${prepped_receptor_noH_mol2}
+        save ${prepped_receptor_noH_pdb}
+        """
         stdin = Template(dock6_charge_rec_template).substitute(
             receptor=receptor,
             prepped_receptor_mol2=prepped_receptor_mol2,

@@ -46,6 +46,6 @@ def _load_sdf(file_path):
                 # Now it is safe to add Hs
                 mol_with_h = Chem.AddHs(clean_mol, addCoords=True)
             else:
-                print(f"Warning: A molecule could not be read in {file_path}")
+                raise ValueError(f"Warning: A molecule could not be read in {file_path}")
     
     return mol_with_h, name

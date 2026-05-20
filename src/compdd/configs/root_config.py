@@ -42,13 +42,15 @@ class DOCK6Config(BaseModel):
 
 
 class ReceptorsConfig(BaseModel):
-    source: Optional[Literal["pdb", "existing"]] = "pdb"
+    source: Optional[Literal["cif", "pdb", "existing"]] = "cif"
 
+    cifs: Optional[Path | list[Path]] = None
     pdbs: Optional[Path | list[Path]] = None
+
     pocket_option: Literal["selection", "reference"] = "selection"
     selection: Optional[Path | str] = None
     reference: Optional[Path] = None
-    reference_suffix : str = "_pocket.pdb"
+    reference_suffix : str = "_pocket.cif"
 
     existing_dir: Optional[Path] = None
 
@@ -102,11 +104,19 @@ def _setup_dirs(cfg: RootConfig):
 
 def _find_files(cfg: RootConfig):
     from compdd.utils.extract_files import extract_files
-    cfg.receptors.pdbs = extract_files(cfg.receptors.pdbs, ".pdb")
-    cfg.ligands.sdfs = extract_files(cfg.ligands.sdfs, ".sdf")
-    if cfg.receptors.reference is not None:
+    if cfg.receptors.source == "cif":
+        cfg.receptors.cifs = extract_files(cfg.receptors.cifs, ".cif")
+    elif cfg.receptors.source == "pdb":
+        cfg.receptors.pdbs = extract_files(cfg.receptors.pdbs, ".pdb")
+        
+    if cfg.receptors.reference == "reference":
         cfg.receptors.reference = extract_files(cfg.receptors.reference, cfg.receptors.reference_suffix)
+
+    if cfg.ligands.source == "sdf":
+        cfg.ligands.sdfs = extract_files(cfg.ligands.sdfs, ".sdf")
+
     return cfg
+
 
 
 def load_config(path):

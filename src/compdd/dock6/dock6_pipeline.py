@@ -17,7 +17,8 @@ class DOCK6Pipeline():
 
         lig_files = ligands_prep(self.cfg)
         prepped_recs = dock6_prep_rec(self.cfg)
-        pairs = matchmixer(prepped_recs, lig_files, self.cfg.common.prepared_suffix)
+        pairs = matchmixer(prepped_recs, lig_files, 
+                           self.cfg.common.prepared_suffix, self.cfg.common.mode)
 
         out_files = dock6_docking(self.cfg, pairs)
         docking_summary = write_summary_csv(self.cfg, out_files, prepped_recs)

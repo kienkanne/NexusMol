@@ -13,13 +13,16 @@ class ReceptorConfigBundle:
     reference_path: Optional[Path] = None
 
 
-def validate_and_normalize_receptors(cfg, reference_suffix: str = "_pocket.pdb") -> List[ReceptorConfigBundle]:
+def validate_and_normalize_receptors(cfg, reference_suffix: str = "_pocket.cif") -> List[ReceptorConfigBundle]:
     """
     Validate and normalize receptor-related fields on `cfg` (RootConfig).
     Returns a list of ReceptorConfigBundle objects with resolved selection strings and reference paths.
-    Also mutates `cfg.receptors.pdbs` to be a sorted list of Paths.
     """
-    receptors = sorted(cfg.receptors.pdbs)
+
+    if cfg.receptors.source == "cif":
+        receptors = sorted(cfg.receptors.cifs)
+    elif cfg.receptors.source == "pdb":
+        receptors = sorted(cfg.receptors.pdbs)
 
     pocket_option = cfg.receptors.pocket_option
     bundles: List[ReceptorConfigBundle] = []
@@ -42,7 +45,7 @@ def validate_and_normalize_receptors(cfg, reference_suffix: str = "_pocket.pdb")
             ref_map = match_references_to_receptors(receptors, references, reference_suffix)
             for rec in receptors:
                 bundles.append(ReceptorConfigBundle(receptor=rec, name=rec.stem, reference_path=ref_map[rec]))
-        print (bundles)
+
     # Handle selection-based pockets: either a global selection string or a per-receptor CSV mapping
     elif pocket_option == "selection":
         sel = cfg.receptors.selection
@@ -70,8 +73,6 @@ def validate_and_normalize_receptors(cfg, reference_suffix: str = "_pocket.pdb")
         raise ValueError(f"Unknown pocket_option: {pocket_option}")
 
     # Attach normalized receptor list and the built bundles to the cfg object so downstream code
-    # can directly iterate over prepared receptor bundles instead of re-parsing selection/reference.
-    cfg.receptors.pdbs = receptors
     try:
         setattr(cfg.receptors, "bundles", bundles)
     except Exception:
@@ -98,7 +99,7 @@ def parse_selection_csv(csv_path: Path) -> dict:
 
 def match_references_to_receptors(receptors: List[Path], references: List[Path], reference_suffix: str) -> dict:
     """Match receptor files to reference pocket files by base name.
-    Receptor 'X_protein.pdb' matches reference 'X{reference_suffix}' (e.g., 'X_pocket.pdb').
+    Receptor 'X_protein.cif' matches reference 'X{reference_suffix}' (e.g., 'X_pocket.cif').
     """
     ref_map = {}
     for rec in receptors:
