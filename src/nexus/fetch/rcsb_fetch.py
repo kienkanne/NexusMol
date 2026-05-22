@@ -1,5 +1,4 @@
 from pathlib import Path
-import os
 from rcsbapi.data import DataQuery
 from rcsbapi.model import ModelQuery
 
@@ -42,11 +41,11 @@ def get_ligands_in_structure(id):
 
 
 def rcsb_fetch(fcfg: FetchConfig, id: str):
-    raw_assembly_suffix = fcfg.raw_assembly_suffix
+    raw_suffix = fcfg.raw_assembly_suffix
     ligand_suffix = fcfg.ligand_suffix
     output_dir = fcfg.output_dir
 
-    os.makedirs(output_dir, exist_ok=True)
+    output_dir.mkdir(parents=True, exist_ok=True)
 
     print(f"\n--- Processing {id} ---")
     ligands = get_ligands_in_structure(id)
@@ -72,24 +71,20 @@ def rcsb_fetch(fcfg: FetchConfig, id: str):
             print(f"❌ Failed to download {lig_id}: {e}")
 
     # Download Biological Assembly in CIF format
-    raw_assembly_file = f"{id}_{raw_assembly_suffix}.cif"
+    raw_file = f"{id}_{raw_suffix}.cif"
     model_api.get_assembly(
         entry_id=id, 
         encoding="cif",
-        filename=raw_assembly_file,
+        filename=raw_file,
     )
 
-    raw_path = os.path.join(output_dir, raw_assembly_file)
+    raw_path = Path(output_dir / raw_file)
 
-    if not os.path.exists(raw_path):
-        raise FileNotFoundError(
-            f"Assembly download failed for {id}: file was not created."
-        )
-
-    if os.path.getsize(raw_path) == 0:
-        raise IOError(
-            f"Assembly download failed for {id}: empty file."
-        )
+    if raw_path.is_file():
+        if raw_path.stat().st_size == 0:
+            raise IOError(f"Assembly download failed for {id}: empty file.")
+    else:
+        raise FileNotFoundError(f"Assembly download failed for {id}: file was not created.")
 
     print (f"✅ Saved raw biological assembly receptor: {raw_path}")
 

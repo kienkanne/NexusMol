@@ -1,0 +1,2 @@
+input_file: "/localscratch/kbui/NexusMol/data/6W63.pdb"
+output_dir: "/localscratch/kbui/NexusMol/data/cleaned_receptors"

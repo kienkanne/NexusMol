@@ -2,7 +2,7 @@ import logging
 import sys
 from pathlib import Path
 
-def setup_logger(log_path: str, level=logging.INFO):
+def setup_logger(log_path: str, level=logging.INFO, time_verbose=True):
 
     #Creates console + file logger.
     log_file = Path(log_path)
@@ -21,10 +21,11 @@ def setup_logger(log_path: str, level=logging.INFO):
     )
 
     fh = logging.FileHandler(log_file)
-    fh.setFormatter(formatter)
-
     sh = logging.StreamHandler(sys.stdout)
-    sh.setFormatter(formatter)
+    
+    if time_verbose:
+        fh.setFormatter(formatter)
+        sh.setFormatter(formatter)
 
     logger.addHandler(fh)
     logger.addHandler(sh)
