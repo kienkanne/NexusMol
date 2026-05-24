@@ -1,0 +1,2295 @@
+2026-05-24 15:05:03 | INFO     | STAGE: Prepare receptor for Vina started
+2026-05-24 15:05:03 | INFO     | Running: /usr/local/chimerax/bin/ChimeraX --nogui
+2026-05-24 15:05:03 | INFO     | Running: /usr/local/chimerax/bin/ChimeraX --nogui
+2026-05-24 15:05:05 | INFO     | Running: mk_prepare_receptor.py -i /localscratch/kbui/NexusMol/examples/final_receptors/6W63.pdb -o /localscratch/kbui/NexusMol/examples/artifacts/vina_mpro/6W63_prepared -a -p -v /localscratch/kbui/NexusMol/examples/artifacts/vina_mpro/6W63_vina_config.txt --box_enveloping /localscratch/kbui/NexusMol/examples/artifacts/vina_mpro/6W63_pocket.pdb --padding 4.0
+2026-05-24 15:05:05 | INFO     | Running: mk_prepare_receptor.py -i /localscratch/kbui/NexusMol/examples/final_receptors/7K40.pdb -o /localscratch/kbui/NexusMol/examples/artifacts/vina_mpro/7K40_prepared -a -p -v /localscratch/kbui/NexusMol/examples/artifacts/vina_mpro/7K40_vina_config.txt --box_enveloping /localscratch/kbui/NexusMol/examples/artifacts/vina_mpro/7K40_pocket.pdb --padding 4.0
+2026-05-24 15:05:17 | WARNING  | STDERR: @> 11005 atoms and 1 coordinate set(s) were parsed in 0.02s.
+matched with excess inter-residue bond(s): A:155
+No template matched for residue_key='A:501'
+tried 1 templates for residue_key='A:501'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess={1}
+
+matched with excess inter-residue bond(s): A:501
+No template matched for residue_key='A:502'
+tried 1 templates for residue_key='A:502'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:503'
+tried 1 templates for residue_key='A:503'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:504'
+tried 1 templates for residue_key='A:504'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:505'
+tried 1 templates for residue_key='A:505'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:506'
+tried 1 templates for residue_key='A:506'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:507'
+tried 1 templates for residue_key='A:507'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:508'
+tried 1 templates for residue_key='A:508'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:509'
+tried 1 templates for residue_key='A:509'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:510'
+tried 1 templates for residue_key='A:510'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:511'
+tried 1 templates for residue_key='A:511'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:512'
+tried 1 templates for residue_key='A:512'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:513'
+tried 1 templates for residue_key='A:513'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:514'
+tried 1 templates for residue_key='A:514'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:515'
+tried 1 templates for residue_key='A:515'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:516'
+tried 1 templates for residue_key='A:516'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:517'
+tried 1 templates for residue_key='A:517'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:518'
+tried 1 templates for residue_key='A:518'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:519'
+tried 1 templates for residue_key='A:519'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:520'
+tried 1 templates for residue_key='A:520'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:521'
+tried 1 templates for residue_key='A:521'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:522'
+tried 1 templates for residue_key='A:522'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:523'
+tried 1 templates for residue_key='A:523'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:524'
+tried 1 templates for residue_key='A:524'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:525'
+tried 1 templates for residue_key='A:525'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:526'
+tried 1 templates for residue_key='A:526'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:527'
+tried 1 templates for residue_key='A:527'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:528'
+tried 1 templates for residue_key='A:528'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:529'
+tried 1 templates for residue_key='A:529'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:530'
+tried 1 templates for residue_key='A:530'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:531'
+tried 1 templates for residue_key='A:531'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:532'
+tried 1 templates for residue_key='A:532'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:533'
+tried 1 templates for residue_key='A:533'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:534'
+tried 1 templates for residue_key='A:534'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:535'
+tried 1 templates for residue_key='A:535'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:536'
+tried 1 templates for residue_key='A:536'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:537'
+tried 1 templates for residue_key='A:537'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:538'
+tried 1 templates for residue_key='A:538'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:539'
+tried 1 templates for residue_key='A:539'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:540'
+tried 1 templates for residue_key='A:540'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:541'
+tried 1 templates for residue_key='A:541'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:542'
+tried 1 templates for residue_key='A:542'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:543'
+tried 1 templates for residue_key='A:543'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:544'
+tried 1 templates for residue_key='A:544'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:545'
+tried 1 templates for residue_key='A:545'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:546'
+tried 1 templates for residue_key='A:546'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:547'
+tried 1 templates for residue_key='A:547'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:548'
+tried 1 templates for residue_key='A:548'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:549'
+tried 1 templates for residue_key='A:549'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:550'
+tried 1 templates for residue_key='A:550'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:551'
+tried 1 templates for residue_key='A:551'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:552'
+tried 1 templates for residue_key='A:552'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:553'
+tried 1 templates for residue_key='A:553'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:554'
+tried 1 templates for residue_key='A:554'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:555'
+tried 1 templates for residue_key='A:555'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:556'
+tried 1 templates for residue_key='A:556'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:557'
+tried 1 templates for residue_key='A:557'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:558'
+tried 1 templates for residue_key='A:558'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:559'
+tried 1 templates for residue_key='A:559'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:560'
+tried 1 templates for residue_key='A:560'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:561'
+tried 1 templates for residue_key='A:561'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:562'
+tried 1 templates for residue_key='A:562'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:563'
+tried 1 templates for residue_key='A:563'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:564'
+tried 1 templates for residue_key='A:564'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:565'
+tried 1 templates for residue_key='A:565'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:566'
+tried 1 templates for residue_key='A:566'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:567'
+tried 1 templates for residue_key='A:567'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:568'
+tried 1 templates for residue_key='A:568'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:569'
+tried 1 templates for residue_key='A:569'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:570'
+tried 1 templates for residue_key='A:570'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:571'
+tried 1 templates for residue_key='A:571'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:572'
+tried 1 templates for residue_key='A:572'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:573'
+tried 1 templates for residue_key='A:573'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:574'
+tried 1 templates for residue_key='A:574'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:575'
+tried 1 templates for residue_key='A:575'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:576'
+tried 1 templates for residue_key='A:576'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:577'
+tried 1 templates for residue_key='A:577'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:578'
+tried 1 templates for residue_key='A:578'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:579'
+tried 1 templates for residue_key='A:579'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:580'
+tried 1 templates for residue_key='A:580'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:581'
+tried 1 templates for residue_key='A:581'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:582'
+tried 1 templates for residue_key='A:582'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:583'
+tried 1 templates for residue_key='A:583'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:584'
+tried 1 templates for residue_key='A:584'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:585'
+tried 1 templates for residue_key='A:585'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:586'
+tried 1 templates for residue_key='A:586'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:587'
+tried 1 templates for residue_key='A:587'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:588'
+tried 1 templates for residue_key='A:588'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:589'
+tried 1 templates for residue_key='A:589'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:590'
+tried 1 templates for residue_key='A:590'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:591'
+tried 1 templates for residue_key='A:591'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:592'
+tried 1 templates for residue_key='A:592'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:593'
+tried 1 templates for residue_key='A:593'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:594'
+tried 1 templates for residue_key='A:594'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:595'
+tried 1 templates for residue_key='A:595'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:596'
+tried 1 templates for residue_key='A:596'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:597'
+tried 1 templates for residue_key='A:597'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:598'
+tried 1 templates for residue_key='A:598'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:599'
+tried 1 templates for residue_key='A:599'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:600'
+tried 1 templates for residue_key='A:600'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:601'
+tried 1 templates for residue_key='A:601'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:602'
+tried 1 templates for residue_key='A:602'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:603'
+tried 1 templates for residue_key='A:603'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:604'
+tried 1 templates for residue_key='A:604'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:605'
+tried 1 templates for residue_key='A:605'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:606'
+tried 1 templates for residue_key='A:606'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:607'
+tried 1 templates for residue_key='A:607'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:608'
+tried 1 templates for residue_key='A:608'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:609'
+tried 1 templates for residue_key='A:609'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:610'
+tried 1 templates for residue_key='A:610'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:611'
+tried 1 templates for residue_key='A:611'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:612'
+tried 1 templates for residue_key='A:612'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:613'
+tried 1 templates for residue_key='A:613'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:614'
+tried 1 templates for residue_key='A:614'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:615'
+tried 1 templates for residue_key='A:615'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:616'
+tried 1 templates for residue_key='A:616'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:617'
+tried 1 templates for residue_key='A:617'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:618'
+tried 1 templates for residue_key='A:618'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:619'
+tried 1 templates for residue_key='A:619'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:620'
+tried 1 templates for residue_key='A:620'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:621'
+tried 1 templates for residue_key='A:621'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:622'
+tried 1 templates for residue_key='A:622'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:623'
+tried 1 templates for residue_key='A:623'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:624'
+tried 1 templates for residue_key='A:624'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:625'
+tried 1 templates for residue_key='A:625'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:626'
+tried 1 templates for residue_key='A:626'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:627'
+tried 1 templates for residue_key='A:627'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:628'
+tried 1 templates for residue_key='A:628'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:629'
+tried 1 templates for residue_key='A:629'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:630'
+tried 1 templates for residue_key='A:630'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:631'
+tried 1 templates for residue_key='A:631'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:632'
+tried 1 templates for residue_key='A:632'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:633'
+tried 1 templates for residue_key='A:633'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:634'
+tried 1 templates for residue_key='A:634'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:635'
+tried 1 templates for residue_key='A:635'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:636'
+tried 1 templates for residue_key='A:636'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:637'
+tried 1 templates for residue_key='A:637'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:638'
+tried 1 templates for residue_key='A:638'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:639'
+tried 1 templates for residue_key='A:639'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:640'
+tried 1 templates for residue_key='A:640'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:641'
+tried 1 templates for residue_key='A:641'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:642'
+tried 1 templates for residue_key='A:642'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:643'
+tried 1 templates for residue_key='A:643'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:644'
+tried 1 templates for residue_key='A:644'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess={2}
+
+matched with excess inter-residue bond(s): A:644
+No template matched for residue_key='A:645'
+tried 1 templates for residue_key='A:645'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:646'
+tried 1 templates for residue_key='A:646'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:647'
+tried 1 templates for residue_key='A:647'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:648'
+tried 1 templates for residue_key='A:648'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:649'
+tried 1 templates for residue_key='A:649'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:650'
+tried 1 templates for residue_key='A:650'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:651'
+tried 1 templates for residue_key='A:651'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:652'
+tried 1 templates for residue_key='A:652'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:653'
+tried 1 templates for residue_key='A:653'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:654'
+tried 1 templates for residue_key='A:654'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:655'
+tried 1 templates for residue_key='A:655'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:656'
+tried 1 templates for residue_key='A:656'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:657'
+tried 1 templates for residue_key='A:657'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:658'
+tried 1 templates for residue_key='A:658'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:659'
+tried 1 templates for residue_key='A:659'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:660'
+tried 1 templates for residue_key='A:660'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:661'
+tried 1 templates for residue_key='A:661'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:662'
+tried 1 templates for residue_key='A:662'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:663'
+tried 1 templates for residue_key='A:663'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:664'
+tried 1 templates for residue_key='A:664'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:665'
+tried 1 templates for residue_key='A:665'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:666'
+tried 1 templates for residue_key='A:666'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:667'
+tried 1 templates for residue_key='A:667'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:668'
+tried 1 templates for residue_key='A:668'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:669'
+tried 1 templates for residue_key='A:669'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:670'
+tried 1 templates for residue_key='A:670'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:671'
+tried 1 templates for residue_key='A:671'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:672'
+tried 1 templates for residue_key='A:672'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:673'
+tried 1 templates for residue_key='A:673'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:674'
+tried 1 templates for residue_key='A:674'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:675'
+tried 1 templates for residue_key='A:675'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:676'
+tried 1 templates for residue_key='A:676'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:677'
+tried 1 templates for residue_key='A:677'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:678'
+tried 1 templates for residue_key='A:678'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:679'
+tried 1 templates for residue_key='A:679'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:680'
+tried 1 templates for residue_key='A:680'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:681'
+tried 1 templates for residue_key='A:681'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:682'
+tried 1 templates for residue_key='A:682'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:683'
+tried 1 templates for residue_key='A:683'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:684'
+tried 1 templates for residue_key='A:684'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:685'
+tried 1 templates for residue_key='A:685'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:686'
+tried 1 templates for residue_key='A:686'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:687'
+tried 1 templates for residue_key='A:687'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:688'
+tried 1 templates for residue_key='A:688'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:689'
+tried 1 templates for residue_key='A:689'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:690'
+tried 1 templates for residue_key='A:690'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:691'
+tried 1 templates for residue_key='A:691'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:692'
+tried 1 templates for residue_key='A:692'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:693'
+tried 1 templates for residue_key='A:693'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:694'
+tried 1 templates for residue_key='A:694'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:695'
+tried 1 templates for residue_key='A:695'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:696'
+tried 1 templates for residue_key='A:696'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:697'
+tried 1 templates for residue_key='A:697'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:698'
+tried 1 templates for residue_key='A:698'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:700'
+tried 1 templates for residue_key='A:700'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:701'
+tried 1 templates for residue_key='A:701'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:702'
+tried 1 templates for residue_key='A:702'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:703'
+tried 1 templates for residue_key='A:703'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:704'
+tried 1 templates for residue_key='A:704'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:705'
+tried 1 templates for residue_key='A:705'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:706'
+tried 1 templates for residue_key='A:706'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:707'
+tried 1 templates for residue_key='A:707'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:708'
+tried 1 templates for residue_key='A:708'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:709'
+tried 1 templates for residue_key='A:709'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:710'
+tried 1 templates for residue_key='A:710'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:711'
+tried 1 templates for residue_key='A:711'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:712'
+tried 1 templates for residue_key='A:712'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:714'
+tried 1 templates for residue_key='A:714'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:715'
+tried 1 templates for residue_key='A:715'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:716'
+tried 1 templates for residue_key='A:716'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:717'
+tried 1 templates for residue_key='A:717'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:718'
+tried 1 templates for residue_key='A:718'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:719'
+tried 1 templates for residue_key='A:719'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:720'
+tried 1 templates for residue_key='A:720'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:721'
+tried 1 templates for residue_key='A:721'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:722'
+tried 1 templates for residue_key='A:722'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:723'
+tried 1 templates for residue_key='A:723'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:724'
+tried 1 templates for residue_key='A:724'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:725'
+tried 1 templates for residue_key='A:725'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:726'
+tried 1 templates for residue_key='A:726'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:727'
+tried 1 templates for residue_key='A:727'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess={0}
+
+matched with excess inter-residue bond(s): A:727
+No template matched for residue_key='A:728'
+tried 1 templates for residue_key='A:728'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:729'
+tried 1 templates for residue_key='A:729'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:730'
+tried 1 templates for residue_key='A:730'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:731'
+tried 1 templates for residue_key='A:731'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:732'
+tried 1 templates for residue_key='A:732'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess={1}
+
+matched with excess inter-residue bond(s): A:732
+No template matched for residue_key='A:733'
+tried 1 templates for residue_key='A:733'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:734'
+tried 1 templates for residue_key='A:734'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:735'
+tried 1 templates for residue_key='A:735'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:736'
+tried 1 templates for residue_key='A:736'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:737'
+tried 1 templates for residue_key='A:737'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:738'
+tried 1 templates for residue_key='A:738'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:739'
+tried 1 templates for residue_key='A:739'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:740'
+tried 1 templates for residue_key='A:740'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:741'
+tried 1 templates for residue_key='A:741'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:742'
+tried 1 templates for residue_key='A:742'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:743'
+tried 1 templates for residue_key='A:743'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:744'
+tried 1 templates for residue_key='A:744'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:745'
+tried 1 templates for residue_key='A:745'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:746'
+tried 1 templates for residue_key='A:746'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:747'
+tried 1 templates for residue_key='A:747'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:748'
+tried 1 templates for residue_key='A:748'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:749'
+tried 1 templates for residue_key='A:749'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:750'
+tried 1 templates for residue_key='A:750'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:751'
+tried 1 templates for residue_key='A:751'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:752'
+tried 1 templates for residue_key='A:752'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:753'
+tried 1 templates for residue_key='A:753'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:754'
+tried 1 templates for residue_key='A:754'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:755'
+tried 1 templates for residue_key='A:755'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:756'
+tried 1 templates for residue_key='A:756'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:757'
+tried 1 templates for residue_key='A:757'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess={0}
+
+matched with excess inter-residue bond(s): A:757
+No template matched for residue_key='A:758'
+tried 1 templates for residue_key='A:758'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:759'
+tried 1 templates for residue_key='A:759'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:760'
+tried 1 templates for residue_key='A:760'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:761'
+tried 1 templates for residue_key='A:761'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:762'
+tried 1 templates for residue_key='A:762'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:763'
+tried 1 templates for residue_key='A:763'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:764'
+tried 1 templates for residue_key='A:764'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:765'
+tried 1 templates for residue_key='A:765'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:766'
+tried 1 templates for residue_key='A:766'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:767'
+tried 1 templates for residue_key='A:767'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:768'
+tried 1 templates for residue_key='A:768'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:770'
+tried 1 templates for residue_key='A:770'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:771'
+tried 1 templates for residue_key='A:771'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:772'
+tried 1 templates for residue_key='A:772'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:773'
+tried 1 templates for residue_key='A:773'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:774'
+tried 1 templates for residue_key='A:774'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:775'
+tried 1 templates for residue_key='A:775'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:776'
+tried 1 templates for residue_key='A:776'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:777'
+tried 1 templates for residue_key='A:777'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:778'
+tried 1 templates for residue_key='A:778'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:779'
+tried 1 templates for residue_key='A:779'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:780'
+tried 1 templates for residue_key='A:780'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+matched with excess inter-residue bond(s): B:155
+- Template matching failed for: ['A:501', 'A:502', 'A:503', 'A:504', 'A:505', 'A:506', 'A:507', 'A:508', 'A:509', 'A:510', 'A:511', 'A:512', 'A:513', 'A:514', 'A:515', 'A:516', 'A:517', 'A:518', 'A:519', 'A:520', 'A:521', 'A:522', 'A:523', 'A:524', 'A:525', 'A:526', 'A:527', 'A:528', 'A:529', 'A:530', 'A:531', 'A:532', 'A:533', 'A:534', 'A:535', 'A:536', 'A:537', 'A:538', 'A:539', 'A:540', 'A:541', 'A:542', 'A:543', 'A:544', 'A:545', 'A:546', 'A:547', 'A:548', 'A:549', 'A:550', 'A:551', 'A:552', 'A:553', 'A:554', 'A:555', 'A:556', 'A:557', 'A:558', 'A:559', 'A:560', 'A:561', 'A:562', 'A:563', 'A:564', 'A:565', 'A:566', 'A:567', 'A:568', 'A:569', 'A:570', 'A:571', 'A:572', 'A:573', 'A:574', 'A:575', 'A:576', 'A:577', 'A:578', 'A:579', 'A:580', 'A:581', 'A:582', 'A:583', 'A:584', 'A:585', 'A:586', 'A:587', 'A:588', 'A:589', 'A:590', 'A:591', 'A:592', 'A:593', 'A:594', 'A:595', 'A:596', 'A:597', 'A:598', 'A:599', 'A:600', 'A:601', 'A:602', 'A:603', 'A:604', 'A:605', 'A:606', 'A:607', 'A:608', 'A:609', 'A:610', 'A:611', 'A:612', 'A:613', 'A:614', 'A:615', 'A:616', 'A:617', 'A:618', 'A:619', 'A:620', 'A:621', 'A:622', 'A:623', 'A:624', 'A:625', 'A:626', 'A:627', 'A:628', 'A:629', 'A:630', 'A:631', 'A:632', 'A:633', 'A:634', 'A:635', 'A:636', 'A:637', 'A:638', 'A:639', 'A:640', 'A:641', 'A:642', 'A:643', 'A:644', 'A:645', 'A:646', 'A:647', 'A:648', 'A:649', 'A:650', 'A:651', 'A:652', 'A:653', 'A:654', 'A:655', 'A:656', 'A:657', 'A:658', 'A:659', 'A:660', 'A:661', 'A:662', 'A:663', 'A:664', 'A:665', 'A:666', 'A:667', 'A:668', 'A:669', 'A:670', 'A:671', 'A:672', 'A:673', 'A:674', 'A:675', 'A:676', 'A:677', 'A:678', 'A:679', 'A:680', 'A:681', 'A:682', 'A:683', 'A:684', 'A:685', 'A:686', 'A:687', 'A:688', 'A:689', 'A:690', 'A:691', 'A:692', 'A:693', 'A:694', 'A:695', 'A:696', 'A:697', 'A:698', 'A:700', 'A:701', 'A:702', 'A:703', 'A:704', 'A:705', 'A:706', 'A:707', 'A:708', 'A:709', 'A:710', 'A:711', 'A:712', 'A:714', 'A:715', 'A:716', 'A:717', 'A:718', 'A:719', 'A:720', 'A:721', 'A:722', 'A:723', 'A:724', 'A:725', 'A:726', 'A:727', 'A:728', 'A:729', 'A:730', 'A:731', 'A:732', 'A:733', 'A:734', 'A:735', 'A:736', 'A:737', 'A:738', 'A:739', 'A:740', 'A:741', 'A:742', 'A:743', 'A:744', 'A:745', 'A:746', 'A:747', 'A:748', 'A:749', 'A:750', 'A:751', 'A:752', 'A:753', 'A:754', 'A:755', 'A:756', 'A:757', 'A:758', 'A:759', 'A:760', 'A:761', 'A:762', 'A:763', 'A:764', 'A:765', 'A:766', 'A:767', 'A:768', 'A:770', 'A:771', 'A:772', 'A:773', 'A:774', 'A:775', 'A:776', 'A:777', 'A:778', 'A:779', 'A:780'] Ignored due to allow_bad_res.
+
+2026-05-24 15:05:17 | INFO     | Running: add_configs()
+2026-05-24 15:05:18 | WARNING  | STDERR: @> 11119 atoms and 1 coordinate set(s) were parsed in 0.02s.
+No template matched for residue_key='A:501'
+tried 1 templates for residue_key='A:501'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:502'
+tried 1 templates for residue_key='A:502'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:503'
+tried 1 templates for residue_key='A:503'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:504'
+tried 1 templates for residue_key='A:504'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:505'
+tried 1 templates for residue_key='A:505'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:506'
+tried 1 templates for residue_key='A:506'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:507'
+tried 1 templates for residue_key='A:507'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:508'
+tried 1 templates for residue_key='A:508'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:509'
+tried 1 templates for residue_key='A:509'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:510'
+tried 1 templates for residue_key='A:510'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:511'
+tried 1 templates for residue_key='A:511'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:512'
+tried 1 templates for residue_key='A:512'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:513'
+tried 1 templates for residue_key='A:513'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:514'
+tried 1 templates for residue_key='A:514'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:515'
+tried 1 templates for residue_key='A:515'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:516'
+tried 1 templates for residue_key='A:516'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:517'
+tried 1 templates for residue_key='A:517'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:518'
+tried 1 templates for residue_key='A:518'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:519'
+tried 1 templates for residue_key='A:519'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:520'
+tried 1 templates for residue_key='A:520'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:521'
+tried 1 templates for residue_key='A:521'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:522'
+tried 1 templates for residue_key='A:522'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:523'
+tried 1 templates for residue_key='A:523'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:524'
+tried 1 templates for residue_key='A:524'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:525'
+tried 1 templates for residue_key='A:525'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:526'
+tried 1 templates for residue_key='A:526'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:527'
+tried 1 templates for residue_key='A:527'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:528'
+tried 1 templates for residue_key='A:528'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:529'
+tried 1 templates for residue_key='A:529'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:530'
+tried 1 templates for residue_key='A:530'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:531'
+tried 1 templates for residue_key='A:531'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:532'
+tried 1 templates for residue_key='A:532'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:533'
+tried 1 templates for residue_key='A:533'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:534'
+tried 1 templates for residue_key='A:534'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:535'
+tried 1 templates for residue_key='A:535'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:536'
+tried 1 templates for residue_key='A:536'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:537'
+tried 1 templates for residue_key='A:537'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:538'
+tried 1 templates for residue_key='A:538'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:539'
+tried 1 templates for residue_key='A:539'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:540'
+tried 1 templates for residue_key='A:540'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:541'
+tried 1 templates for residue_key='A:541'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:542'
+tried 1 templates for residue_key='A:542'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:543'
+tried 1 templates for residue_key='A:543'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:544'
+tried 1 templates for residue_key='A:544'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:545'
+tried 1 templates for residue_key='A:545'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:546'
+tried 1 templates for residue_key='A:546'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:547'
+tried 1 templates for residue_key='A:547'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:548'
+tried 1 templates for residue_key='A:548'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:549'
+tried 1 templates for residue_key='A:549'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:550'
+tried 1 templates for residue_key='A:550'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:551'
+tried 1 templates for residue_key='A:551'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:552'
+tried 1 templates for residue_key='A:552'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:553'
+tried 1 templates for residue_key='A:553'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:554'
+tried 1 templates for residue_key='A:554'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:555'
+tried 1 templates for residue_key='A:555'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:556'
+tried 1 templates for residue_key='A:556'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:557'
+tried 1 templates for residue_key='A:557'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:558'
+tried 1 templates for residue_key='A:558'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:559'
+tried 1 templates for residue_key='A:559'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:560'
+tried 1 templates for residue_key='A:560'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:561'
+tried 1 templates for residue_key='A:561'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:562'
+tried 1 templates for residue_key='A:562'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:563'
+tried 1 templates for residue_key='A:563'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:564'
+tried 1 templates for residue_key='A:564'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:565'
+tried 1 templates for residue_key='A:565'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:566'
+tried 1 templates for residue_key='A:566'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:567'
+tried 1 templates for residue_key='A:567'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:568'
+tried 1 templates for residue_key='A:568'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:569'
+tried 1 templates for residue_key='A:569'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:570'
+tried 1 templates for residue_key='A:570'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:571'
+tried 1 templates for residue_key='A:571'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:572'
+tried 1 templates for residue_key='A:572'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:573'
+tried 1 templates for residue_key='A:573'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:574'
+tried 1 templates for residue_key='A:574'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:575'
+tried 1 templates for residue_key='A:575'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:576'
+tried 1 templates for residue_key='A:576'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:577'
+tried 1 templates for residue_key='A:577'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:578'
+tried 1 templates for residue_key='A:578'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:579'
+tried 1 templates for residue_key='A:579'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:580'
+tried 1 templates for residue_key='A:580'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:581'
+tried 1 templates for residue_key='A:581'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:582'
+tried 1 templates for residue_key='A:582'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:583'
+tried 1 templates for residue_key='A:583'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:584'
+tried 1 templates for residue_key='A:584'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:585'
+tried 1 templates for residue_key='A:585'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:586'
+tried 1 templates for residue_key='A:586'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:587'
+tried 1 templates for residue_key='A:587'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:588'
+tried 1 templates for residue_key='A:588'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:589'
+tried 1 templates for residue_key='A:589'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:590'
+tried 1 templates for residue_key='A:590'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:591'
+tried 1 templates for residue_key='A:591'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:592'
+tried 1 templates for residue_key='A:592'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:593'
+tried 1 templates for residue_key='A:593'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:594'
+tried 1 templates for residue_key='A:594'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:595'
+tried 1 templates for residue_key='A:595'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:596'
+tried 1 templates for residue_key='A:596'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:597'
+tried 1 templates for residue_key='A:597'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:598'
+tried 1 templates for residue_key='A:598'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:599'
+tried 1 templates for residue_key='A:599'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:600'
+tried 1 templates for residue_key='A:600'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:601'
+tried 1 templates for residue_key='A:601'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:602'
+tried 1 templates for residue_key='A:602'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:603'
+tried 1 templates for residue_key='A:603'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:604'
+tried 1 templates for residue_key='A:604'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:605'
+tried 1 templates for residue_key='A:605'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:606'
+tried 1 templates for residue_key='A:606'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:607'
+tried 1 templates for residue_key='A:607'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:608'
+tried 1 templates for residue_key='A:608'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:609'
+tried 1 templates for residue_key='A:609'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:610'
+tried 1 templates for residue_key='A:610'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:611'
+tried 1 templates for residue_key='A:611'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:612'
+tried 1 templates for residue_key='A:612'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:613'
+tried 1 templates for residue_key='A:613'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:614'
+tried 1 templates for residue_key='A:614'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:615'
+tried 1 templates for residue_key='A:615'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:616'
+tried 1 templates for residue_key='A:616'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:617'
+tried 1 templates for residue_key='A:617'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:618'
+tried 1 templates for residue_key='A:618'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:619'
+tried 1 templates for residue_key='A:619'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:620'
+tried 1 templates for residue_key='A:620'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:621'
+tried 1 templates for residue_key='A:621'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:622'
+tried 1 templates for residue_key='A:622'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:623'
+tried 1 templates for residue_key='A:623'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:624'
+tried 1 templates for residue_key='A:624'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:625'
+tried 1 templates for residue_key='A:625'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:626'
+tried 1 templates for residue_key='A:626'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:627'
+tried 1 templates for residue_key='A:627'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:628'
+tried 1 templates for residue_key='A:628'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:629'
+tried 1 templates for residue_key='A:629'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:630'
+tried 1 templates for residue_key='A:630'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:631'
+tried 1 templates for residue_key='A:631'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:632'
+tried 1 templates for residue_key='A:632'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:633'
+tried 1 templates for residue_key='A:633'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:634'
+tried 1 templates for residue_key='A:634'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:635'
+tried 1 templates for residue_key='A:635'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:636'
+tried 1 templates for residue_key='A:636'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:637'
+tried 1 templates for residue_key='A:637'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:638'
+tried 1 templates for residue_key='A:638'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:639'
+tried 1 templates for residue_key='A:639'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:640'
+tried 1 templates for residue_key='A:640'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:641'
+tried 1 templates for residue_key='A:641'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:642'
+tried 1 templates for residue_key='A:642'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:643'
+tried 1 templates for residue_key='A:643'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:644'
+tried 1 templates for residue_key='A:644'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:645'
+tried 1 templates for residue_key='A:645'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:646'
+tried 1 templates for residue_key='A:646'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:647'
+tried 1 templates for residue_key='A:647'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:648'
+tried 1 templates for residue_key='A:648'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:649'
+tried 1 templates for residue_key='A:649'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:650'
+tried 1 templates for residue_key='A:650'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:651'
+tried 1 templates for residue_key='A:651'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:652'
+tried 1 templates for residue_key='A:652'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:653'
+tried 1 templates for residue_key='A:653'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:654'
+tried 1 templates for residue_key='A:654'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:655'
+tried 1 templates for residue_key='A:655'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:656'
+tried 1 templates for residue_key='A:656'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:657'
+tried 1 templates for residue_key='A:657'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:658'
+tried 1 templates for residue_key='A:658'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:659'
+tried 1 templates for residue_key='A:659'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:660'
+tried 1 templates for residue_key='A:660'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:661'
+tried 1 templates for residue_key='A:661'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:662'
+tried 1 templates for residue_key='A:662'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:663'
+tried 1 templates for residue_key='A:663'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:664'
+tried 1 templates for residue_key='A:664'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:665'
+tried 1 templates for residue_key='A:665'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:666'
+tried 1 templates for residue_key='A:666'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:667'
+tried 1 templates for residue_key='A:667'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:668'
+tried 1 templates for residue_key='A:668'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:669'
+tried 1 templates for residue_key='A:669'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:670'
+tried 1 templates for residue_key='A:670'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:671'
+tried 1 templates for residue_key='A:671'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:672'
+tried 1 templates for residue_key='A:672'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:673'
+tried 1 templates for residue_key='A:673'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:674'
+tried 1 templates for residue_key='A:674'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:675'
+tried 1 templates for residue_key='A:675'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:676'
+tried 1 templates for residue_key='A:676'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:677'
+tried 1 templates for residue_key='A:677'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:678'
+tried 1 templates for residue_key='A:678'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:679'
+tried 1 templates for residue_key='A:679'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:680'
+tried 1 templates for residue_key='A:680'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:681'
+tried 1 templates for residue_key='A:681'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:682'
+tried 1 templates for residue_key='A:682'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:683'
+tried 1 templates for residue_key='A:683'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:684'
+tried 1 templates for residue_key='A:684'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:685'
+tried 1 templates for residue_key='A:685'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:686'
+tried 1 templates for residue_key='A:686'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:687'
+tried 1 templates for residue_key='A:687'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:688'
+tried 1 templates for residue_key='A:688'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:689'
+tried 1 templates for residue_key='A:689'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:690'
+tried 1 templates for residue_key='A:690'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:691'
+tried 1 templates for residue_key='A:691'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:692'
+tried 1 templates for residue_key='A:692'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:693'
+tried 1 templates for residue_key='A:693'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:694'
+tried 1 templates for residue_key='A:694'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:695'
+tried 1 templates for residue_key='A:695'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:696'
+tried 1 templates for residue_key='A:696'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:697'
+tried 1 templates for residue_key='A:697'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:698'
+tried 1 templates for residue_key='A:698'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:699'
+tried 1 templates for residue_key='A:699'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:700'
+tried 1 templates for residue_key='A:700'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:701'
+tried 1 templates for residue_key='A:701'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:702'
+tried 1 templates for residue_key='A:702'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:703'
+tried 1 templates for residue_key='A:703'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:704'
+tried 1 templates for residue_key='A:704'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:705'
+tried 1 templates for residue_key='A:705'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:706'
+tried 1 templates for residue_key='A:706'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:707'
+tried 1 templates for residue_key='A:707'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:708'
+tried 1 templates for residue_key='A:708'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:709'
+tried 1 templates for residue_key='A:709'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:710'
+tried 1 templates for residue_key='A:710'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:711'
+tried 1 templates for residue_key='A:711'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:713'
+tried 1 templates for residue_key='A:713'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:714'
+tried 1 templates for residue_key='A:714'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:715'
+tried 1 templates for residue_key='A:715'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:716'
+tried 1 templates for residue_key='A:716'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:717'
+tried 1 templates for residue_key='A:717'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:718'
+tried 1 templates for residue_key='A:718'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:719'
+tried 1 templates for residue_key='A:719'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:720'
+tried 1 templates for residue_key='A:720'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:721'
+tried 1 templates for residue_key='A:721'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:722'
+tried 1 templates for residue_key='A:722'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:723'
+tried 1 templates for residue_key='A:723'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:724'
+tried 1 templates for residue_key='A:724'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:725'
+tried 1 templates for residue_key='A:725'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:726'
+tried 1 templates for residue_key='A:726'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:727'
+tried 1 templates for residue_key='A:727'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:728'
+tried 1 templates for residue_key='A:728'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:729'
+tried 1 templates for residue_key='A:729'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:730'
+tried 1 templates for residue_key='A:730'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:731'
+tried 1 templates for residue_key='A:731'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:732'
+tried 1 templates for residue_key='A:732'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:733'
+tried 1 templates for residue_key='A:733'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:734'
+tried 1 templates for residue_key='A:734'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:735'
+tried 1 templates for residue_key='A:735'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:736'
+tried 1 templates for residue_key='A:736'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:737'
+tried 1 templates for residue_key='A:737'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:738'
+tried 1 templates for residue_key='A:738'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:739'
+tried 1 templates for residue_key='A:739'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:740'
+tried 1 templates for residue_key='A:740'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:741'
+tried 1 templates for residue_key='A:741'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:742'
+tried 1 templates for residue_key='A:742'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:743'
+tried 1 templates for residue_key='A:743'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:744'
+tried 1 templates for residue_key='A:744'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:745'
+tried 1 templates for residue_key='A:745'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:746'
+tried 1 templates for residue_key='A:746'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:747'
+tried 1 templates for residue_key='A:747'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:748'
+tried 1 templates for residue_key='A:748'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:749'
+tried 1 templates for residue_key='A:749'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:750'
+tried 1 templates for residue_key='A:750'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:752'
+tried 1 templates for residue_key='A:752'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:753'
+tried 1 templates for residue_key='A:753'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:754'
+tried 1 templates for residue_key='A:754'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:755'
+tried 1 templates for residue_key='A:755'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:756'
+tried 1 templates for residue_key='A:756'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:757'
+tried 1 templates for residue_key='A:757'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:758'
+tried 1 templates for residue_key='A:758'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:759'
+tried 1 templates for residue_key='A:759'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:760'
+tried 1 templates for residue_key='A:760'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:761'
+tried 1 templates for residue_key='A:761'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:762'
+tried 1 templates for residue_key='A:762'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:763'
+tried 1 templates for residue_key='A:763'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:764'
+tried 1 templates for residue_key='A:764'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:765'
+tried 1 templates for residue_key='A:765'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:766'
+tried 1 templates for residue_key='A:766'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:767'
+tried 1 templates for residue_key='A:767'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:768'
+tried 1 templates for residue_key='A:768'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:769'
+tried 1 templates for residue_key='A:769'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:770'
+tried 1 templates for residue_key='A:770'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:771'
+tried 1 templates for residue_key='A:771'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:772'
+tried 1 templates for residue_key='A:772'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:773'
+tried 1 templates for residue_key='A:773'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:774'
+tried 1 templates for residue_key='A:774'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:775'
+tried 1 templates for residue_key='A:775'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:776'
+tried 1 templates for residue_key='A:776'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:777'
+tried 1 templates for residue_key='A:777'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:778'
+tried 1 templates for residue_key='A:778'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:779'
+tried 1 templates for residue_key='A:779'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:780'
+tried 1 templates for residue_key='A:780'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:781'
+tried 1 templates for residue_key='A:781'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:782'
+tried 1 templates for residue_key='A:782'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:783'
+tried 1 templates for residue_key='A:783'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:784'
+tried 1 templates for residue_key='A:784'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:785'
+tried 1 templates for residue_key='A:785'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:786'
+tried 1 templates for residue_key='A:786'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:787'
+tried 1 templates for residue_key='A:787'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:788'
+tried 1 templates for residue_key='A:788'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:789'
+tried 1 templates for residue_key='A:789'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:790'
+tried 1 templates for residue_key='A:790'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:791'
+tried 1 templates for residue_key='A:791'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+No template matched for residue_key='A:793'
+tried 1 templates for residue_key='A:793'excess_H_ok=False
+HOH        heavy_miss=0 heavy_excess=1 H_excess=[-1, -1] bond_miss=set() bond_excess=set()
+
+- Template matching failed for: ['A:501', 'A:502', 'A:503', 'A:504', 'A:505', 'A:506', 'A:507', 'A:508', 'A:509', 'A:510', 'A:511', 'A:512', 'A:513', 'A:514', 'A:515', 'A:516', 'A:517', 'A:518', 'A:519', 'A:520', 'A:521', 'A:522', 'A:523', 'A:524', 'A:525', 'A:526', 'A:527', 'A:528', 'A:529', 'A:530', 'A:531', 'A:532', 'A:533', 'A:534', 'A:535', 'A:536', 'A:537', 'A:538', 'A:539', 'A:540', 'A:541', 'A:542', 'A:543', 'A:544', 'A:545', 'A:546', 'A:547', 'A:548', 'A:549', 'A:550', 'A:551', 'A:552', 'A:553', 'A:554', 'A:555', 'A:556', 'A:557', 'A:558', 'A:559', 'A:560', 'A:561', 'A:562', 'A:563', 'A:564', 'A:565', 'A:566', 'A:567', 'A:568', 'A:569', 'A:570', 'A:571', 'A:572', 'A:573', 'A:574', 'A:575', 'A:576', 'A:577', 'A:578', 'A:579', 'A:580', 'A:581', 'A:582', 'A:583', 'A:584', 'A:585', 'A:586', 'A:587', 'A:588', 'A:589', 'A:590', 'A:591', 'A:592', 'A:593', 'A:594', 'A:595', 'A:596', 'A:597', 'A:598', 'A:599', 'A:600', 'A:601', 'A:602', 'A:603', 'A:604', 'A:605', 'A:606', 'A:607', 'A:608', 'A:609', 'A:610', 'A:611', 'A:612', 'A:613', 'A:614', 'A:615', 'A:616', 'A:617', 'A:618', 'A:619', 'A:620', 'A:621', 'A:622', 'A:623', 'A:624', 'A:625', 'A:626', 'A:627', 'A:628', 'A:629', 'A:630', 'A:631', 'A:632', 'A:633', 'A:634', 'A:635', 'A:636', 'A:637', 'A:638', 'A:639', 'A:640', 'A:641', 'A:642', 'A:643', 'A:644', 'A:645', 'A:646', 'A:647', 'A:648', 'A:649', 'A:650', 'A:651', 'A:652', 'A:653', 'A:654', 'A:655', 'A:656', 'A:657', 'A:658', 'A:659', 'A:660', 'A:661', 'A:662', 'A:663', 'A:664', 'A:665', 'A:666', 'A:667', 'A:668', 'A:669', 'A:670', 'A:671', 'A:672', 'A:673', 'A:674', 'A:675', 'A:676', 'A:677', 'A:678', 'A:679', 'A:680', 'A:681', 'A:682', 'A:683', 'A:684', 'A:685', 'A:686', 'A:687', 'A:688', 'A:689', 'A:690', 'A:691', 'A:692', 'A:693', 'A:694', 'A:695', 'A:696', 'A:697', 'A:698', 'A:699', 'A:700', 'A:701', 'A:702', 'A:703', 'A:704', 'A:705', 'A:706', 'A:707', 'A:708', 'A:709', 'A:710', 'A:711', 'A:713', 'A:714', 'A:715', 'A:716', 'A:717', 'A:718', 'A:719', 'A:720', 'A:721', 'A:722', 'A:723', 'A:724', 'A:725', 'A:726', 'A:727', 'A:728', 'A:729', 'A:730', 'A:731', 'A:732', 'A:733', 'A:734', 'A:735', 'A:736', 'A:737', 'A:738', 'A:739', 'A:740', 'A:741', 'A:742', 'A:743', 'A:744', 'A:745', 'A:746', 'A:747', 'A:748', 'A:749', 'A:750', 'A:752', 'A:753', 'A:754', 'A:755', 'A:756', 'A:757', 'A:758', 'A:759', 'A:760', 'A:761', 'A:762', 'A:763', 'A:764', 'A:765', 'A:766', 'A:767', 'A:768', 'A:769', 'A:770', 'A:771', 'A:772', 'A:773', 'A:774', 'A:775', 'A:776', 'A:777', 'A:778', 'A:779', 'A:780', 'A:781', 'A:782', 'A:783', 'A:784', 'A:785', 'A:786', 'A:787', 'A:788', 'A:789', 'A:790', 'A:791', 'A:793'] Ignored due to allow_bad_res.
+
+2026-05-24 15:05:18 | INFO     | Running: add_configs()
+2026-05-24 15:05:18 | INFO     | STAGE: Prepare receptor for Vina completed
+2026-05-24 15:05:18 | INFO     | STAGE: Batch docking with Vina started
+2026-05-24 15:06:10 | INFO     | STAGE: Batch docking with Vina completed
+2026-05-24 15:06:10 | INFO     | STAGE: Write summary csv started
+2026-05-24 15:06:10 | INFO     | STAGE: Write summary csv completed
+2026-05-24 15:06:10 | INFO     | Running: final_copy()
+2026-05-24 15:06:10 | INFO     | Pipeline completed

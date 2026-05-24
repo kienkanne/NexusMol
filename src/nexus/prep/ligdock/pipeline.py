@@ -1,10 +1,9 @@
-from ast import List
-
+from pathlib import Path
 from pydantic import BaseModel
-from nexus.prep.prep_config import PrepConfig, default_output
+from nexus.prep.prep_config import PrepConfig
 from nexus.prep.ligdock.ligands_prep import ligands_prep
 from nexus.core.extract_files import extract_files
-from pathlib import Path
+
 
 class LigdockPipeline(BaseModel):
     pcfg: PrepConfig
@@ -25,6 +24,8 @@ class LigdockPipeline(BaseModel):
             if not self.pcfg.common.input:
                 raise ValueError("Invalid input, no sdf file found.")
 
-        self.pcfg = default_output(self.pcfg)  
-
+        if self.pcfg.common.output_dir is None:
+            self.pcfg.common.output_dir = Path.cwd()
+        self.pcfg.common.output_dir.mkdir(parents=True, exist_ok=True)
+        
         return ligands_prep(self.pcfg)

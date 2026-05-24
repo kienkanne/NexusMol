@@ -1,0 +1,29 @@
+libs:
+  chimerax: "/usr/local/chimerax/bin/ChimeraX"
+  chimera: "/usr/local/chimera/chimera-1.8/bin/chimera"
+
+common:
+  project_name: vina_mpro
+  working_dir: "/localscratch/kbui/NexusMol/examples/docking_artifacts"
+  results_dir: "/localscratch/kbui/NexusMol/examples/docking_results"
+
+  padding: 4.0
+  n_jobs: 16
+  max_poses: 16
+
+receptors:
+  source: "/localscratch/kbui/NexusMol/examples/final_receptors"
+  suffix: ".pdb"
+
+  pocket_option: "selection"
+  selection: "/A:41,145"
+  reference: null
+  reference_suffix: null
+
+ligands:
+  source: "/localscratch/kbui/NexusMol/examples/vina_prepared_ligands"
+  suffix: "_prepared.pdbqt"
+
+vina:
+  exhaustiveness: 64
+  num_modes: 16

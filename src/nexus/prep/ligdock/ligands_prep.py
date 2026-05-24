@@ -4,7 +4,7 @@ from pathlib import Path
 from nexus.core.executors.python_parallel import python_parallel
 from nexus.core.executors.gnu_parallel import gnu_parallel
 
-from nexus.prep.ligdock._ligands_common import _parse_ligands_csv, _discover_prepared_ligands
+from nexus.prep.ligdock._parse_csv import _parse_ligands_csv
 from nexus.prep.prep_config import PrepConfig
 
 def ligands_prep(pcfg: PrepConfig):
@@ -14,9 +14,10 @@ def ligands_prep(pcfg: PrepConfig):
             return _discover_prepared_ligands(pcfg)"""
         output_dir = pcfg.common.output_dir
         suffix = pcfg.common.suffix
+        n_jobs = pcfg.ligdock.n_jobs
 
         if pcfg.ligdock.source == "sdf":
-            @python_parallel(n_jobs=16, title="load_sdf_parallel()", skip=True)
+            @python_parallel(n_jobs=n_jobs, title="load_sdf_parallel()", skip=True)
             def _load_sdf_parallel(sdfs):
                 from nexus.prep.ligdock._load_sdf import _load_sdf
                 tasks = []
@@ -31,7 +32,7 @@ def ligands_prep(pcfg: PrepConfig):
         if pcfg.ligdock.source == "smiles":
             smiles_list, names = _parse_ligands_csv(pcfg.common.input)
 
-            @python_parallel(n_jobs=16, title="rdkit_gen3d_parallel()", skip=True)
+            @python_parallel(n_jobs=n_jobs, title="rdkit_gen3d_parallel()", skip=True)
             def _rdkit_gen3d_parallel(smiles_list):
                 from nexus.prep.ligdock._rdkit_gen3d import _rdkit_gen3d
                 tasks = []
@@ -42,7 +43,7 @@ def ligands_prep(pcfg: PrepConfig):
 
 
         if Path(suffix).suffix == ".pdbqt":
-            @python_parallel(n_jobs=16, title="meeko_charge_parallel()", skip=True)
+            @python_parallel(n_jobs=n_jobs, title="meeko_charge_parallel()", skip=True)
             def _meeko_charge_parallel(mol_with_h_list, output_list):
                 from nexus.prep.ligdock._meeko_charge import _meeko_charge
                 tasks = []
@@ -60,7 +61,7 @@ def ligands_prep(pcfg: PrepConfig):
         if Path(suffix).suffix == ".mol2":
             prepared_ligs = []
             tmp_sdf_list = []
-            @gnu_parallel(16, title="obabel_charge_parallel()")
+            @gnu_parallel(n_jobs=n_jobs, title="obabel_charge_parallel()")
             def _obabel_charge_parallel(mol_with_h_list, names):
                 from rdkit import Chem
                 cmds = []

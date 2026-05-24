@@ -1,0 +1,14 @@
+{
+  "Prepare receptor for DOCK6": {
+    "status": "done",
+    "output": null
+  },
+  "Batch docking with DOCK6": {
+    "status": "done",
+    "output": null
+  },
+  "Write summary csv": {
+    "status": "done",
+    "output": null
+  }
+}

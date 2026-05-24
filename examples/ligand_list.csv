@@ -1,0 +1,6 @@
+smiles,name
+Cc1ccc(C(C)C)cc1O,mol1
+C#CCOc1cc(C(C)C)ccc1C,mol2
+Cc1ccc(C(C)C)cc1OCc3cc(c2ccccc2)no3,mol3
+Cc3ccc(c2cc(COc1cc(C(C)C)ccc1C)on2)cc3,mol4
+CC(=O)OC1=CC=CC=C1C(=O)O,aspirin

@@ -28,6 +28,7 @@ class MutatePipeline(BaseModel):
 
         if self.pcfg.common.output_dir is None:
             self.pcfg.common.output_dir = Path.cwd()
-
+        self.pcfg.common.output_dir.mkdir(parents=True, exist_ok=True)
+        
         chimerax_mutate(self.pcfg)
 

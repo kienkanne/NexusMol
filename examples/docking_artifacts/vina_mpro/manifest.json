@@ -1,0 +1,19 @@
+{
+  "created_utc": "2026-05-24T19:05:03.928714+00:00",
+  "host": "irene2",
+  "platform": "Linux-6.12.0-124.31.1.el10_1.x86_64-x86_64-with-glibc2.39",
+  "python_version": "3.11.15",
+  "status": "success",
+  "stages": {
+    "Prepare receptor for Vina": "done",
+    "Batch docking with Vina": "done",
+    "Write summary csv": "done"
+  },
+  "timings_sec": {
+    "Prepare receptor for Vina": 14.884,
+    "Batch docking with Vina": 51.358,
+    "Write summary csv": 0.002
+  },
+  "total_wall_time": "66.250",
+  "finished_utc": "2026-05-24T19:06:10.178267+00:00"
+}

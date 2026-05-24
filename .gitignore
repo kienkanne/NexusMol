@@ -47,6 +47,9 @@ artifacts/
 *.tmp
 *.bak
 
+# Exception for examples only
+!examples/**/*.log
+
 # Testing / coverage
 
 .pytest_cache/

@@ -3,24 +3,27 @@ from typing import Literal, Optional, Union, List
 from pathlib import Path
 import os
 
+from pyparsing import Opt
+from vina import Vina
+
 
 class LibsConfig(BaseModel):
-    chimerax: Path
-    chimera: Path
+    chimerax: Optional[Path] = "/usr/local/chimerax/bin/ChimeraX"
+    chimera: Optional[Path] = "/usr/local/chimera/chimera-1.8/bin/chimera"
 
-    dock_home: Path
+    dock_home: Optional[Path] = None
 
 
 class CommonConfig(BaseModel):
     model_config = ConfigDict(extra='allow')
 
-    project_name: str
-    working_dir: Path
-    results_dir: Path
+    project_name: Optional[str] = "docking"
+    working_dir: Optional[Path] = Path.cwd() / "artifacts"
+    results_dir: Optional[Path] = Path.cwd() / "results"
 
     padding: Optional[float] = 5.0
-    n_jobs: int = 1
-    max_poses: int = 8
+    n_jobs: Optional[int] = 1
+    max_poses: Optional[int] = 8
 
     mode: Optional[Literal["mix", "match"]] = "mix"
     program: Optional[Literal["vina", "dock6"]] = None
@@ -40,13 +43,14 @@ class LigandsConfig(BaseModel):
     source: Optional[Path] = None
     suffix: Optional[str] = ".sdf"
 
+
 class VinaConfig(BaseModel):
     exhaustiveness: Optional[int] = 32
     num_modes: Optional[int] = 8
 
 
 class DOCK6Config(BaseModel):
-    max_orientations: float = 1000
+    max_orientations: Optional[int] = 1000
     radius: Optional[float] = 10.0
 
 
@@ -58,13 +62,13 @@ class ValidationConfig(BaseModel):
 
 
 class DockConfig(BaseModel):
-    libs: LibsConfig
-    common: CommonConfig
-    vina: VinaConfig
-    dock6: DOCK6Config
-    receptors: ReceptorsConfig
-    ligands: LigandsConfig
-    validation: ValidationConfig
+    libs: Optional[LibsConfig] = LibsConfig()
+    common: Optional[CommonConfig] = CommonConfig()
+    vina: Optional[VinaConfig] = VinaConfig()
+    dock6: Optional[DOCK6Config] = DOCK6Config()
+    receptors: Optional[ReceptorsConfig] = ReceptorsConfig()
+    ligands: Optional[LigandsConfig] = LigandsConfig()
+    validation: Optional[ValidationConfig] = ValidationConfig()
 
 
 def load_dock_config(path):
@@ -110,11 +114,24 @@ def _setup_dirs(dcfg: DockConfig):
 
     for subcfg_name in DockConfig.model_fields:
         subcfg = getattr(dcfg, subcfg_name)
-        for field_name in subcfg.__class__.model_fields:
+        
+        # 1. Skip if the sub-config is None (Optional fields)
+        if subcfg is None:
+            continue
+            
+        # 2. Safely get the fields regardless of Pydantic version
+        if hasattr(subcfg, "model_fields"):
+            fields = subcfg.model_fields  # Pydantic v2
+        elif hasattr(subcfg, "__fields__"):
+            fields = subcfg.__fields__    # Pydantic v1
+        else:
+            continue                      # Not a Pydantic model, skip it
+
+        for field_name in fields:
             value = getattr(subcfg, field_name)
             if isinstance(value, Path):
                 expanded_path = Path(os.path.expandvars(str(value))).expanduser()
-                setattr(subcfg, field_name, expanded_path)
+                setattr(subcfg, field_name, expanded_path) # Don't forget to save it back!
 
     dcfg.common.working_dir = dcfg.common.working_dir/ dcfg.common.project_name
     dcfg.common.results_dir = dcfg.common.results_dir / dcfg.common.project_name

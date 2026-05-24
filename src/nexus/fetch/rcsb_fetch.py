@@ -55,10 +55,10 @@ def rcsb_fetch(fcfg: FetchConfig):
         
         # Download Ligands as SDF
         for lig_id in ligands:
-            if ligand_name:
+            if ligand_name is None:
                 ligand_file = f"{id}_{lig_id}.sdf"
             else:
-                ligand_file = f"{id}.sdf"
+                ligand_file = f"{id}_{ligand_name}.sdf"
 
             try:
                 model_api.get_ligand(

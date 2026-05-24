@@ -1,0 +1,8 @@
+center_x = 10.668
+center_y = -32.552
+center_z = 20.395
+size_x = 16.877
+size_y = 12.543
+size_z = 16.709
+exhaustiveness = 64
+num_modes = 16

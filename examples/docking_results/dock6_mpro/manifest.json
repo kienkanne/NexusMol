@@ -1,0 +1,19 @@
+{
+  "created_utc": "2026-05-24T19:17:29.884367+00:00",
+  "host": "irene2",
+  "platform": "Linux-6.12.0-124.31.1.el10_1.x86_64-x86_64-with-glibc2.39",
+  "python_version": "3.11.15",
+  "status": "success",
+  "stages": {
+    "Prepare receptor for DOCK6": "done",
+    "Batch docking with DOCK6": "done",
+    "Write summary csv": "done"
+  },
+  "timings_sec": {
+    "Prepare receptor for DOCK6": 94.607,
+    "Batch docking with DOCK6": 24.438,
+    "Write summary csv": 0.002
+  },
+  "total_wall_time": "119.050",
+  "finished_utc": "2026-05-24T19:19:28.934557+00:00"
+}

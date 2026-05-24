@@ -1,6 +1,6 @@
 from pathlib import Path
 from pydantic import BaseModel
-from nexus.prep.prep_config import PrepConfig, default_output
+from nexus.prep.prep_config import PrepConfig
 from nexus.core.extract_files import extract_files
 from nexus.prep.rec._chimerax_rec_prep import chimerax_rec_prep
 
@@ -20,5 +20,6 @@ class RecPipeline(BaseModel):
    
         if self.pcfg.common.output_dir is None:
             self.pcfg.common.output_dir = Path.cwd()
-
+        self.pcfg.common.output_dir.mkdir(parents=True, exist_ok=True)
+        
         chimerax_rec_prep(self.pcfg)

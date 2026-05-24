@@ -1,0 +1,11 @@
+
+✅ Requested mutations completed: 
+   - /A:64 was assigned HIE
+   - /A:80 was assigned HIE
+   - /B:64 was assigned HIE
+   - /B:80 was assigned HIE
+   - /A:41 was assigned HIP
+   - /B:41 was assigned HIP
+   - /A:145 was assigned CYM
+   - /B:145 was assigned CYM
+✅ Saved mutated receptor to -> mutated_receptors/7K40_cleaned_mutated.pdb

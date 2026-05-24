@@ -1,0 +1,18 @@
+2026-05-24 15:17:29 | INFO     | STAGE: Prepare receptor for DOCK6 started
+2026-05-24 15:17:29 | INFO     | Running: /usr/local/chimerax/bin/ChimeraX --nogui
+2026-05-24 15:17:29 | INFO     | Running: /usr/local/chimerax/bin/ChimeraX --nogui
+2026-05-24 15:17:32 | INFO     | Running: env LD_PRELOAD=/usr/lib64/libz.so.1:/usr/lib64/libfreetype.so.6 LD_LIBRARY_PATH=/usr/local/chem.sw/chimera/chimera-1.8/lib /usr/local/chimera/chimera-1.8/bin/chimera --nogui /localscratch/kbui/NexusMol/examples/artifacts/dock6_mpro/6W63_write_dms.py
+2026-05-24 15:17:32 | INFO     | Running: env LD_PRELOAD=/usr/lib64/libz.so.1:/usr/lib64/libfreetype.so.6 LD_LIBRARY_PATH=/usr/local/chem.sw/chimera/chimera-1.8/lib /usr/local/chimera/chimera-1.8/bin/chimera --nogui /localscratch/kbui/NexusMol/examples/artifacts/dock6_mpro/7K40_write_dms.py
+2026-05-24 15:17:34 | INFO     | Running sphgen and sphere_selector
+2026-05-24 15:17:34 | INFO     | Running sphgen and sphere_selector
+2026-05-24 15:17:38 | INFO     | Running: /localscratch/kbui/Apps/dock6/bin/showbox
+2026-05-24 15:17:38 | INFO     | Running: /localscratch/kbui/Apps/dock6/bin/grid -i /localscratch/kbui/NexusMol/examples/artifacts/dock6_mpro/7K40_grid.in -o /localscratch/kbui/NexusMol/examples/artifacts/dock6_mpro/7K40_grid.out
+2026-05-24 15:17:38 | INFO     | Running: /localscratch/kbui/Apps/dock6/bin/showbox
+2026-05-24 15:17:38 | INFO     | Running: /localscratch/kbui/Apps/dock6/bin/grid -i /localscratch/kbui/NexusMol/examples/artifacts/dock6_mpro/6W63_grid.in -o /localscratch/kbui/NexusMol/examples/artifacts/dock6_mpro/6W63_grid.out
+2026-05-24 15:19:04 | INFO     | STAGE: Prepare receptor for DOCK6 completed
+2026-05-24 15:19:04 | INFO     | STAGE: Batch docking with DOCK6 started
+2026-05-24 15:19:28 | INFO     | STAGE: Batch docking with DOCK6 completed
+2026-05-24 15:19:28 | INFO     | STAGE: Write summary csv started
+2026-05-24 15:19:28 | INFO     | STAGE: Write summary csv completed
+2026-05-24 15:19:28 | INFO     | Running: final_copy()
+2026-05-24 15:19:28 | INFO     | Pipeline completed

@@ -13,6 +13,9 @@ class DOCK6Pipeline():
 
     def run(self):
         self.dcfg.common.program = "dock6"
+        if self.dcfg.libs.dock_home is None:
+            raise ValueError("libs.dock_home is missing")
+        print (self.dcfg.ligands.suffix)
         if ".mol2" not in self.dcfg.ligands.suffix:
             raise ValueError("Ligands for DOCK6 must have '.mol2' suffix.")
         lig_paths = self.dcfg.ligands.source

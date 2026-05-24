@@ -1,0 +1,20 @@
+✅ Saved cleaned biological assembly receptor to -> cleaned_receptors/6W63_cleaned.pdb
+ℹ️  Chains information:
+   - Start: /A:1     End: /A:305
+   - Start: /B:1     End: /B:305
+
+⚠️  ChimeraX assigned non-standard protonation states:
+   - /A:41 was assigned HIP
+   - /A:64 was assigned HIE
+   - /A:80 was assigned HID
+   - /A:163 was assigned HID
+   - /A:164 was assigned HID
+   - /A:172 was assigned HIE
+   - /A:246 was assigned HIE
+   - /B:41 was assigned HIP
+   - /B:64 was assigned HIE
+   - /B:80 was assigned HID
+   - /B:163 was assigned HID
+   - /B:164 was assigned HID
+   - /B:172 was assigned HIE
+   - /B:246 was assigned HIE

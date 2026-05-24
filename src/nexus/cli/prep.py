@@ -31,7 +31,8 @@ def rec(
     config: ConfigOpt = None, input: InputOpt = None, output_dir: OutputOpt = None, suffix: SuffixOpt = None,
     dry: bool = typer.Option(False, "-d", "--dry", help="Remove water from protein")
 ):
-    """Run the protein cleaning preparation with ChimeraX pipeline."""
+    """Run the protein cleaning preparation with ChimeraX pipeline.
+    If the input is a folder, all files with '.cif' and '.pdb' are searched to be processed"""
     pcfg = load_prep_config(config) if (config and config.exists()) else PrepConfig()
     
     pcfg = merge_cli_overrides(
@@ -48,9 +49,10 @@ def rec(
 @app.command()
 def mutate(
     config: ConfigOpt = None, input: InputOpt = None, output_dir: OutputOpt = None, suffix: SuffixOpt = None,
-    mutations: Optional[List[str]] = typer.Option(None, "-m", "--mutations", help="Syntax must match '{selection}&:{RES}-{NEW_RES}'")
+    mutations: Optional[List[str]] = typer.Option(None, "-m", "--mutations", help="Syntax must match '{selection}-{NEW_RES}'")
 ):
-    """Change residues identity or protonation state using ChimeraX."""
+    """Change residues identity or protonation state using ChimeraX.
+    If the input is a folder, all files with '.cif' and '.pdb' are searched to be processed"""
     pcfg = load_prep_config(config) if (config and config.exists()) else PrepConfig()
 
     pcfg = merge_cli_overrides(

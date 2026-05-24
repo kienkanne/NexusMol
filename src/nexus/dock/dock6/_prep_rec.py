@@ -116,7 +116,7 @@ def _prep_rec(dcfg: DockConfig, receptor_bundle: Dock6ReceptorBundle):
         subprocess.run(cmd, cwd=cwd, text=True, check=True)
 
         ss = cwd / "selected_spheres.sph"
-        named_ss_path = wd / f"{name}_selected_spheres.sph"
+        named_ss_path = wd / f"{name}_ss.sph"
 
         if ss.exists():
             ss.rename(named_ss_path)

@@ -18,8 +18,7 @@ class MutateConfig(BaseModel):
     mutations: Optional[List[str]] = None
 
 class LigdockConfig(BaseModel):
-    source: Optional[Literal["smiles", "sdf"]] = "sdf"
-    format: Optional[Literal["pdbqt", "mol2"]] = "pdbqt"
+    n_jobs: Optional[int] = 1
     type: Optional[Literal["GAFF", "AM1-BCC"]] = "GAFF"
 
 class PrepConfig(BaseModel):

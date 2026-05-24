@@ -13,32 +13,26 @@ def chimerax_mutate(pcfg: PrepConfig):
     mutations = pcfg.mutate.mutations
 
     ## 1. Parse and Validate Selections
-    user_requested_states = {}
-    setattr_commands = []
-    
+
     for input_path in input:
         output_path = output_dir / f"{input_path.stem}{suffix}"
-        log_path = setup_logger(output_dir / f"{input_path.stem}.log", time_verbose=False)
+        log_path = setup_logger(output_path.with_suffix(".log"), time_verbose=False)
 
+        user_requested_states = {}
+        setattr_commands = []
         for sel_res in mutations:
             sel = sel_res[0]
             new_res = sel_res[1]
-            # Enforce the strict {something}&:{RES} syntax
-            # match.group(1) will capture the base ID (e.g., /A:41)
-            # match.group(2) captures the old residue name (e.g., HIS)
-            match = re.match(r"^(.*)&:([A-Za-z0-9]{3})$", sel)
-            if not match:
-                raise ValueError(f"Invalid selection syntax: '{sel}'. Must match '{{specifier}}&:{{RES}}'")
             
-            base_id = match.group(1)
-            user_requested_states[base_id] = new_res
+            user_requested_states[sel] = new_res
             setattr_commands.extend([
                 f"select {sel}",
                 "delete H&sel",
                 f"setattr sel residue name {new_res}",
                 "addh sel",
                 "addcharge sel",
-                "info residues sel attribute amber_name"
+                "info residues sel attribute name",
+                "select clear"
                                     ])
 
         ## 2. Dynamically Build the ChimeraX Script
@@ -83,9 +77,9 @@ def chimerax_mutate(pcfg: PrepConfig):
 
         mutated_residues = []
         for line in result.stdout.splitlines():
-            if "amber_name" in line and "residue id" in line:
-                # Matches strings like: "residue id /A:8 amber_name HID index 7"
-                match = re.search(r"residue id (\S+) amber_name (\S+)", line)
+            if "name" in line and "residue id" in line:
+                # Matches strings like: "residue id /B:145 name CYM index 144"
+                match = re.search(r"residue id (\S+) name (\S+)", line)
                 if match:
                     res_id, amber_name = match.groups()
                     mutated_residues.append((res_id, amber_name))

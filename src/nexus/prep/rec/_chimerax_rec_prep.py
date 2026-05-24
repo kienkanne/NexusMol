@@ -15,7 +15,7 @@ def chimerax_rec_prep(pcfg: PrepConfig):
 
     for input_path in input:
         output_path = output_dir / f"{input_path.stem}{suffix}"
-        log_path = setup_logger(output_dir / f"{input_path.stem}.log", time_verbose=False)
+        log_path = setup_logger(output_path.with_suffix(".log"), time_verbose=False)
 
         with open(Path(__file__).resolve().parents[0] / "_clean_template.py") as f:
             clean_template = f.read()     
