@@ -4,12 +4,10 @@ from pathlib import Path
 
 
 class FetchConfig(BaseModel):
-    raw_assembly_suffix: Optional[str] = "raw"
-    ligand_suffix: Optional[str] = None
-
+    input: Optional[List[str] | Path] = None
+    ligand_name: Optional[bool] = False
     output_dir: Optional[Path] = None
 
-    id_list: Optional[List] = None
 
 
 def load_fetch_config(path):

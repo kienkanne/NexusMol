@@ -1,3 +1,4 @@
+from pathlib import Path
 from pydantic import BaseModel
 from nexus.prep.prep_config import PrepConfig, default_output
 from nexus.core.extract_files import extract_files
@@ -17,6 +18,7 @@ class RecPipeline(BaseModel):
         if ".pdb" not in self.pcfg.common.suffix and ".cif" not in self.pcfg.common.suffix:
             raise ValueError("Output receptor format must be 'pdb' or 'cif'.")
    
-        self.pcfg = default_output(self.pcfg)
+        if self.pcfg.common.output_dir is None:
+            self.pcfg.common.output_dir = Path.cwd()
 
         chimerax_rec_prep(self.pcfg)

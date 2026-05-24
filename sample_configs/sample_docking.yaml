@@ -4,45 +4,27 @@ libs:
 
   dock_home: "/localscratch/kbui/Apps/dock6"
 
-  obabel: "obabel"
-  parallel: "parallel"
-  vina: "vina"
-
 common:
-  project_name: Nexus_vina
+  project_name: _buuu
   working_dir: "/localscratch/kbui/NexusMol/artifacts"
   results_dir: "/localscratch/kbui/NexusMol/results"
-  prepared_suffix: "prepped"
 
   padding: 4.0
   n_jobs: 16
   max_poses: 16
 
 receptors:
-  source: "pdb" # or "pdb" or "existing"
-
-  cifs: "/localscratch/kbui/NexusMol/data/cleaned_mpro_receptors2"
-  pdbs: "/localscratch/kbui/NexusMol/data/my_receptors_ligands"
-  existing_dir: "/localscratch/kbui/NexusMol/data/6W63.cif"
+  source: "/localscratch/kbui/NexusMol/data/cleaned_receptors"
+  suffix: ".pdb"
 
   pocket_option: "selection" # or "reference"
-  reference: null
   selection: "/A:41,145"
+  reference: null
   reference_suffix: null
 
 ligands:
-  source: "existing" # or "sdf" or "smiles"
-
-  # used if source == "smiles" or "sdf"
-  output_dir: /localscratch/kbui/NexusMol/data/vina_meeko_prepped_test
-
-  # used if source == "smiles"
-  smiles_csv: /localscratch/kbui/NexusMol/data/ligands_list.csv
-  # used if source == "sdf"
-  sdfs: /localscratch/kbui/NexusMol/data/all_ligands.sdf
-
-  # used if source == "existing"
-  existing_dir: /localscratch/kbui/NexusMol/data/dock6_meeko_prepped
+  source: "/localscratch/kbui/NexusMol/data/vina_meeko_prepped"
+  suffix: ".pdbqt"
 
 vina:
   exhaustiveness: 64

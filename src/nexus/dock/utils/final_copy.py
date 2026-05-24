@@ -3,45 +3,24 @@ from pathlib import Path
 from nexus.core.executors.base import base
 
 
-def _to_path(item):
-    if hasattr(item, "receptor"):
-        return Path(item.receptor)
-    if isinstance(item, (list, tuple)) and item:
-        return Path(item[0])
-    return Path(item)
-
-
-def final_copy(cfg, prepped_rec, docking_summary, out_files, others=None):
-    @base(cfg, "final_copy()")
+def final_copy(dcfg, rec_bundles, docking_summary, out_files):
+    @base(dcfg.common.logger, title="final_copy()")
     def _run():
 
-        logger = cfg.common.logger
-        manifest = cfg.common.manifest
+        logger = dcfg.common.logger
+        manifest = dcfg.common.manifest
         manifest.finalize(success=True)
         logger.info("Pipeline completed")
 
-        working_dir = cfg.common.working_dir
-        results_dir = cfg.common.results_dir
+        working_dir = dcfg.common.working_dir
+        results_dir = dcfg.common.results_dir
 
         results_dir.mkdir(parents=True, exist_ok=True)
 
-        mode = getattr(cfg.common, "mode", "mix")
-
-        def _receptor_name_from_item(item):
-            if hasattr(item, "name"):
-                return item.name
-            if hasattr(item, "receptor"):
-                return Path(item.receptor).stem.replace(f"_{cfg.common.prepared_suffix}", "")
-            if isinstance(item, (list, tuple)) and item:
-                return Path(item[0]).stem.replace(f"_{cfg.common.prepared_suffix}", "")
-            return Path(item).stem.replace(f"_{cfg.common.prepared_suffix}", "")
+        mode = getattr(dcfg.common, "mode", "mix")
 
         if mode == "mix":
-            # Group outputs by receptor
-            if not isinstance(prepped_rec, (list, tuple)):
-                raise ValueError("prepped_rec must be a list of receptor bundles in mix mode")
-
-            rec_names = [_receptor_name_from_item(r) for r in prepped_rec]
+            rec_names = [r.name for r in rec_bundles]
             groups = {name: [] for name in rec_names}
             for out in out_files:
                 stem = Path(out).stem
@@ -51,36 +30,34 @@ def final_copy(cfg, prepped_rec, docking_summary, out_files, others=None):
                         break
 
             # Copy per-receptor
-            for item, rec in zip(prepped_rec, rec_names):
-                rec_dir = results_dir / rec
+            for item, rec_name in zip(rec_bundles, rec_names):
+                rec_dir = results_dir / rec_name
                 (rec_dir / "poses").mkdir(parents=True, exist_ok=True)
 
                 # copy outputs
-                for out in groups.get(rec, []):
+                for out in groups.get(rec_name, []):
                     src = working_dir / out
                     dst = rec_dir / "poses" / Path(out).name
                     if src.exists():
                         shutil.copy2(src, dst)
 
                 # copy receptor file
-                rec_path = _to_path(item)
+                rec_path = item.receptor
                 if rec_path.exists():
                     shutil.copy2(rec_path, rec_dir / rec_path.name)
 
                 # copy receptor-specific config if present on bundle
-                cfg_path = None
-                if hasattr(item, "vina_config"):
-                    cfg_path = Path(item.vina_config)
-                if hasattr(item, "selected_spheres"):
-                    cfg_path = Path(item.selected_spheres)
-                if cfg_path and cfg_path.exists():
-                    shutil.copy2(cfg_path, rec_dir / cfg_path.name)
+                pocket = None
+                if hasattr(item, "pocket"):
+                    pocket = item.pocket
+                if pocket and pocket.exists():
+                    shutil.copy2(pocket, rec_dir)
 
             # copy docking summary files to respective receptor dirs or to root
             if isinstance(docking_summary, (list, tuple)):
                 for csv in docking_summary:
                     for rec in rec_names:
-                        if rec in csv:
+                        if rec in str(csv.stem):
                             src = working_dir / csv
                             dst = results_dir / rec / Path(csv).name
                             if src.exists():
@@ -108,28 +85,19 @@ def final_copy(cfg, prepped_rec, docking_summary, out_files, others=None):
                     shutil.copy2(src, dst)
 
             # copy all receptors and configs into details
-            if isinstance(prepped_rec, (list, tuple)):
-                for item in prepped_rec:
-                    rec_path = _to_path(item)
-                    if rec_path.exists():
-                        shutil.copy2(rec_path, details / rec_path.name)
-                    # possible config fields
-                    if hasattr(item, "vina_config"):
-                        cfgp = Path(item.vina_config)
-                        if cfgp.exists():
-                            shutil.copy2(cfgp, details / cfgp.name)
-                    if hasattr(item, "selected_spheres"):
-                        sp = Path(item.selected_spheres)
-                        if sp.exists():
-                            shutil.copy2(sp, details / sp.name)
-
-            # copy others if given
-            if others is not None:
-                for f in others:
-                    src = working_dir / f
-                    dst = details / Path(f).name
-                    if src.exists():
-                        shutil.copy2(src, dst)
+            for item in rec_bundles:
+                rec_path = rec_bundles.receptor
+                if rec_path.exists():
+                    shutil.copy2(rec_path, details / rec_path.name)
+                # possible config fields
+                if hasattr(item, "pocket"):
+                    pocket = item.pocket
+                    if pocket.exists():
+                        shutil.copy2(pocket, details)
+                if hasattr(item, "selected_spheres"):
+                    sp = Path(item.selected_spheres)
+                    if sp.exists():
+                        shutil.copy2(sp, details / sp.name)
 
             # copy single csv to root as summary
             if isinstance(docking_summary, (list, tuple)):

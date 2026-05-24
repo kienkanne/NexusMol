@@ -28,33 +28,26 @@ def parse_scores(output, max_poses, program):
     return scores
 
 
-def write_summary_csv(cfg, out_files, prepped_recs=None):
+def write_summary_csv(dcfg, out_files, rec_bundles):
 
-    @main_tracker(cfg, "Write summary csv")
-    @base(cfg)
+    @main_tracker(dcfg, "Write summary csv")
+    @base(dcfg)
     def _run():
-        project_name = cfg.common.project_name
-        max_poses = cfg.common.max_poses
+        project_name = dcfg.common.project_name
+        max_poses = dcfg.common.max_poses
+        working_dir = dcfg.common.working_dir
 
         # Determine mode: mix -> per-receptor CSVs, match -> single CSV
-        mode = getattr(cfg.common, "mode", "mix")
-
-        def _receptor_name_from_item(item):
-            from nexus.dock.utils._strip_prepared_suffix import _strip_prepared_suffix
-            if hasattr(item, "name"):
-                return item.name
-            # item might be a path or tuple(bundle, config)
-            path = Path(item.receptor) if hasattr(item, "receptor") else (Path(item[0]) if isinstance(item, (list, tuple)) else Path(item))
-            return _strip_prepared_suffix(path, cfg.common.prepared_suffix)
+        mode = getattr(dcfg.common, "mode", "mix")
 
         written = []
 
         if mode == "mix":
-            # Group out_files by receptor name derived from prepped_recs
-            if prepped_recs is None:
-                raise ValueError("prepped_recs is required for mix mode")
+            # Group out_files by receptor name derived from rec_bundles
+            if rec_bundles is None:
+                raise ValueError("rec_bundles is required for mix mode")
 
-            rec_names = [_receptor_name_from_item(r) for r in prepped_recs]
+            rec_names = [r.name for r in rec_bundles]
             groups = {name: [] for name in rec_names}
 
             for out in out_files:
@@ -71,7 +64,7 @@ def write_summary_csv(cfg, out_files, prepped_recs=None):
                 rows = []
                 for out in files:
                     lig_name = Path(out).stem.replace(f"{rec}_", "").replace("_scored", "")
-                    scores = parse_scores(out, max_poses, cfg.common.program)
+                    scores = parse_scores(out, max_poses, dcfg.common.program)
                     rows.append([lig_name] + scores + [""] * (max_poses - len(scores)))
 
                 def pose1_sort(row):
@@ -79,7 +72,7 @@ def write_summary_csv(cfg, out_files, prepped_recs=None):
                     return float(score) if score != "" else math.inf
 
                 rows = sorted(rows, key=pose1_sort)
-                csv_name = f"{project_name}_{rec}_docking_summary.csv"
+                csv_name = working_dir / f"{project_name}_{rec}_docking_summary.csv"
                 with open(csv_name, "w", newline="") as handle:
                     writer = csv.writer(handle)
                     writer.writerow(headers)
@@ -93,7 +86,7 @@ def write_summary_csv(cfg, out_files, prepped_recs=None):
             for out in out_files:
                 # name should be the bundle/ligand name
                 lig_name = Path(out).stem.replace("_scored", "")
-                scores = parse_scores(out, max_poses, cfg.common.program)
+                scores = parse_scores(out, max_poses, dcfg.common.program)
                 rows.append([lig_name] + scores + [""] * (max_poses - len(scores)))
 
             def pose1_sort(row):
@@ -101,7 +94,7 @@ def write_summary_csv(cfg, out_files, prepped_recs=None):
                 return float(score) if score != "" else math.inf
 
             rows = sorted(rows, key=pose1_sort)
-            csv_name = f"{project_name}_docking_summary.csv"
+            csv_name = working_dir / f"{project_name}_docking_summary.csv"
             with open(csv_name, "w", newline="") as handle:
                 writer = csv.writer(handle)
                 writer.writerow(headers)

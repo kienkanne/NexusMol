@@ -1,24 +1,16 @@
 import subprocess
 import os
-from pathlib import Path
+from nexus.core.trackers.logging_utils import DummyLogger
 
-def shell(cfg):
+def shell(logger=None):
     def decorator(func):
         def wrapper(*args, **kwargs):
-            original_cwd = os.getcwd()
             try:
-                Path(cfg.common.working_dir).mkdir(parents=True, exist_ok=True)
-                os.chdir(cfg.common.working_dir)
-
                 cmd, stdin = func(*args, **kwargs)
                 cmd = [os.path.expandvars(i) for i in cmd]
-                try:
-                    logger = cfg.common.logger
-                    logger.info(f"Running: {' '.join([str(arg) for arg in cmd])}")
-                except Exception as e:
-                    print(f"Logger not found in cfg.common: {e}")
-                    print(f"Running: {' '.join([str(arg) for arg in cmd])}")
 
+                local_logger = logger if logger is not None else DummyLogger()
+                local_logger.info(f"Running: {' '.join([str(arg) for arg in cmd])}")
 
                 result = subprocess.run(
                     cmd,
@@ -40,10 +32,6 @@ def shell(cfg):
                 logger.error(f"Command failed with exit code {e.returncode}")
                 logger.error(f"Error output: {e.stderr}")
                 raise
-
-            finally:
-                # This runs even if the function crashes
-                os.chdir(original_cwd)
 
         return wrapper
     return decorator

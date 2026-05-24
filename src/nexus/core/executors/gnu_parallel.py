@@ -3,12 +3,11 @@ import shlex
 import subprocess
 import tempfile
 from pathlib import Path
-
+from nexus.core.trackers.logging_utils import DummyLogger
 
 def gnu_parallel(n_jobs=1, logger=None, title=None, skip=False):
     def decorator(func):
         def wrapper(*args, **kwargs):
-            from nexus.core.trackers.logging_utils import DummyLogger
             local_logger = logger if logger is not None else DummyLogger()
             local_title = title if title is not None else ""
             

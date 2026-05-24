@@ -9,6 +9,8 @@ from nexus.dock.dock_config import DockConfig
 class Dock6ReceptorBundle:
     receptor: Path
     selected_spheres: Path
+    grid_prefix: Path
+    pocket: Path
     name: str
 
 
@@ -22,12 +24,14 @@ def _prep_rec(dcfg: DockConfig, receptor_bundle: Dock6ReceptorBundle):
         bundle = None
     name = Path(receptor).stem
     dock_home = dcfg.libs.dock_home
-    suffix = dcfg.common.prepared_suffix
-    prepped_receptor_mol2 = f"{name}_{suffix}.mol2"
-    prepped_receptor_noH_mol2 = f"{name}_{suffix}_noH.mol2"
-    pocket = f"{name}_pocket.mol2"
+    suffix = "prepared"
+    working_dir = dcfg.common.working_dir
 
-    @shell(dcfg)
+    prepped_receptor_mol2 = working_dir / f"{name}_{suffix}.mol2"
+    prepped_receptor_noH_mol2 = working_dir / f"{name}_{suffix}_noH.mol2"
+    pocket = working_dir / f"{name}_pocket.mol2"
+
+    @shell(dcfg.common.logger)
     def generate_site():
         chimerax = dcfg.libs.chimerax
   
@@ -59,14 +63,13 @@ def _prep_rec(dcfg: DockConfig, receptor_bundle: Dock6ReceptorBundle):
         return ([chimerax, "--nogui"], stdin)
     generate_site()
 
-    wd = dcfg.common.working_dir
-    if not os.path.exists(wd / pocket):
-        raise FileNotFoundError(f"{wd / pocket} was not created. Check selection string or reference.")
+    if not os.path.exists(pocket):
+        raise FileNotFoundError(f"{pocket} was not created. Check selection string or reference.")
 
-    if os.path.getsize(wd / pocket) == 0:
-        raise IOError(f"{wd / pocket} is empty. Check selection string or reference.")
+    if os.path.getsize(pocket) == 0:
+        raise IOError(f"{pocket} is empty. Check selection string or reference.")
 
-    @shell(dcfg)
+    @shell(dcfg.common.logger)
     def writedms():
         chimera = dcfg.libs.chimera
         with open(Path(__file__).resolve().parents[0] / "templates" / "write_dms_template.py") as f:
@@ -74,20 +77,22 @@ def _prep_rec(dcfg: DockConfig, receptor_bundle: Dock6ReceptorBundle):
 
         input_file = Template(write_dms_template).substitute(prepped_receptor_noH_mol2=prepped_receptor_noH_mol2,
                                                                 name=name)
-        with open(f"{name}_write_dms.py", "w") as file:
+        
+        write_dms_path = working_dir / f"{name}_write_dms.py"
+        
+        with open(write_dms_path, "w") as file:
             file.write(input_file)
 
         return (["env", 
                 "LD_PRELOAD=/usr/lib64/libz.so.1:/usr/lib64/libfreetype.so.6", 
                 "LD_LIBRARY_PATH=/usr/local/chem.sw/chimera/chimera-1.8/lib",
                 chimera,
-                "--nogui", f"{name}_write_dms.py"], None)
+                "--nogui", write_dms_path], None)
     writedms()
     
-
-    def spheres(dcfg):
-        logger = dcfg.common.logger
-        logger.info("Running sphgen and sphere_selector")
+    ### Patch behavior of sphgen and sphere_selector having hardcoded outputs
+    def spheres():
+        dcfg.common.logger.info("Running sphgen and sphere_selector")
         import subprocess
         import shutil
         with open(Path(__file__).resolve().parents[0] / "templates" / "INSPH_template.txt") as f:
@@ -111,39 +116,47 @@ def _prep_rec(dcfg: DockConfig, receptor_bundle: Dock6ReceptorBundle):
         subprocess.run(cmd, cwd=cwd, text=True, check=True)
 
         ss = cwd / "selected_spheres.sph"
-        named_ss = wd / f"{name}_selected_spheres.sph"
+        named_ss_path = wd / f"{name}_selected_spheres.sph"
 
         if ss.exists():
-            ss.rename(named_ss)
+            ss.rename(named_ss_path)
         shutil.rmtree(cwd)
-    spheres(dcfg)
 
+        return named_ss_path
+    selected_spheres = spheres()
 
-    @shell(dcfg)
+    rec_box = working_dir / f"{name}_rec_box.pdb"   
+    @shell(dcfg.common.logger)
     def showbox():
         padding = dcfg.common.padding
-        stdin = f"Y\n{padding}\n{name}_selected_spheres.sph\n1\n{name}_rec_box.pdb\n"
+        stdin = f"Y\n{padding}\n{selected_spheres}\n1\n{rec_box}\n"
         return ([dock_home/"bin"/"showbox"], stdin)
     showbox()
 
 
-    @shell(dcfg)
+    grid_prefix = working_dir / f"{name}_grid"
+    @shell(dcfg.common.logger)
     def grid():
         with open(Path(__file__).resolve().parents[0] / "templates" / "grid_template.txt") as f:
             grid_template = f.read()
 
         input_file = Template(grid_template).substitute(prepped_receptor=prepped_receptor_mol2, 
                                                         dock_home=dock_home,
+                                                        rec_box=rec_box,
+                                                        grid_prefix=grid_prefix,
                                                         name=name)
-        with open(f"{name}_grid.in", "w") as file:
+        
+        with open(f"{grid_prefix}.in", "w") as file:
             file.write(input_file)
 
-        return ([dock_home/"bin"/"grid", "-i", f"{name}_grid.in", "-o", f"{name}_grid.out"], None)
+        return ([dock_home/"bin"/"grid", "-i", f"{grid_prefix}.in", "-o", f"{grid_prefix}.out"], None)
     grid()
 
     return Dock6ReceptorBundle(
         receptor=Path(prepped_receptor_mol2),
-        selected_spheres=Path(f"{name}_selected_spheres.sph"),
+        selected_spheres=selected_spheres,
+        grid_prefix=grid_prefix,
+        pocket=pocket,
         name=name,
     )
 
@@ -151,11 +164,13 @@ def _prep_rec(dcfg: DockConfig, receptor_bundle: Dock6ReceptorBundle):
 from nexus.core.executors.python_parallel import python_parallel
 from nexus.core.trackers.main_tracker import main_tracker
 from functools import partial
+from typing import List
 
 
-def dock6_prep_rec(dcfg):
+
+def dock6_prep_rec(dcfg) -> List[Dock6ReceptorBundle]:
     @main_tracker(dcfg, "Prepare receptor for DOCK6")
-    @python_parallel(dcfg, "prep_rec()", skip=True)
+    @python_parallel(dcfg.common.n_jobs, title="prep_rec()", skip=True)
     def _run():
         tasks = []
         bundles = getattr(dcfg.receptors, "bundles", None)

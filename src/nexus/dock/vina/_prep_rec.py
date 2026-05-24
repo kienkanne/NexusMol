@@ -11,6 +11,7 @@ from nexus.dock.dock_config import DockConfig
 class VinaReceptorBundle:
     receptor: Path
     vina_config: Path
+    pocket: Path
     name: str
 
 
@@ -22,11 +23,13 @@ def _prep_rec(dcfg: DockConfig, receptor_bundle: VinaReceptorBundle):
         receptor = receptor_bundle
         bundle = None
     name = Path(receptor).stem
-    suffix = dcfg.common.prepared_suffix
-    prepped_receptor_pdbqt = f"{name}_{suffix}.pdbqt"
-    pocket = f"{name}_pocket.pdb"
+    suffix = "prepared"
+    working_dir = dcfg.common.working_dir
+    prepped_receptor_pdbqt = working_dir / f"{name}_{suffix}.pdbqt"
+    pocket = working_dir / f"{name}_pocket.pdb"
+    vina_config = working_dir / f"{name}_vina_config.txt"
 
-    @shell(dcfg)
+    @shell(dcfg.common.logger)
     def generate_site():
         chimerax = dcfg.libs.chimerax
 
@@ -50,14 +53,13 @@ def _prep_rec(dcfg: DockConfig, receptor_bundle: VinaReceptorBundle):
         return ([chimerax, "--nogui"], stdin)
     generate_site()
 
-    wd = dcfg.common.working_dir
-    if not os.path.exists(wd / pocket):
-        raise FileNotFoundError(f"{wd / pocket} was not created. Check selection string or reference.")
+    if not os.path.exists(pocket):
+        raise FileNotFoundError(f"{pocket} was not created. Check selection string or reference.")
 
-    if os.path.getsize(wd / pocket) == 0:
-        raise IOError(f"{wd / pocket} is empty. Check selection string or reference.")
+    if os.path.getsize(pocket) == 0:
+        raise IOError(f"{pocket} is empty. Check selection string or reference.")
 
-    @shell(dcfg)
+    @shell(dcfg.common.logger)
     def meeko_prep_rec():
         padding = dcfg.common.padding
 
@@ -66,13 +68,13 @@ def _prep_rec(dcfg: DockConfig, receptor_bundle: VinaReceptorBundle):
                 "-i",
                 receptor,
                 "-o",
-                f"{name}_{suffix}",
-                "-a",
+                prepped_receptor_pdbqt.with_suffix(""),
+                "-a",  # Allow bad res
                 "-p",  # Generate receptor PDBQT
                 "-v",
-                f"{name}_{suffix}_vina_config.txt",  # Generate Vina config file
+                vina_config,  # Generate Vina config file
                 "--box_enveloping",
-                f"{name}_pocket.pdb",  # Wrap around this molecule
+                pocket,  # Wrap around this molecule
                 "--padding",
                 str(padding),  # Padding buffer in Angstroms
             ]
@@ -80,7 +82,7 @@ def _prep_rec(dcfg: DockConfig, receptor_bundle: VinaReceptorBundle):
         return (cmd, None)
     meeko_prep_rec()
 
-    @base(dcfg, "add_configs()")
+    @base(dcfg.common.logger, title="add_configs()")
     def add_configs():
         exhaustiveness = dcfg.vina.exhaustiveness
         num_modes = dcfg.vina.num_modes
@@ -88,15 +90,16 @@ def _prep_rec(dcfg: DockConfig, receptor_bundle: VinaReceptorBundle):
                     "exhaustiveness": exhaustiveness,
                     "num_modes": num_modes,
                 }
-        with open(f"{name}_{suffix}_vina_config.txt", "a") as config_file:
+        with open(vina_config, "a") as config_file:
             config_file.write("\n")
             for key, value in extra_configs.items():
                 config_file.write(f"{key} = {value}\n")
     add_configs()       
 
     return VinaReceptorBundle(
-        receptor=Path(prepped_receptor_pdbqt),
-        vina_config=Path(f"{name}_{suffix}_vina_config.txt"),
+        receptor=prepped_receptor_pdbqt,
+        vina_config=vina_config,
+        pocket=pocket, # For copy back only
         name=name,
     )
 
@@ -108,7 +111,7 @@ from functools import partial
 
 def vina_prep_rec(dcfg):
     @main_tracker(dcfg, "Prepare receptor for Vina")
-    @python_parallel(dcfg, "prep_rec()", skip=True)
+    @python_parallel(dcfg.common.n_jobs, title="prep_rec()", skip=True)
     def _run():
         tasks = []
         bundles = getattr(dcfg.receptors, "bundles", None)

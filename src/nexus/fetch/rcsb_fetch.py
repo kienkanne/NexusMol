@@ -40,52 +40,53 @@ def get_ligands_in_structure(id):
     return ligand_ids
 
 
-def rcsb_fetch(fcfg: FetchConfig, id: str):
-    raw_suffix = fcfg.raw_assembly_suffix
-    ligand_suffix = fcfg.ligand_suffix
+def rcsb_fetch(fcfg: FetchConfig):
+    id_list = fcfg.input
+    ligand_name = fcfg.ligand_name
     output_dir = fcfg.output_dir
 
     output_dir.mkdir(parents=True, exist_ok=True)
 
-    print(f"\n--- Processing {id} ---")
-    ligands = get_ligands_in_structure(id)
-    
-    model_api = ModelQuery(download=True, file_directory=output_dir)
-    
-    # Download Ligands as SDF
-    for lig_id in ligands:
-        if ligand_suffix is None:
-            ligand_file = f"{id}_{lig_id}.sdf"
-        elif isinstance(ligand_suffix, str):
-            ligand_file = f"{id}_{ligand_suffix}.sdf"
+    for id in id_list:
+        print(f"\n--- Processing {id} ---")
+        ligands = get_ligands_in_structure(id)
+        
+        model_api = ModelQuery(download=True, file_directory=output_dir)
+        
+        # Download Ligands as SDF
+        for lig_id in ligands:
+            if ligand_name:
+                ligand_file = f"{id}_{lig_id}.sdf"
+            else:
+                ligand_file = f"{id}.sdf"
 
-        try:
-            model_api.get_ligand(
-                entry_id=id,
-                label_comp_id=lig_id,
-                encoding="sdf",
-                filename=ligand_file
-            )
-            print(f"✅ Saved ligand -> {ligand_file}")
-        except Exception as e:
-            print(f"❌ Failed to download {lig_id}: {e}")
+            try:
+                model_api.get_ligand(
+                    entry_id=id,
+                    label_comp_id=lig_id,
+                    encoding="sdf",
+                    filename=ligand_file
+                )
+                print(f"✅ Saved ligand -> {output_dir / ligand_file}")
+            except Exception as e:
+                print(f"❌ Failed to download {lig_id}: {e}")
 
-    # Download Biological Assembly in CIF format
-    raw_file = f"{id}_{raw_suffix}.cif"
-    model_api.get_assembly(
-        entry_id=id, 
-        encoding="cif",
-        filename=raw_file,
-    )
+        # Download Biological Assembly in CIF format
+        raw_file = f"{id}.cif"
+        model_api.get_assembly(
+            entry_id=id, 
+            encoding="cif",
+            filename=raw_file,
+        )
 
-    raw_path = Path(output_dir / raw_file)
+        raw_path = Path(output_dir / raw_file)
 
-    if raw_path.is_file():
-        if raw_path.stat().st_size == 0:
-            raise IOError(f"Assembly download failed for {id}: empty file.")
-    else:
-        raise FileNotFoundError(f"Assembly download failed for {id}: file was not created.")
+        if raw_path.is_file():
+            if raw_path.stat().st_size == 0:
+                raise IOError(f"Assembly download failed for {id}: empty file.")
+        else:
+            raise FileNotFoundError(f"Assembly download failed for {id}: file was not created.")
 
-    print (f"✅ Saved raw biological assembly receptor: {raw_path}")
+        print (f"✅ Saved raw biological assembly receptor: {raw_path}")
 
     return raw_path

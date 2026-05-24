@@ -10,10 +10,6 @@ class LibsConfig(BaseModel):
 
     dock_home: Path
 
-    obabel: Path
-    parallel: Path
-    vina: Path
-
 
 class CommonConfig(BaseModel):
     model_config = ConfigDict(extra='allow')
@@ -21,37 +17,28 @@ class CommonConfig(BaseModel):
     project_name: str
     working_dir: Path
     results_dir: Path
-    prepared_suffix: str = "prepped"
-    mode: Optional[Literal["mix", "match"]] = "mix"
 
     padding: Optional[float] = 5.0
     n_jobs: int = 1
     max_poses: int = 8
 
+    mode: Optional[Literal["mix", "match"]] = "mix"
     program: Optional[Literal["vina", "dock6"]] = None
 
 
 class ReceptorsConfig(BaseModel):
-    source: Optional[Literal["cif", "pdb", "existing"]] = "cif"
-
-    cifs: Optional[Union[Path, List[Path]]] = None
-    pdbs: Optional[Union[Path, List[Path]]] = None
-    existing_dir: Optional[Path] = None
+    source: Optional[Path] = None
+    suffix: Optional[str] = ".pdb"
 
     pocket_option: Literal["selection", "reference"] = "selection"
     selection: Optional[Union[Path, str]] = None
     reference: Optional[Path] = None
-    reference_suffix: Optional[str] = "_pocket.cif"
+    reference_suffix: Optional[str] = "_pocket.pdb"
 
 
 class LigandsConfig(BaseModel):
-    source: Literal["smiles", "sdf","existing"] = "smiles"
-
-    smiles_csv: Optional[Path] = None
-    sdfs: Optional[Union[List[Path], Path]] = None
-    output_dir : Optional[Path] = None
-    existing_dir: Optional[Path] = None
-
+    source: Optional[Path] = None
+    suffix: Optional[str] = ".sdf"
 
 class VinaConfig(BaseModel):
     exhaustiveness: Optional[int] = 32
@@ -84,55 +71,59 @@ def load_dock_config(path):
     import yaml
     with open(path) as f:
         data = yaml.safe_load(f)
-    cfg = DockConfig.model_validate(data)
+    dcfg = DockConfig.model_validate(data)
 
-    cfg = _setup_dirs(cfg)
-    cfg = _find_files(cfg)
+    dcfg = _setup_dirs(dcfg)
+    dcfg = _find_files(dcfg)
 
     # Validate and normalize receptor-related configuration (selection/reference semantics)
-    validate_and_normalize_receptors(cfg, cfg.receptors.reference_suffix)
+    validate_and_normalize_receptors(dcfg, dcfg.receptors.reference_suffix)
 
-    return cfg
+    return dcfg
 
 
-def _find_files(cfg: DockConfig):
+def _find_files(dcfg: DockConfig):
     from nexus.core.extract_files import extract_files
-    if cfg.receptors.source == "cif":
-        cfg.receptors.cifs = extract_files(cfg.receptors.cifs, ".cif")
-    elif cfg.receptors.source == "pdb":
-        cfg.receptors.pdbs = extract_files(cfg.receptors.pdbs, ".pdb")
+    
+    if ".pdb" not in dcfg.receptors.suffix and ".cif" not in dcfg.receptors.suffix:
+        raise ValueError("Input receptor suffix must have 'pdb' or 'cif'.")
+
+    receptors_source = dcfg.receptors.source
+    dcfg.receptors.source = extract_files(dcfg.receptors.source, dcfg.receptors.suffix)
+    if not dcfg.receptors.source:
+        raise ValueError(f"No receptor with '{dcfg.receptors.suffix}' found in  {receptors_source}.")
         
-    if cfg.receptors.reference is not None:
-        cfg.receptors.reference = extract_files(cfg.receptors.reference, cfg.receptors.reference_suffix)
+    if dcfg.receptors.reference is not None:
+        dcfg.receptors.reference = extract_files(dcfg.receptors.reference, dcfg.receptors.reference_suffix)
 
-    if cfg.ligands.source == "sdf":
-        cfg.ligands.sdfs = extract_files(cfg.ligands.sdfs, ".sdf")
+    ligands_source = dcfg.ligands.source
+    dcfg.ligands.source = extract_files(dcfg.ligands.source, dcfg.ligands.suffix)
+    if not dcfg.ligands.source:
+        raise ValueError(f"No ligand with '{dcfg.ligands.suffix}' found in  {ligands_source}.")
+    return dcfg
 
-    return cfg
 
-
-def _setup_dirs(cfg: DockConfig):
+def _setup_dirs(dcfg: DockConfig):
     from nexus.core.trackers.logging_utils import setup_logger
     from nexus.core.trackers.manifest import Manifest
     from nexus.core.trackers.runstate import State
 
     for subcfg_name in DockConfig.model_fields:
-        subcfg = getattr(cfg, subcfg_name)
+        subcfg = getattr(dcfg, subcfg_name)
         for field_name in subcfg.__class__.model_fields:
             value = getattr(subcfg, field_name)
             if isinstance(value, Path):
                 expanded_path = Path(os.path.expandvars(str(value))).expanduser()
                 setattr(subcfg, field_name, expanded_path)
 
-    cfg.common.working_dir = cfg.common.working_dir/ cfg.common.project_name
-    cfg.common.results_dir = cfg.common.results_dir / cfg.common.project_name
-    cfg.ligands.output_dir = cfg.ligands.output_dir / cfg.common.project_name
+    dcfg.common.working_dir = dcfg.common.working_dir/ dcfg.common.project_name
+    dcfg.common.results_dir = dcfg.common.results_dir / dcfg.common.project_name
 
-    cfg.common.logger = setup_logger(cfg.common.working_dir / "run.log")
-    cfg.common.manifest = Manifest(cfg.common.working_dir / "manifest.json")
-    cfg.common.runstate = State(cfg.common.working_dir / "state.json") 
+    setattr(dcfg.common, "logger", setup_logger(dcfg.common.working_dir / "run.log"))
+    setattr(dcfg.common, "manifest", Manifest(dcfg.common.working_dir / "manifest.json"))
+    setattr(dcfg.common, "runstate", State(dcfg.common.working_dir / "state.json") )
 
-    return cfg
+    return dcfg
 
 
 from dataclasses import dataclass
@@ -146,22 +137,18 @@ class ReceptorConfigBundle:
     reference_path: Optional[Path] = None
 
 
-def validate_and_normalize_receptors(cfg, reference_suffix: str = "_pocket.cif") -> List[ReceptorConfigBundle]:
+def validate_and_normalize_receptors(dcfg: DockConfig, reference_suffix: str = "_pocket.cif") -> List[ReceptorConfigBundle]:
     """
-    Validate and normalize receptor-related fields on `cfg` (RootConfig).
+    Validate and normalize receptor-related fields on `dcfg` (RootConfig).
     Returns a list of ReceptorConfigBundle objects with resolved selection strings and reference paths.
     """
-    if cfg.receptors.source == "cif":
-        receptors = sorted(cfg.receptors.cifs)
-    elif cfg.receptors.source == "pdb":
-        receptors = sorted(cfg.receptors.pdbs)
-
-    pocket_option = cfg.receptors.pocket_option
+    receptors = dcfg.receptors.source
+    pocket_option = dcfg.receptors.pocket_option
     bundles: List[ReceptorConfigBundle] = []
 
     # Handle reference-based pockets: either a single global reference or per-receptor references
     if pocket_option == "reference":
-        references = sorted(cfg.receptors.reference)
+        references = sorted(dcfg.receptors.reference)
         if not references:
             raise FileNotFoundError(f"pocket_option is 'reference' but no reference pockets found/provided (expected suffix {reference_suffix})")
 
@@ -180,7 +167,7 @@ def validate_and_normalize_receptors(cfg, reference_suffix: str = "_pocket.cif")
 
     # Handle selection-based pockets: either a global selection string or a per-receptor CSV mapping
     elif pocket_option == "selection":
-        sel = cfg.receptors.selection
+        sel = dcfg.receptors.selection
         if sel is None:
             raise ValueError("pocket_option is 'selection' but no selection provided in config")
 
@@ -204,12 +191,12 @@ def validate_and_normalize_receptors(cfg, reference_suffix: str = "_pocket.cif")
     else:
         raise ValueError(f"Unknown pocket_option: {pocket_option}")
 
-    # Attach normalized receptor list and the built bundles to the cfg object so downstream code
+    # Attach normalized receptor list and the built bundles to the dcfg object so downstream code
     try:
-        setattr(cfg.receptors, "bundles", bundles)
+        setattr(dcfg.receptors, "bundles", bundles)
     except Exception:
         # As a fallback, set attribute directly (pydantic models allow attribute assignment post-creation)
-        cfg.receptors.__dict__["bundles"] = bundles
+        dcfg.receptors.__dict__["bundles"] = bundles
 
     return bundles
 

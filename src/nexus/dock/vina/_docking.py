@@ -1,52 +1,34 @@
-from pathlib import Path
-
-from nexus.dock.utils._strip_prepared_suffix import _strip_prepared_suffix
 from nexus.core.executors.gnu_parallel import gnu_parallel
 from nexus.core.trackers.main_tracker import main_tracker
 
 
-def _to_path(item):
-    if hasattr(item, "receptor"):
-        return Path(item.receptor)
-    if isinstance(item, (list, tuple)) and item:
-        return Path(item[0])
-    return Path(item)
-
-
-def _vina_config_path(item):
-    if hasattr(item, "vina_config"):
-        return Path(item.vina_config)
-    if isinstance(item, (list, tuple)) and len(item) > 1:
-        return Path(item[1])
-    raise ValueError("Unable to extract Vina config path from receptor bundle")
-
-
 def _build_vina_docking_commands(dcfg, pairs):
-    vina = dcfg.libs.vina
-    suffix = dcfg.common.prepared_suffix
+    working_dir = dcfg.common.working_dir
     mode = getattr(dcfg.common, "mode", "mix")
 
     out_files = []
     cmds = []
 
-    for prepped_rec, prepped_lig in pairs:
-        receptor_path = _to_path(prepped_rec)
-        vina_config = _vina_config_path(prepped_rec)
-        receptor_name = _strip_prepared_suffix(str(receptor_path), suffix)
-        ligand_name = _strip_prepared_suffix(prepped_lig, suffix)
+    for receptor_bundle, prepped_lig in pairs:
+        receptor_path = receptor_bundle.receptor
+        vina_config = receptor_bundle.vina_config
+        receptor_name = receptor_bundle.name
+        ligand_name = prepped_lig.stem
         if mode == "match":
             # receptor and ligand share the same name; produce single-name outputs
-            output_name = f"{ligand_name}_scored.pdbqt"
+            output_prefix = f"{ligand_name}"
         else:
-            output_name = f"{receptor_name}_{ligand_name}_scored.pdbqt"
+            output_prefix = f"{receptor_name}_{ligand_name}"
 
-        out_files.append(output_name)
+        output_path = working_dir / f"{output_prefix}_scored.pdbqt"
+
+        out_files.append(output_path)
         cmds.append([
-            vina,
+            "vina",
             "--receptor", str(receptor_path),
             "--ligand", str(prepped_lig),
             "--config", str(vina_config),
-            "--out", output_name,
+            "--out", output_path,
         ])
 
     return out_files, cmds
@@ -61,7 +43,7 @@ def vina_docking(dcfg, prepped_ligs_or_pairs, prepped_rec=None, vina_config=None
     out_files = []
 
     @main_tracker(dcfg, "Batch docking with Vina")
-    @gnu_parallel(dcfg, "vina_docking()")
+    @gnu_parallel(dcfg.common.n_jobs, title="vina_docking()")
     def _run():
         nonlocal out_files
         out_files, cmds = _build_vina_docking_commands(dcfg, pairs)

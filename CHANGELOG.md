@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.5.3
+- Fix inconsistencies in the dock pipeline to be compatiable with the new executors, which now is independent of configs.
+- Receptor bundles now include all necessary files for DOCK6.
+- `copy_to_results()` in dock pipleine now copies the pocket file.
+- Config file for docking pipeline is simplified, now required readily prepared receptors and ligands from `nexus prep`
+- Valdiation pipeline is temporarily disabled.
+
 ## 1.5.2
 - Separated ligands preparation from dock pipeline to prep pipeline via `nexus prep ligdock`.
 - Remove dependencies of gnu_parallel and python_parallel wrappers on config object.

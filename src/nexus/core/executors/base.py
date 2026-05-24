@@ -1,23 +1,17 @@
-import os
-from pathlib import Path
+from nexus.core.trackers.logging_utils import DummyLogger
 
-def base(cfg, title=None):
+
+def base(logger=None, title=None):
     def decorator(func):
         def wrapper(*args, **kwargs):
-            original_cwd = os.getcwd()
+            local_logger = logger if logger is not None else DummyLogger()
+            local_title = title if title is not None else ""
 
-            try:
-                Path(cfg.common.working_dir).parent.mkdir(parents=True, exist_ok=True)
-                os.chdir(cfg.common.working_dir)
-                
-                logger = cfg.common.logger
-                if title is not None:
-                    logger.info(f"Running: {title}")
+            if title is not None:
+                local_logger.info(f"Running: {local_title}")
 
-                return func(*args, **kwargs)
-            finally:
-                # This runs even if the function crashes
-                os.chdir(original_cwd)
+            return func(*args, **kwargs)
+
 
         return wrapper
     return decorator
