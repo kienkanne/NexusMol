@@ -1,0 +1,9 @@
+Randomize velocities for seed 
+&cntrl 
+ imin=0, irest=0, ntx=1, 
+ ntpr=$ntpr, ntwx=$ntwx, ntwr=$ntwr, nstlim=$nstlim, 
+ dt=$dt, ntt=3, tempi=$temp, 
+ temp0=$temp, gamma_ln=1.0, ig=-1, 
+ ntp=1, ntc=2, ntf=2, cut=$cut, 
+ ntb=2, iwrap=1, ioutfm=1, 
+/

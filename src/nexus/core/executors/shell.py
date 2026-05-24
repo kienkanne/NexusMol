@@ -21,16 +21,16 @@ def shell(logger=None):
                 
                 # logger stdout/stderr for debugging
                 if result.stdout:
-                    logger.debug(f"STDOUT: {result.stdout}")
+                    local_logger.debug(f"STDOUT: {result.stdout}")
                 if result.stderr:
-                    logger.warning(f"STDERR: {result.stderr}")
+                    local_logger.warning(f"STDERR: {result.stderr}")
 
                 result.check_returncode()
                 return result.stdout
 
             except subprocess.CalledProcessError as e:
-                logger.error(f"Command failed with exit code {e.returncode}")
-                logger.error(f"Error output: {e.stderr}")
+                local_logger.error(f"Command failed with exit code {e.returncode}")
+                local_logger.error(f"Error output: {e.stderr}")
                 raise
 
         return wrapper

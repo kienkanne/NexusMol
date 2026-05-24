@@ -1,0 +1,18 @@
+Explicit solvent initial heating mdin 
+ &cntrl 
+   imin=0, irest=0, ntx=1, 
+   ntpr=$ntpr, ntwx=$ntwx, ntwr=$ntwr, nstlim=$nstlim, 
+   dt=$dt, ntt=3, gamma_ln=5.0, ig=-1, 
+   ntc=2, ntf=2, cut=$cut, ntb=2, ntp=1, 
+   iwrap=1, ioutfm=1, nmropt=1, 
+   ntr=1, restraint_wt=$restraint, restraintmask='$mask'
+ / 
+ &wt 
+   TYPE='TEMP0', ISTEP1=0, ISTEP2=$istep_mid_temp, 
+   VALUE1=10.0, VALUE2=$mid_temp, 
+ / 
+ &wt 
+   TYPE='TEMP0', ISTEP1=$istep_mid_temp_plus1, ISTEP2=$istep_temp, 
+   VALUE1=$mid_temp, VALUE2=$temp, 
+ / 
+ &wt TYPE='END' / 

@@ -3,9 +3,6 @@ from typing import Literal, Optional, Union, List
 from pathlib import Path
 import os
 
-from pyparsing import Opt
-from vina import Vina
-
 
 class LibsConfig(BaseModel):
     chimerax: Optional[Path] = "/usr/local/chimerax/bin/ChimeraX"
