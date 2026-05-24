@@ -1,5 +1,5 @@
 from pydantic import BaseModel, ConfigDict
-from typing import Optional, Literal
+from typing import Optional, Literal, List
 from pathlib import Path
 
 class CommonConfig(BaseModel):
@@ -15,7 +15,7 @@ class RecConfig(BaseModel):
     dry: Optional[bool] = False
 
 class MutateConfig(BaseModel):
-    mutations: Optional[str] = None
+    mutations: Optional[List[str]] = None
 
 class LigdockConfig(BaseModel):
     source: Optional[Literal["smiles", "sdf"]] = "sdf"
@@ -37,5 +37,17 @@ def load_prep_config(path):
     
     if pcfg.common.output is None:
         pcfg.common.output = pcfg.common.input.parent
+
+    return pcfg
+
+
+def default_output(pcfg: PrepConfig):
+    if pcfg.common.output_dir is None:
+        if isinstance(pcfg.common.input, Path):
+            pcfg.common.output_dir = pcfg.common.input.parent
+            pcfg.common.input = [pcfg.common.input]
+        elif isinstance(pcfg.common.input, list):   
+            pcfg.common.output_dir = pcfg.common.input[0].parent
+    pcfg.common.output_dir.mkdir(parents=True, exist_ok=True) 
 
     return pcfg

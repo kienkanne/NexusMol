@@ -1,7 +1,6 @@
 import typer
-from typing import Optional, Literal
+from typing import Optional, Literal, Annotated, List
 from pathlib import Path
-from typing_extensions import Annotated
 from nexus.prep.prep_config import load_prep_config, PrepConfig
 
 
@@ -49,11 +48,11 @@ def rec(
 @app.command()
 def mutate(
     config: ConfigOpt = None, input: InputOpt = None, output_dir: OutputOpt = None, suffix: SuffixOpt = None,
-    mutations: Optional[str] = typer.Option(None, "-m", "--mutations", help="Syntax must match '{selection}&:{RES}-{NEW_RES}'")
+    mutations: Optional[List[str]] = typer.Option(None, "-m", "--mutations", help="Syntax must match '{selection}&:{RES}-{NEW_RES}'")
 ):
     """Change residues identity or protonation state using ChimeraX."""
     pcfg = load_prep_config(config) if (config and config.exists()) else PrepConfig()
-    
+
     pcfg = merge_cli_overrides(
         pcfg, 
         {"input": input, "output_dir": output_dir, "suffix": suffix}, 
@@ -68,7 +67,7 @@ def mutate(
 @app.command()
 def ligdock(
     config: ConfigOpt = None, input: InputOpt = None, output_dir: OutputOpt = None, suffix: SuffixOpt = None,
-    ctype: Optional[Literal["GAFF", "AM1-BCC"]] = typer.Option("GAFF", "-t", "--ctype", help="Charge type for ligands")
+    ctype: Optional[Literal["GAFF", "AM1-BCC"]] = typer.Option("GAFF", "-t", "--ctype", help="Charge type for ligands (wip)")
 ):
     """Change residues identity or protonation state using ChimeraX."""
     pcfg = load_prep_config(config) if (config and config.exists()) else PrepConfig()
