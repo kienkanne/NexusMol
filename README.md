@@ -10,8 +10,9 @@ This repository runs end-to-end computational workflows for drug discovery using
 - DOCK6
 - Validation workflows for Vina and DOCK6
 - Receptors and ligands fetching from RCSB.org
+- Receptors and ligands custom preparation and cleaning
 
-The pipeline prepares the receptor, resolves or prepares ligands, docks ligands in parallel with GNU parallel, copies selected outputs to a results folder, and writes a docking summary CSV sorted by the best pose score.
+The docking pipelines docks ligands in parallel with GNU parallel, copies selected outputs to a results folder, and writes a docking summary CSV sorted by the best pose score.
 
 ## Installation
 
@@ -34,17 +35,10 @@ Other needed tools that have to be installed:
 - ChimeraX: See [https://www.cgl.ucsf.edu/chimerax/download.html](https://www.cgl.ucsf.edu/chimerax/download.html)
 - Chimera: See [https://www.cgl.ucsf.edu/chimera/download.html](https://www.cgl.ucsf.edu/chimera/download.html) 
 
-Most command-line tools can be installed into the active conda/mamba environment and referenced by executable name in the config:
+Some librares are needed to be pointed at their installed directories:
 
 ```yaml
-obabel: "obabel"
-parallel: "parallel"
-vina: "vina"
-```
-
-Some others needed to be pointed at their installed directories:
-
-```yaml
+chimerax: "/usr/local/chimerax/bin/ChimeraX"
 dock_home: "$HOME/Apps/dock6/"
 ```
 
@@ -57,24 +51,29 @@ nexus dock vina -c sample_configs/sample_docking.yaml
 nexus dock dock6 -c sample_configs/sample_docking.yaml
 ```
 
-Run validation workflows with the same config:
-
-```bash
-nexus validate vina -c sample_configs/sample_docking.yaml
-nexus validate dock6 -c sample_configs/sample_docking.yaml
-```
-
 Retrieve receptor assemblies and ligand SDFs directly from RCSB with the fetch command:
 
 ```bash
-nexus fetch rcsb -c sample_configs/structure_retrieval.yaml
+nexus fetch rcsb -i 6LU7 -i 6W63 -o output_dir/
 ```
 
-The retrieval module downloads biological assemblies in mmCIF format, cleans waters and unwanted ligands, and writes cleaned `.cif` receptor outputs.
+The fetch module downloads biological assemblies in mmCIF format and writes cleaned `.cif` receptor outputs.
+
+Prepare/clean receptors or mutate/change protonation state of receptors wth the prep command:
+
+```bash
+nexus prep rec -i 6LU7.cif -i 6W63.pdb -o output_dir/
+nexus prep mutate -i 6LU7.cif -o output_dir/ -m "/A:41&:HIS-HIP" -m "/A:145&:CYS-CYM"
+
+nexus prep ligdock -i smiles_list.csv -o output_dir/ -s "prepared.pdbqt"
+nexus prep ligdock -i path_to_sdf_folder/ -o output_dir -s "prepared.mol2"
+```
 
 ## Ligand CSV
 
-When `sample_ligands.yaml` uses `source: smiles`, the ligand file must be a CSV with exactly this header:
+The suffix determines the output of the ligand, and it must contain either `.pdbqt` (format for vina, prepared by meeko) or `.mol2` (format for dock6, prepared by obabel)
+
+The input for `nexus prep ligdock` can be a sdf file, a folder containing many sdf files, or a csv file. The CSV file must have exactly this header:
 
 ```csv
 smiles,name
@@ -82,9 +81,9 @@ CC(=O)OC1=CC=CC=C1C(=O)O,aspirin
 CC1=C(C=C(C=C1)C(C)C)O,carvacrol
 ```
 
-Ligand names are used in output filenames, so keep them short and file-friendly. The loader sanitizes names and raises an error for duplicate names after sanitization.
+Ligand names are used in output filenames, so keep them short and file-friendly. The loader sanitizes names and raises an error for duplicate names after sanitization. RDKIT is used to generate the 3D conformations of ligands from smiles.
 
-## Config Format
+## Docking Config Format
 
 See [sample_configs/sample_docking.yaml](sample_configs/sample_docking.yaml) and [sample_configs/sample_ligands.yaml](sample_configs/sample_ligands.yaml) for working examples.
 
@@ -98,10 +97,6 @@ libs:
   chimera: "/usr/local/chimera/chimera-1.8/bin/chimera"
 
   dock_home: "/localscratch/kbui/Apps/dock6/"
-
-  obabel: "obabel"
-  parallel: "parallel"
-  vina: "vina"
 ```
 
 ### `common`
@@ -113,7 +108,6 @@ common:
   project_name: Mpro_vina_docking
   working_dir: "/path/to/nexus/artifacts"
   results_dir: "/path/to/nexus/results"
-  prepared_suffix: "prepped"
 
   padding: 4.0
   n_jobs: 16
@@ -123,7 +117,6 @@ common:
 - `project_name`: name of the folder in working_dir and results_dir
 - `working_dir`: parent folder of scratch space where intermediate files are written.
 - `results_dir`: parent folder of where final selected outputs and summary CSV are copied.
-- `prepared_suffix`: suffix used for prepared receptor files, written as `<name>_<prepared_suffix>.<ext>`.
 - `padding`: extra buffer space (in Angstroms) added to the outer edges of the docking grid box.
 - `n_jobs`: total concurrent jobs.
 - `max_poses`: maximum number of scores to parse per ligand into the summary CSV.
@@ -134,33 +127,23 @@ Receptor input and pocket definition (resolved at config-load time).
 
 ```yaml
 receptors:
-  source: "cif"
-
-  cifs: "/path/to/nexus/data/cleaned_mpro_receptors2"
-  pdbs: "/path/to/nexus/data"
-  existing_dir: "/path/to/nexus/data/6W63.cif"
-
-  pocket_option: "selection"
-  reference: null
-  selection: "chain A and resi 25+26+41+42+49+54"
-  reference_suffix: null
-
+  source: "/localscratch/kbui/NexusMol/data/"
+  suffix: "_protein.cif"
 ```
 
 Alternatively, use a reference pocket file:
 
 ```yaml
 receptors:
-  pdbs: "/localscratch/kbui/Comp_DD/data/6W63.pdb"
   pocket_option: "reference"
-  reference: "/localscratch/kbui/Comp_DD/data/6W63_pocket.pdb"
+  reference: "/localscratch/kbui/NexusMol/data/6W63_pocket.pdb"
 ```
 
 Or use multiple receptors with per-receptor selections (from a CSV):
 
 ```yaml
 receptors:
-  pdbs:
+  source:
     - "/path/to/receptor1.pdb"
     - "/path/to/receptor2.pdb"
   pocket_option: "selection"
@@ -174,7 +157,8 @@ receptor1,chain A and resi 41+145
 receptor2,chain B and resi 50+100+150
 ```
 
-- `pdbs`/`cifs`: single PDB file, directory of PDB files, or list of PDB file paths.
+- `source`: single file, directory of files, or list of file paths.
+- `suffix`: the pattern to search for if the provided source is a folder.
 - `pocket_option`: `selection` (use PyMOL selection string) or `reference` (use reference pocket file).
 - `selection`: PyMOL selection string (applied to all receptors) or path to a per-receptor CSV file.
 - `reference`: single reference pocket file (for all receptors) or path to a directory of reference files.
@@ -184,35 +168,14 @@ receptor2,chain B and resi 50+100+150
 
 ### `ligands`
 
-Ligand inputs are configured in the same YAML file:
-
-```yaml
-ligands:
-  source: "smiles" # or "sdf" or "existing"
-  smiles_csv: "/localscratch/kbui/Comp_DD/data/ligands_list.csv"
-  output_dir: "/localscratch/kbui/Comp_DD/results/ligands_prepped"
-```
-
-Alternatively, from SDF files:
-
-```yaml
-ligands:
-  source: "sdf"
-  sdfs: "/path/to/ligands.sdf"  # or a list of SDF files
-  output_dir: "/localscratch/kbui/Comp_DD/results/ligands_prepped"
-```
-
-Or from pre-prepared ligands:
-
 ```yaml
 ligands:
   source: "existing"
-  existing_dir: "/path/to/prepped/ligands"
+  suffix: "/path/to/prepped/ligands"
 ```
 
-- `source: smiles` prepares ligands from a `smiles,name` CSV.
-- `source: sdf` prepares ligands from SDF files.
-- `source: existing` skips preparation and uses already-prepared ligands.
+- `source`: single file, directory of files, or list of file paths.
+- `suffix`: the pattern to search for if the provided source is a folder.
 - Vina reads `*_<prepared_suffix>.pdbqt`; DOCK6 reads `*_<prepared_suffix>.mol2`.
 
 ### `vina`
@@ -241,7 +204,7 @@ dock6:
 - `max_orientations`: maximum number of ligand orientations to sample.
 - `radius`: radius of the binding sphere (in Angstroms) around the selected atoms.
 
-## Validation
+## Validation (currently disabled)
 
 The repository now supports dedicated validation workflows via:
 
@@ -260,7 +223,7 @@ validation:
   ligand_suffix: "_ligand.sdf"
 ```
 
-Validation mode reuses the same config file, but `validation.data` is used to load receptor proteins, reference pockets, and ligands. These files are searched recursively in the input folder path. All should have matching names. All settings in `receptors` and `ligands` are ignored when validation is used.
+Validation mode reuses the same config file, but `validation.data` is used to load receptor proteins, reference pockets, and ligands. These files are searched recursively in the input folder path. All should have matching names. All settings in `receptors` and `ligands` are ignored when validation is used. 
 
 For recommended dataset layout and formatting, see `docs/validation.md`.
 
