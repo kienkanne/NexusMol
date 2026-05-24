@@ -5,10 +5,12 @@
 - Receptor bundles now include all necessary files for DOCK6.
 - `copy_to_results()` in dock pipleine now copies the pocket file.
 - Config file for docking pipeline is simplified, now required readily prepared receptors and ligands from `nexus prep`
+- Added simple syntax for `nexus fetch`, now can parse a file containing pdb ids.
 - Valdiation pipeline is temporarily disabled.
 
 ## 1.5.2
 - Separated ligands preparation from dock pipeline to prep pipeline via `nexus prep ligdock`.
+- Added simple cli syntax for small tasks using `nexus prep`
 - Remove dependencies of gnu_parallel and python_parallel wrappers on config object.
 - Path variables must now be absolute paths, as wrappers don't change to working directory anymore.
 - Added `nexus prep mutate` to allow for changing protonation states or side chains of receptors manually.
