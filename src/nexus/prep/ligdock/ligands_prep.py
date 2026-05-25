@@ -10,8 +10,6 @@ from nexus.prep.prep_config import PrepConfig
 def ligands_prep(pcfg: PrepConfig):
     #@main_tracker(pcfg, "Prepare ligands")
     def _run():
-        """if pcfg.ligands.source == "existing":
-            return _discover_prepared_ligands(pcfg)"""
         output_dir = pcfg.common.output_dir
         suffix = pcfg.common.suffix
         n_jobs = pcfg.ligdock.n_jobs
