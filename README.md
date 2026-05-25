@@ -217,47 +217,126 @@ dock6:
 - `max_orientations`: maximum number of ligand orientations to sample.
 - `radius`: radius of the binding sphere (in Angstroms) around the selected atoms.
 
-## Validation (currently disabled)
+## System Setup for MD Config Format
 
-The repository now supports dedicated validation workflows via:
-
-```bash
-nexus validate vina -c build/sample_configs/sample_docking.yaml
-nexus validate dock6 -c build/sample_configs/sample_docking.yaml
-```
-
-Validation specific settings.
+The `nexus prep sysmd` command builds solvated Amber systems from receptor and optional ligand inputs.
 
 ```yaml
-validation:
-  data: "/localscratch/kbui/coreset"
-  protein_suffix: "_protein.pdb"
-  pocket_suffix: "_pocket.pdb"
-  ligand_suffix: "_ligand.sdf"
+common:
+  input: /localscratch/kbui/NexusMol/examples/sysmd_input/6W63.pdb
+  working_dir: /localscratch/kbui/NexusMol/examples/artifacts
+  output_dir: /localscratch/kbui/NexusMol/examples/results
+
+sysmd:
+  system_name: 6W63_mol4_solvated
+  ligand: /localscratch/kbui/NexusMol/examples/sysmd_input/6W63_mol4_prepared_scored.pdbqt
+  pose_num: 1
+  force_field: "ff14SB"
+  water_model: "tip3p"
+  box_type: "Oct"
+  box_size: 12.0
+  salt_conc: 0.15
 ```
 
-Validation mode reuses the same config file, but `validation.data` is used to load receptor proteins, reference pockets, and ligands. These files are searched recursively in the input folder path. All should have matching names. All settings in `receptors` and `ligands` are ignored when validation is used. 
+### `common`
 
-For recommended dataset layout and formatting, see `docs/validation.md`.
+- `input` — input receptor file (`.pdb`, `.cif`, or prepared receptor structure).
+- `working_dir` — parent directory for intermediate sysmd artifacts.
+- `output_dir` — destination directory for generated solvated system files.
 
-## Outputs
+### `sysmd`
 
-The results directory contains selected final files:
+- `system_name` — base name appended to `working_dir` and `output_dir`.
+- `ligand` — optional prepared ligand pose file used to build a receptor-ligand complex.
+- `pose_num` — pose index to select from the supplied ligand file.
+- `force_field` — Amber force field for the system, e.g. `ff14SB` or `ff19SB`.
+- `water_model` — water model for solvation, e.g. `tip3p` or `opc`.
+- `box_type` — solvent box type: `Box` or `Oct`.
+- `box_size` — padding distance in Angstroms around the solute.
+- `salt_conc` — salt concentration in molar units.
 
-- Vina poses: `*_scored.pdbqt`
-- DOCK6 poses: `*_scored.mol2`
-- Pipeline logs: `run.log`, `manifest.json`, `state.json`
-- Summary CSV: `<project_name>_<receptor_stem>_docking_summary.csv`
+`nexus prep sysmd` creates the working and output directories under the configured paths and writes the solvated system files there.
 
-The summary CSV has this format:
+## Molecular Dynamics Config Format
 
-```csv
-name,pose1,pose2,pose3,...
-aspirin,-2.383,-1.596,-1.454,...
-carvacrol,-1.917,-1.528,-1.319,...
+The MD config is used by `nexus md amber` to run Amber minimization, heating, equilibration, and production.
+
+```yaml
+common:
+  project_name: MD_Dialanine
+  working_dir: /localscratch/kbui/NexusMol/examples/artifacts
+  results_dir: /localscratch/kbui/NexusMol/examples/results
+  prmtop: /localscratch/kbui/NexusMol/examples/md_input/ALA.prmtop
+  inpcrd: /localscratch/kbui/NexusMol/examples/md_input/ALA.inpcrd
+  temp: 300.0
+  dt: 0.002
+  cut: 10.0
+  mask: ":1-3"
+
+min:
+  n_min_runs: 7
+  ncyc: 1000
+  maxcyc: 1000
+  restraints: [10.0, 5.0, 2.0, 1.0, 0.5, 0.1, 0.0]
+
+heat:
+  mid_temp: 100.0
+  time1: 100.0
+  time2: 500.0
+  total_time: 2000.0
+  restraint: 10.0
+
+eq:
+  n_eq_runs: 7
+  eq_time: 100.0
+  restraints: [10.0, 5.0, 2.0, 1.0, 0.5, 0.1, 0.0]
+
+prod:
+  num_seeds: 1
+  rand_time: 200.0
+  prod_time: 2500.0
+  prod_freq: 10.0
 ```
 
-Rows are sorted by `pose1`, with lower scores first.
+### `common`
+
+- `project_name` — appended to `working_dir` and `results_dir`.
+- `working_dir` — parent path for MD scratch and intermediate files.
+- `results_dir` — parent path for final MD outputs.
+- `prmtop` — Amber topology file.
+- `inpcrd` — Amber coordinate file.
+- `temp` — base temperature for MD stages.
+- `dt` — time step in picoseconds.
+- `cut` — nonbonded cutoff distance in Angstroms.
+- `mask` — optional atom mask used for analysis and restraints.
+
+### `min`
+
+- `n_min_runs` — number of minimization stages.
+- `ncyc` — steepest-descent minimization steps.
+- `maxcyc` — conjugate-gradient minimization steps.
+- `restraints` — per-stage restraint force constants.
+
+### `heat`
+
+- `mid_temp` — intermediate heating temperature.
+- `time1` — first heating interval duration.
+- `time2` — second heating interval duration.
+- `total_time` — total heating duration.
+- `restraint` — positional restraint force constant during heating.
+
+### `eq`
+
+- `n_eq_runs` — number of equilibration stages.
+- `eq_time` — equilibration time per stage.
+- `restraints` — per-stage restraint force constants.
+
+### `prod`
+
+- `num_seeds` — number of independent production seeds.
+- `rand_time` — randomization time before production.
+- `prod_time` — production run duration.
+- `prod_freq` — production output frequency.
 
 ## Examples
 
