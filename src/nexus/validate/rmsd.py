@@ -11,7 +11,7 @@ def _split_pdbqt_poses(text):
     return poses
 
 
-def _parse_pose_rmsds(prep_path: Path, scored_path: Path, max_poses: int):
+def parse_vina_pose_rmsds(prep_path: Path, scored_path: Path, max_poses: int = 1):
     # Compute RMSDs between a prepared crystal (pdbqt) and poses in a scored pdbqt file.
     # Returns list of rmsd values (strings) up to max_poses.
     try:
@@ -78,7 +78,7 @@ def _parse_dock6_mol2(file_path: Path):
     return mols
 
 
-def _parse_dock6_pose_rmsds(prep_path: Path, scored_path: Path, max_poses: int):
+def parse_dock6_pose_rmsds(prep_path: Path, scored_path: Path, max_poses: int = 1):
     try:
         from rdkit.Chem import rdMolAlign
     except Exception as e:
@@ -150,9 +150,9 @@ def compute_validation_rmsds(vcfg: DockConfig):
             ligand_name = scored.stem.replace("_scored", "")
             try:
                 if program == "dock6":
-                    rmsds = _parse_dock6_pose_rmsds(prep_path, scored, max_poses)
-                else:
-                    rmsds = _parse_pose_rmsds(prep_path, scored, max_poses)
+                    rmsds = parse_dock6_pose_rmsds(prep_path, scored, max_poses)
+                elif program == "vina":
+                    rmsds = parse_vina_pose_rmsds(prep_path, scored, max_poses)
             except Exception:
                 rmsds = [""] * max_poses
             rows.append([ligand_name] + rmsds)

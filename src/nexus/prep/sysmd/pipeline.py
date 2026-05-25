@@ -32,19 +32,3 @@ class SysmdPipeline(BaseModel):
             ligand_pose = _select_pose(self.pcfg)
             ligand_charged, ligand_frcmod = _process_ligand(self.pcfg, ligand_pose)
         run_tleap(self.pcfg, receptor_named, ligand_charged, ligand_frcmod)
-
-### TODO:
-# Cli for Sysmd
-# Obabel extract poses
-# Cpptraj analysis package
-# Validate module -> Run for results
-# Write lecture notes
-
-# Literature first:
-### Claude
-# Select protein structures
-# Find Mpro drugs
-
-# Docking and write results
-# Ranking pre-analysis
-# MD suggestions strats
