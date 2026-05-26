@@ -30,6 +30,9 @@ Required for the base CLI and most workflows:
 - Meeko.
 - PyYAML, Pydantic, and Typer.
 
+To install anaconda (or miniconda), see [https://www.anaconda.com/download](https://www.anaconda.com/download)
+Other required libraries are automatically installed on setup.
+
 Workflow-specific external software:
 
 | Workflow | External requirements |
@@ -72,6 +75,13 @@ libs:
   chimera: /usr/local/chimera/chimera-1.8/bin/chimera
   dock_home: /path/to/dock6
 ```
+
+To install these tools, see the links below:
+
+- UCSF DOCK6: [https://github.com/docking-org/dock6](https://github.com/docking-org/dock6)
+- UCSF ChimeraX: [https://www.cgl.ucsf.edu/chimerax/download.html](https://www.cgl.ucsf.edu/chimerax/download.html)
+- UCSF Legacy Chimera: [https://www.cgl.ucsf.edu/chimera/download.html](https://www.cgl.ucsf.edu/chimera/download.html) 
+- AMBER: [https://ambermd.org/GetAmber.php](https://ambermd.org/GetAmber.php)
 
 ## Quick Start
 
