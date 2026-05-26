@@ -1,5 +1,5 @@
 import typer
-from typing import Optional, Literal, Annotated, List
+from typing import Optional, Annotated, List
 from pathlib import Path
 
 
@@ -14,7 +14,7 @@ SuffixOpt = Annotated[Optional[str], typer.Option("-s", "--suffix", help="Suffix
 
 def merge_cli_overrides(pcfg, common_flags: dict, unique_key: str, unique_flags: dict):
     from nexus.prep.prep_config import PrepConfig
-    """Helper function to handle your Pydantic deep merging"""
+    """Helper function to handle Pydantic deep merging"""
     cli_overrides = {
         "common": {k: v for k, v in common_flags.items() if v is not None},
         unique_key: {k: v for k, v in unique_flags.items() if v is not None}

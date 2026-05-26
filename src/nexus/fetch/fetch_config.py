@@ -9,8 +9,6 @@ class FetchConfig(BaseModel):
     output_dir: Optional[Path] = None
 
 
-
-### NOT USED FOR NOW
 def load_fetch_config(path):
     import yaml
     with open(path) as f:

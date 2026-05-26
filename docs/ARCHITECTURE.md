@@ -28,7 +28,7 @@ nexus = nexus.cli.main:main
 | `nexus fetch` | Active | `rcsb` |
 | `nexus prep` | Active | `rec`, `mutate`, `ligdock`, `sysmd` |
 | `nexus dock` | Active | `vina`, `dock6` |
-| `nexus md` | Partially active | `amber`, `analyze`; `openmm` is registered but not implemented |
+| `nexus md` | Active | `amber`, `analyze`|
 | `nexus validate` | Disabled | `vina`, `dock6` return immediately |
 
 ## Configuration Lifecycle

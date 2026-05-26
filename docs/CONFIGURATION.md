@@ -6,7 +6,7 @@ NexusMol uses YAML files for the larger workflows and command-line flags for sma
 
 | Command | Config file | Important flags | Notes |
 | --- | --- | --- | --- |
-| `nexus fetch rcsb` | `--config` exists but is not currently applied | `-i/--input`, `-o/--output_dir`, `-l/--ligand_name` | Use flags for current fetch runs. |
+| `nexus fetch rcsb` | Optional `-c/--config` | `-i/--input`, `-o/--output_dir`, `-l/--ligand_name` | Use flags for current fetch runs. |
 | `nexus prep rec` | Optional `-c/--config` | `-i`, `-o`, `-s`, `-d/--dry` | Flags override config values. |
 | `nexus prep mutate` | Optional `-c/--config` | `-i`, `-o`, `-s`, `-m/--mutations` | Flags override config values. |
 | `nexus prep ligdock` | Optional `-c/--config` | `-i`, `-o`, `-s`, `-t/--ctype` | Input type is inferred from file extension. |
@@ -15,8 +15,6 @@ NexusMol uses YAML files for the larger workflows and command-line flags for sma
 | `nexus dock dock6` | Required `-c/--config` | None beyond `-c` | Requires prepared `.mol2` ligands and `libs.dock_home`. |
 | `nexus md amber` | Required `-c/--config` | None beyond `-c` | Requires `AMBERHOME` and `pmemd.cuda`. |
 | `nexus md analyze` | No YAML config | `-p`, `-t`, `-m`, `-n`, `-o` | Runs CPPTRAJ analysis directly from flags. |
-| `nexus md openmm` | Required by CLI, not implemented | `-c` | Registered command with no implementation. |
-| `nexus validate vina/dock6` | Required by CLI, disabled | `-c` | Commands return without running. |
 
 ## Path Handling
 
@@ -51,7 +49,7 @@ nexus fetch rcsb -i 6W63 -i 7K40 -o fetched_structures -l ligand
 | `-i`, `--input` | Repeatable string | PDB ID values, or one text file path containing one ID per line. |
 | `-o`, `--output_dir` | Path | Output directory. Defaults to current directory if omitted. |
 | `-l`, `--ligand_name` | String | Optional output ligand name used in SDF filenames. |
-| `-c`, `--config` | Path | Exposed by CLI, but currently ignored by the command body. |
+| `-c`, `--config` | Path | Path to YAML config. |
 
 Fetch outputs:
 
