@@ -18,7 +18,7 @@ flowchart TD
     D --> K[state.json]
 ```
 
-The CLI starts each run. Config loaders create typed config objects, then pipelines resolve files, launch tools, parse outputs, and copy final artifacts into results directories.
+The CLI starts each run. Config loaders create typed config objects, then pipelines resolve files, install the global `PipelineContext`, launch tools, parse outputs, and copy final artifacts into results directories.
 
 ## Fetch Data Path
 
@@ -119,7 +119,7 @@ Output:
 <output_dir>/<ligand_name>_prepared.mol2
 ```
 
-When `skip=True` is used by the Python parallel executor, failed ligand tasks are logged and filtered out of downstream results.
+When `skip=True` is used by the Python parallel executor, failed ligand tasks are logged and filtered out of downstream results. The surviving molecules can be misaligned with the original names list when a task fails.
 
 ## Docking Data Path
 
@@ -135,12 +135,13 @@ sequenceDiagram
 
     CLI->>Config: Read YAML
     Config->>Config: Validate, setup dirs, find files
+    Config->>Config: Install PipelineContext
     Config->>Config: Build receptor bundles
     CLI->>Prep: Run Vina or DOCK6 pipeline
     Prep->>Prep: Generate prepared receptors and pocket assets
     Prep->>Pair: Return receptor bundles
     Pair->>Dock: Receptor/ligand pairs
-    Dock->>Dock: Run GNU Parallel jobs
+    Dock->>Dock: Run executor-managed jobs
     Dock->>Summary: Scored pose files
     Summary->>Copy: Docking summary CSV paths
     Copy->>Copy: Copy results, logs, manifest, state
@@ -193,7 +194,7 @@ Each bundle carries:
 1. ChimeraX creates a pocket PDB.
 2. `mk_prepare_receptor.py` writes receptor PDBQT and a Vina config with box parameters.
 3. NexusMol appends `exhaustiveness`, `num_modes`, and `cpu = 1`.
-4. GNU Parallel runs `vina` for each receptor/ligand pair.
+4. The docking executor runs `vina` for each receptor/ligand pair.
 5. `write_summary_csv()` parses `REMARK VINA RESULT` lines.
 6. `final_copy()` copies pose files, receptor files, pockets, summaries, and run metadata.
 
@@ -203,7 +204,7 @@ Each bundle carries:
 2. Legacy Chimera writes a DMS surface file.
 3. DOCK6 utilities generate spheres and grids.
 4. NexusMol writes flex input files.
-5. GNU Parallel runs `dock6`.
+5. The docking executor runs `dock6`.
 6. `write_summary_csv()` parses `Grid_Score` lines.
 7. `final_copy()` copies selected outputs and run metadata.
 
@@ -240,7 +241,7 @@ Output:
 <output_dir>/<system_name>/<system_name>.inpcrd
 ```
 
-The current code treats `ligand` as optional in the schema, but receptor-only runs have a known `None` handling issue in `tleap` command construction.
+The current code treats `ligand` as optional in the schema, but receptor-only runs still have a known `None` handling issue in `tleap` command construction.
 
 ## Amber MD Data Path
 
@@ -314,8 +315,6 @@ Output:
 | File extraction | Raises `FileNotFoundError`, `TypeError`, or `ValueError` for missing or incompatible input. |
 | Pipeline prechecks | Raise explicit errors for unsupported suffixes, missing `AMBERHOME`, missing `dock_home`, or missing required files. |
 | `shell()` executor | Logs command, stdout/stderr, raises on non-zero exit. |
-| `gnu_parallel(skip=False)` | Raises on non-zero GNU Parallel return code. |
-| `gnu_parallel(skip=True)` | Keeps successful jobs and logs job counts. Failed jobs do not abort the stage. |
 | `python_parallel(skip=False)` | Raises the first task exception. |
 | `python_parallel(skip=True)` | Logs task errors and filters failed results. |
 | `main_tracker()` | Marks stage failed in `state.json`, records exception in `manifest.json`, finalizes manifest as failed, logs stack trace, and re-raises. |

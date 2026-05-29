@@ -24,7 +24,6 @@ Required for the base CLI and most workflows:
 
 - Conda or Mamba.
 - Python 3.11.
-- GNU Parallel.
 - Open Babel.
 - RDKit.
 - Meeko.

@@ -9,8 +9,8 @@ NexusMol is organized as a thin orchestration layer around external scientific p
 | CLI | `src/nexus/cli/` | Defines the `nexus` Typer app and command groups. |
 | Configuration | `*_config.py` modules | Loads YAML into Pydantic models and performs path/default setup. |
 | Pipelines | `fetch/`, `prep/`, `dock/`, `md/` | Coordinates ordered workflow stages. |
-| Executors | `src/nexus/core/executors/` | Runs shell commands, GNU Parallel jobs, and Python multiprocessing tasks. |
-| Trackers | `src/nexus/core/trackers/` | Writes logs, manifests, and stage state files. |
+| Executors | `src/nexus/core/executors/` | Runs shell commands and Python-parallel tasks through context-managed wrappers. Deprecated `base()` and `gnu_parallel()` shims remain only for compatibility. |
+| Trackers | `src/nexus/core/trackers/` | Provides the global `PipelineContext`, writes logs, manifests, and stage state files. |
 | Utilities | `dock/utils/`, prep helpers | Shared file extraction, score parsing, copying, and format handling. |
 
 ## CLI Entrypoint
@@ -49,9 +49,10 @@ load_dock_config(path)
   -> _setup_dirs()
   -> _find_files()
   -> validate_and_normalize_receptors()
+  -> setup_context()
 ```
 
-`_setup_dirs()` appends `common.project_name` to `common.working_dir` and `common.results_dir`, expands environment variables for declared `Path` fields, and attaches:
+`_setup_dirs()` appends `common.project_name` to `common.working_dir` and `common.results_dir`, expands environment variables for declared `Path` fields, and prepares runtime paths before `setup_context()` installs:
 
 - `common.logger`
 - `common.manifest`
@@ -87,13 +88,15 @@ Both docking backends share this sequence:
 2. Validate ligand suffix (`.pdbqt` for Vina, `.mol2` for DOCK6).
 3. Prepare receptor-specific backend inputs.
 4. Pair receptors and ligands.
-5. Run docking commands through GNU Parallel.
+5. Run docking commands through the current executor layer.
 6. Parse score files and write CSV summaries.
 7. Copy selected artifacts and metadata to results.
 
 Vina receptor prep uses ChimeraX to create a pocket file, then `mk_prepare_receptor.py` to write receptor PDBQT and Vina box config. Vina-specific settings are appended to the config file before docking.
 
 DOCK6 receptor prep uses ChimeraX and legacy Chimera to create receptor/pocket files, then DOCK6 utilities (`sphgen`, `sphere_selector`, `showbox`, `grid`) before running `dock6`.
+
+The docking loaders now normalize receptor bundles through `PipelineContext`-backed config setup, and docs should treat GNU Parallel as a deprecated implementation detail rather than the primary execution model.
 
 ### Molecular Dynamics
 
@@ -105,22 +108,24 @@ minimize -> heat -> equilibrate -> produce -> copy_to_results
 
 Each stage renders an Amber input template and launches `pmemd.cuda` through the shared shell executor.
 
+`OpenMMPipeline` uses the same tracked runtime pattern but builds and mutates an OpenMM `Simulation` object directly across setup, minimization, heating, equilibration, production, and final copy.
+
 `nexus md analyze` is not YAML-driven. It renders a CPPTRAJ script from CLI flags, runs `cpptraj`, and copies a visualization notebook into the output directory.
 
 ## Executors
 
 | Executor | Behavior |
 | --- | --- |
-| `base()` | Logs a titled Python function call when a logger is supplied. |
-| `shell()` | Runs one command with `subprocess.run`, captures stdout/stderr, logs output, and raises on non-zero exit. |
-| `gnu_parallel()` | Converts command lists to shell-quoted command lines and sends them to GNU Parallel. |
-| `python_parallel()` | Runs Python callables through `ProcessPoolExecutor` and preserves result order. |
+| `shell()` | Context manager that runs one command with `subprocess.run()`, captures stdout/stderr, logs output, and raises on non-zero exit. |
+| `python_parallel()` | Context manager that runs Python callables through `ProcessPoolExecutor` and preserves result order. |
+| `base()` | Deprecated Python-call wrapper retained for compatibility only. |
+| `gnu_parallel()` | Deprecated GNU Parallel wrapper retained for compatibility only. |
 
-`gnu_parallel(skip=True)` and `python_parallel(skip=True)` keep successful jobs and filter/log failed jobs instead of failing the whole stage. Strict mode raises when a job fails.
+`python_parallel(skip=True)` keeps successful jobs and filters/logs failed jobs instead of failing the whole stage. Strict mode raises when a job fails.
 
 ## Tracking and Failure Handling
 
-The `main_tracker()` decorator wraps major stages. On start it marks the stage as running in both `manifest.json` and `state.json`. On success it marks the stage done and records timing. On failure it marks the stage failed, records the exception string in the manifest, finalizes the manifest as failed, logs the stack trace, and re-raises the exception.
+The `main_tracker()` decorator wraps major stages and reads runtime services from the global `PipelineContext`. On start it marks the stage as running in both `manifest.json` and `state.json`. On success it marks the stage done and records timing. On failure it marks the stage failed, records the exception string in the manifest, finalizes the manifest as failed, logs the stack trace, and re-raises the exception.
 
 The current code supports checkpoint-style state storage, but most stages call `main_tracker()` with default `checkpoint=False`, so completed stages are recorded but not skipped automatically on a rerun.
 
@@ -151,7 +156,7 @@ To add a new workflow:
 1. Add or extend a Pydantic config model if the workflow needs YAML input.
 2. Implement a small pipeline class that owns orchestration only.
 3. Put external command construction in helper functions.
-4. Use `shell()`, `gnu_parallel()`, or `python_parallel()` for execution.
+4. Use `shell()` and/or `python_parallel()` for execution.
 5. Wrap major stages with `main_tracker()`.
 6. Add a Typer command in the appropriate `src/nexus/cli/` module.
 7. Document config fields in `CONFIGURATION.md` and data movement in `DATA_FLOW.md`.

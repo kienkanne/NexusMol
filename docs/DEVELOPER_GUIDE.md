@@ -33,9 +33,10 @@ python -c "import nexus; print('nexus import ok')"
 | Legacy UCSF Chimera | DOCK6 DMS generation |
 | DOCK6 | `nexus dock dock6` |
 | AmberTools/Amber | `nexus prep sysmd`, `nexus md amber`, `nexus md analyze` |
+| OpenMM | `nexus md openmm` |
 | Vina | `nexus dock vina` |
 | Open Babel | ligand conversion and pose splitting |
-| GNU Parallel | docking batches and some ligand prep |
+| GNU Parallel | legacy compatibility only; new workflows do not depend on it directly |
 
 5. Set required environment variables when applicable:
 
@@ -57,11 +58,11 @@ libs:
 
 ```text
 src/nexus/cli/          Typer commands
-src/nexus/core/         execution wrappers, file helpers, logging/state
+src/nexus/core/         execution wrappers, trackers, logging/state
 src/nexus/fetch/        RCSB fetch pipeline
 src/nexus/prep/         receptor, mutation, ligand, and sysmd preparation
 src/nexus/dock/         docking configs, Vina, DOCK6, score summaries
-src/nexus/md/           Amber pipeline and CPPTRAJ analysis
+src/nexus/md/           Amber pipeline, OpenMM pipeline, and CPPTRAJ analysis
 src/nexus/validate/     disabled validation code path
 examples/*.yaml         example config templates
 ```
@@ -104,11 +105,11 @@ Many workflows depend on external binaries and large scientific inputs, so unit 
 - Manifest and state handling.
 - Error paths for missing inputs.
 
-For integration testing, use tiny fixtures and set `n_jobs: 1` first. Full Vina, DOCK6, and Amber tests should be separated from fast unit tests because they require installed external programs.
+For integration testing, use tiny fixtures and set `n_jobs: 1` first. Full Vina, DOCK6, Amber, and OpenMM tests should be separated from fast unit tests because they require installed external programs.
 
 ## Coding Patterns
 
-Follow the existing architecture:
+Follow the current architecture:
 
 - Put command-line entrypoints in `src/nexus/cli/`.
 - Put YAML models in `*_config.py` files.
@@ -116,8 +117,10 @@ Follow the existing architecture:
 - Put external command construction in helper functions.
 - Use `pathlib.Path` for filesystem paths.
 - Use Pydantic defaults and validation instead of ad hoc config mutation where practical.
+- Install runtime services through `setup_context()` and read them with `PipelineContext.get_ctx()`.
 - Wrap major stages with `main_tracker()` so failures update `manifest.json` and `state.json`.
-- Use `shell()`, `gnu_parallel()`, or `python_parallel()` instead of raw subprocess calls unless a tool requires special working-directory handling.
+- Use `shell()` and `python_parallel()` instead of raw subprocess calls unless a tool requires special handling.
+- Treat `base()` and `gnu_parallel()` as deprecated compatibility shims only.
 
 ## Adding a New CLI Command
 
@@ -132,10 +135,10 @@ Follow the existing architecture:
 
 1. Decide whether the stage is pure Python, one shell command, many shell commands, or many Python tasks.
 2. Use the matching executor:
-   - `base()` for lightweight Python steps.
    - `shell()` for one external command.
-   - `gnu_parallel()` for independent command batches.
    - `python_parallel()` for independent Python callables.
+   - `base()` only when maintaining old call sites.
+   - `gnu_parallel()` only when maintaining old call sites.
 3. Wrap the stage with `main_tracker(cfg, "Stage Name")`.
 4. Return paths or simple serializable values if the stage output may be stored in `state.json`.
 5. Make failures explicit with `ValueError`, `FileNotFoundError`, or `RuntimeError` before launching expensive external work.
@@ -150,9 +153,18 @@ Follow the existing architecture:
 - Inspect `artifacts/<project>/state.json` for the last stage status.
 - For ChimeraX selection issues, reproduce the selection in ChimeraX before rerunning the full pipeline.
 - For Amber workflows, check `AMBERHOME`, confirm `pdb4amber`, `tleap`, `antechamber`, `parmchk2`, `pmemd.cuda`, and `cpptraj` are on `PATH`.
+- For OpenMM workflows, confirm the OpenMM Python environment can import the package and that CUDA is available when the pipeline selects the CUDA platform.
 - For ligand preparation failures, validate the CSV header exactly as `smiles,name` and reduce to one ligand while debugging.
 - For Vina and DOCK6 score-summary failures, verify that scored pose files were created before `write_summary_csv()` runs.
 
 ## Known Development Hotspots
 
-See `SECURITY_AND_BUGS.md` for current defects and remediation suggestions. High-priority areas include fetch config handling, sysmd receptor-only behavior, validation re-enablement, portable GNU Parallel temp handling, and MD analysis working-directory restoration.
+See `SECURITY_AND_BUGS.md` for current defects and remediation suggestions. High-priority areas include fetch config handling, sysmd receptor-only behavior, ligand-prep result/name alignment when parallel jobs fail, docking mode propagation, deprecated executor cleanup, and MD analysis working-directory restoration.
+
+## Current Architecture Notes
+
+- `PipelineContext` now owns the active logger, manifest, and run state.
+- `shell()` and `python_parallel()` are context managers rather than simple wrappers.
+- `main_tracker()` no longer depends on config objects directly.
+- Docking and MD configs now derive project-scoped output folders from `common.project_name`.
+- The OpenMM pipeline is the new MD path alongside the Amber pipeline.

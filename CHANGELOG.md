@@ -1,5 +1,16 @@
 # Changelog
 
+## 2.3.0
+- Overhauled `src/nexus/core` to use global `PipelineContext` setup, context-managed `shell()` and `python_parallel()`, and simplified stage tracking.
+- Marked `core/executors/base` and `core/executors/gnu_parallel` as deprecated; new workflows now use `shell()` and `python_parallel()` directly.
+- GNU parallel is no longer listed as a requirement in `environment.yaml`
+- MD trajectory files are removed from examples/
+
+## 2.2.2
+- Added OpenMM molecular dynamics pipeline with `nexus md openmm`
+- `nexus md openmm` uses a similar config format as `nexus md amber`, running end-to-end pipelines with minimization, heating, equilibration, and production
+- Output trajectories are written in the `.dcd` format, and the log file is a csv with time series details.
+
 ## 2.2.1
 - `nexus prep mutate` now only changes the protonation state while keeping standard residue names.
 - Added `metadata` field for docking and MD pipeline, allowing to store metadata that is dumped to a JSON file in results directory. Docking also stores csv file paths for each receptor.

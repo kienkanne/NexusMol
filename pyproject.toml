@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "nexus"
-version = "2.2.1"
+version = "2.3.0"
 
 [tool.setuptools.package-data]
 nexus = ["**/*.txt", "**/*.com", "**/templates/*.py", "**/*.ipynb"]
