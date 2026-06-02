@@ -56,7 +56,7 @@ class CustomLogger(Logger):
         log_file = Path(self.path)
         log_file.parent.mkdir(parents=True, exist_ok=True)
 
-        self.setLevel(logging.DEBUG)
+        self.setLevel(logging.INFO)
 
         for handler in self.handlers[:]:
             self.removeHandler(handler)
