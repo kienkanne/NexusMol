@@ -1,5 +1,12 @@
 # Changelog
 
+## 2.3.1
+- OpenMM now runs NVT heating and NPT heating.
+- Added safe fallback for AMBER and OpenMM for machines without GPU.
+- Added more explaining comments to examples/
+- Added global CLI verbosity control: `--silence` / `-s`. Levels: `0` (default) prints informational messages; `1` mutes `INFO`; `2` mutes `INFO`, `DEBUG`, and `WARNING` (errors are always shown).
+
+
 ## 2.3.0
 - Overhauled `src/nexus/core` to use global `PipelineContext` setup, context-managed `shell()` and `python_parallel()`, and simplified stage tracking.
 - Marked `core/executors/base` and `core/executors/gnu_parallel` as deprecated; new workflows now use `shell()` and `python_parallel()` directly.

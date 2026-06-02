@@ -21,6 +21,6 @@ class OpenMMPipeline(BaseModel):
         simulation = heat(self.mcfg, simulation)
         simulation = equilibrate(self.mcfg, simulation)
 
-        simulations, outputs = produce(self.mcfg, simulation)
+        outputs = produce(self.mcfg, simulation)
 
         final_copy(self.mcfg, outputs)

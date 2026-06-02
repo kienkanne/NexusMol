@@ -26,7 +26,6 @@ def produce(mcfg: MDConfig, simulation: Simulation):
         getPositions=True, getEnergy=True, enforcePeriodicBox=True, getForces=True, getVelocities=True
     )
 
-    simulations = []
     outputs = []
     for i in range(1, num_seeds + 1):
         # Load in the shared saved equilibrated state
@@ -43,13 +42,10 @@ def produce(mcfg: MDConfig, simulation: Simulation):
         simulation.step(int(prod_time / dt))
         
         outputs.append(outputs_per_seed)
-        # Deepcopy the simulation wrapper state
-        import copy
-        simulations.append(copy.copy(simulation))
 
         logger = PipelineContext.get_ctx().logger
         logger.info(f"Finished full run with seed {i}")
 
     # outputs contain (traj, chk, log)
     # corresponds to amber: (nc, ncrst, out)
-    return simulations, outputs
+    return outputs

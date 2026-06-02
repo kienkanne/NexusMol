@@ -25,7 +25,7 @@ def python_parallel(tasks, n_jobs=1, title="", skip=False):
     except:
         logger = DummyLogger()
 
-    logger.info(f"Running: Python Parallel {title} for {len(tasks)} jobs")
+    logger.info(f"Running: Parallel {title} for {len(tasks)} jobs")
     results = [None] * len(tasks)
     
     # 3. Execute the frozen tasks in parallel

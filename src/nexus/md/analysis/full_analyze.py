@@ -21,6 +21,8 @@ def full_analyze(prmtop: Path, trajin: Path, mask: str, name: str, output_dir: P
                                                            mask=mask, 
                                                            name=name)
 
+    output_dir = output_dir / name
+
     _run_cpptraj(cpptraj_input, output_dir=output_dir, name=name)
 
     shutil.copy2((Path(__file__).resolve().parents[0] / "visual_temnplate.ipynb"), output_dir / f"Visual_{name}.ipynb")

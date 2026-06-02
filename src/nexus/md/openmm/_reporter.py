@@ -73,11 +73,3 @@ def add_reporters(
         )
 
     return simulation, (traj, chk, log)
-
-
-def write_final_pdb(simulation, topology, output_path):
-    """Write the current Context coordinates to a final PDB file."""
-
-    state = simulation.context.getState(getPositions=True)
-    with open(output_path, "w") as handle:
-        PDBFile.writeFile(topology, state.getPositions(), handle)

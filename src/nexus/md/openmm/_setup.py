@@ -1,11 +1,11 @@
-from openmm import LangevinMiddleIntegrator, MonteCarloBarostat
+from openmm import LangevinMiddleIntegrator
 from openmm.app import AmberInpcrdFile, AmberPrmtopFile, HBonds, PME, Simulation
-from openmm.unit import atmosphere, kelvin, nanometer, picosecond
+from openmm.unit import nanometer, picosecond
 from openmm import Platform
 import re
 
 from nexus.md.md_config import MDConfig
-from nexus.core.trackers.main_tracker import main_tracker
+from nexus.core.trackers.main_tracker import main_tracker, PipelineContext
 
 @main_tracker("Setup")
 def setup(mcfg: MDConfig):
@@ -13,7 +13,6 @@ def setup(mcfg: MDConfig):
     inpcrd = AmberInpcrdFile(mcfg.common.inpcrd)
 
     dt = mcfg.common.dt * picosecond
-    temp = mcfg.common.temp * kelvin
     cut = mcfg.common.cut * nanometer / 10 # Convert angstroms to nanometers
 
     mask = mcfg.common.mask
@@ -21,7 +20,7 @@ def setup(mcfg: MDConfig):
     system = prmtop.createSystem(
         nonbondedMethod=PME,
         nonbondedCutoff=cut,
-        constraints=HBonds,            # ntc=2 (constraint), ntf=2(SHAKE)
+        constraints=HBonds,            # Equivalent to AMBER ntc=2, ntf=2 (SHAKE on H-bonds)
         rigidWater=True               
                                  )
     
@@ -32,7 +31,7 @@ def setup(mcfg: MDConfig):
         first_residue_i=int(match.group(1))
         stop_residue_i=int(match.group(2))
     else:
-        raise ValueError(f"Invalid mask: {mask}")
+        raise ValueError(f"Invalid mask: {mask}. Currently only supports masks of the form ':first-last' to specify a contiguous residue range.")
 
     # Add restraints for minimization, heating, and equilibration
     add_positional_restraints(topology=prmtop.topology,
@@ -41,12 +40,6 @@ def setup(mcfg: MDConfig):
                               first_residue_i=first_residue_i,
                               stop_residue_i=stop_residue_i,
                               k_kcal_per_mol_a2=10)
-    
-    # Add barostat (start NPT from heating)
-    # TODO: Pressure settings are hardcoded for now
-    pressure = 1 * atmosphere
-    barostat_interval: int = 25
-    system.addForce(MonteCarloBarostat(pressure, temp, barostat_interval))
 
     # Set high friction (5 ps^-1) initially for safe heating stage
     # Set back to (1 ps^-1) for equilibration and production later on
@@ -54,15 +47,29 @@ def setup(mcfg: MDConfig):
     # Initial temperature set to 0, gradually changed by heating step to temp
     integrator = LangevinMiddleIntegrator(0, gamma, dt)
 
-    # Default to using GPU with mixed precision
-    platform = Platform.getPlatformByName("CUDA")
-    properties = {'Precision': 'mixed'}
+    logger = PipelineContext.get_ctx().logger
+    try:
+        # Try to load CUDA with mixed precision
+        platform = Platform.getPlatformByName("CUDA")
+        properties = {'Precision': 'mixed'}
+        
+        simulation = Simulation(topology=prmtop.topology,
+                                system=system,
+                                integrator=integrator,
+                                platform=platform,
+                                platformProperties=properties)
+        logger.info("Running simulation on CUDA (Mixed Precision)")
 
-    simulation = Simulation(topology=prmtop.topology,
-                            system=system,
-                            integrator=integrator,
-                            platform=platform,
-                            platformProperties=properties)
+    except Exception as e:
+        logger.info(f"CUDA not available ({e}). Falling back to the fastest available platform.")
+
+        simulation = Simulation(topology=prmtop.topology,
+                                system=system,
+                                integrator=integrator)
+        
+        # Print what it actually ended up choosing
+        logger.info(f"Running simulation on: {simulation.context.getPlatform().getName()}")
+        
     simulation.context.setPositions(inpcrd.getPositions())
 
     # AMBER restart files may contain periodic box vectors; copy them into the

@@ -142,7 +142,7 @@ LEU A   141    LEU   141
 ASN A   142    ASN   142
 GLY A   143    GLY   143
 SER A   144    SER   144
-CYM A   145    CYM   145
+CYS A   145    CYS   145
 GLY A   146    GLY   146
 SER A   147    SER   147
 VAL A   148    VAL   148
@@ -447,7 +447,7 @@ LEU B   141    LEU   446
 ASN B   142    ASN   447
 GLY B   143    GLY   448
 SER B   144    SER   449
-CYM B   145    CYM   450
+CYS B   145    CYS   450
 GLY B   146    GLY   451
 SER B   147    SER   452
 VAL B   148    VAL   453

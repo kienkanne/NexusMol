@@ -15,7 +15,9 @@ The output from `nexus prep rec` tells us the non-standard protonation states th
 
 ## Change protonation states of receptors
 
-Based on the output from `nexus prep rec`, we adjust the protonation state of the receptors based on biological knowledge of the receptor. For example, 6W63 and 7K40 are protein structures of the SARS-CoV-2 main protease (mpro), and if we want to model the ionic pair at the catalytic side, we can assign His41 to be doubly protonated (HIP) and Cys145 to be deprotonated (CYM). We can also adjust other histidines that was assigned to be HIP by chimerax to be neutral (HIE/HID), for example.
+Based on the output from `nexus prep rec`, we adjust the protonation state of the receptors based on biological knowledge of the receptor. 
+
+> For example, 6W63 and 7K40 are protein structures of the SARS-CoV-2 main protease (mpro), and if we want to model the ionic pair at the catalytic side, we can assign His41 to be doubly protonated (HIP) and Cys145 to be deprotonated (CYM). We can also adjust other histidines that was assigned to be HIP by chimerax to be neutral (HIE/HID), for example.
 
 ```bash
 nexus prep mutate -i receptors/cleaned/6W63_cleaned.pdb -o receptors/mutated/ -s "_mutated.pdb" -m ":145-CYM"
@@ -54,21 +56,32 @@ nexus dock dock6 -c dock6_config.yaml
 
 After choosing a docked pose or using a crystal structure with ligand, build a solvated Amber-compatible system using `nexus prep sysmd`. Results can be found in `results/6W63_mol4_solvated/`
 
+> AmberTools can be very verbose, so I suggest use the flag `--silence` to avoid having your terminal cluttered.
+
 ```bash
-nexus prep sysmd -c sysmd_config.yaml
+nexus --silence 2 prep sysmd -c sysmd_config.yaml
 ```
 
 Once the system files are generated, a full molecular dynamics pipeline can be run, including minimization, heating, equilibration, and production. Results can be found in `results/AMBER_DiAla` and `results/OpenMM_DiAla`. Currently, there is no difference between `amber_config.yaml` and `openmm_config.yaml`, with the exception of the `project_name` field; both share the same parameters.
 
 ```bash
-nexus md amber -c amber_config.yaml
+nexus --silence 2 md amber -c amber_config.yaml
 nexus md openmm -c openmm_config.yaml
 ```
 
 Molecular dynamics output can be analysis using the command:
 
 ```bash
-nexus md analyze -p your.prmtop -t trajectory.nc -m ":1-198" -n name -o output_dir
+nexus --silence 2 md analyze -p your.prmtop -t trajectory.nc -m ":1-198" -n name -o results/
 ```
 
-Example outputs can be found in `results/2BPW_analysis_output/`. 2BPW is a HIV-1 protease-inhibitor complex, and was chosen for this example over DiAlanine because DiAlanine is too small to have meaningful protein analysis. This command can also load in the dcd trajectory format, which is the output when running openmm.
+Example outputs can be found in `results/2BPW_analysis_output/`. 
+
+> 2BPW is a HIV-1 protease-inhibitor complex, and was chosen for this example over DiAlanine because DiAlanine is too small to have meaningful protein analysis. This command can also load in the dcd trajectory format, which is the output when running openmm.
+
+> If you want to try out running these commands on your own, you can copy this folder (examples), excluding subfolders, to your desired destination and run these commands.
+
+```bash
+mkdir -p ~/your_directory
+cp ./* ~/your_directory
+```

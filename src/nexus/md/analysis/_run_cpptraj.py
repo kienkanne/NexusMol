@@ -10,7 +10,7 @@ def _run_cpptraj(cpptraj_input: str, output_dir: Path, name: str= "", logger=Non
     cwd = os.getcwd()
     try:
         os.chdir(output_dir)
-        print (output_dir)
+
         cpptraj_in = output_dir / f"{name}.in"
         cpptraj_in.write_text(cpptraj_input)
 

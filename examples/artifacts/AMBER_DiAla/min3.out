@@ -6,12 +6,11 @@
 | PMEMD implementation of SANDER, Release 24
 
 |  Compiled date/time: Wed Aug 21 09:34:12 2024
-| Run on 05/28/2026 at 23:42:30
+| Run on 06/01/2026 at 23:17:44
 
 |   Executable path: pmemd.cuda
 | Working directory: /localscratch/kbui/NexusMol/examples
-|          Hostname: irene2
-
+|          Hostname: Unknown
   [-O]verwriting output
 
 File Assignments:
@@ -44,7 +43,7 @@ Minimization
 /                                                                              
 
 
-Note: ig = -1. Setting random seed to   837026 based on wallclock time in 
+Note: ig = -1. Setting random seed to   392427 based on wallclock time in 
       microseconds.
 | irandom = 1, using AMBER's internal random number generator (default).
  
@@ -707,12 +706,12 @@ ACE
 |
 |     Routine           Sec        %
 |     ------------------------------
-|     Nonbond           0.19   53.72
+|     Nonbond           0.19   53.45
 |     Bond              0.00    0.00
 |     Angle             0.00    0.00
 |     Dihedral          0.00    0.00
 |     Shake             0.00    0.00
-|     Other             0.16   46.28
+|     Other             0.16   46.55
 |     ------------------------------
 |     Total             0.35
 
@@ -747,10 +746,10 @@ ACE
 |     ---------------------------------
 |     Total                0.00    0.00
 
-|  Setup CPU time:            0.23 seconds
+|  Setup CPU time:            0.18 seconds
 |  NonSetup CPU time:         0.35 seconds
-|  Total CPU time:            0.58 seconds     0.00 hours
+|  Total CPU time:            0.53 seconds     0.00 hours
 
-|  Setup wall time:           0    seconds
+|  Setup wall time:           1    seconds
 |  NonSetup wall time:        0    seconds
-|  Total wall time:           0    seconds     0.00 hours
+|  Total wall time:           1    seconds     0.00 hours

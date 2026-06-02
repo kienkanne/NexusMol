@@ -18,6 +18,32 @@ NexusMol uses YAML files for the larger workflows and command-line flags for sma
 
 ## Path Handling
 
+## Logging and CLI verbosity
+
+- Nexus supports a root-level CLI option to control logging verbosity across all subcommands.
+
+- Flag: `--silence` (integer)
+  - `0` (default): normal behavior; `INFO`, `WARNING`, and `ERROR` messages are emitted.
+  - `1`: mutes `INFO` messages; `WARNING` and `ERROR` still shown.
+  - `2`: mutes `INFO`, `DEBUG`, and `WARNING`; only `ERROR` and above are shown.
+
+This flag is implemented in the top-level CLI entrypoint (it is parsed before subcommands run) and sets a global silence level consumed by the logging utilities. The `CustomLogger` and `DummyLogger` implementations respect this level so that console output from `shell()` and most pipeline messages can be reduced for large batch runs.
+
+Important: pipeline stage logs emitted via the `main_tracker` decorator are always shown regardless of the `--silence` level. Those messages are emitted with the internal `is_tracker` flag (e.g. `extra={"is_tracker": True}`) and the logger bypasses the silence filter for them so that stage start/complete/failure messages remain visible even when other informational output is muted.
+
+Example:
+
+```bash
+nexus --silence 1 dock vina -c vina_config.yaml
+```
+
+Notes:
+
+- `ERROR` messages are always printed regardless of the silence level.
+- Pipeline stage logs emitted via the `main_tracker` decorator bypass the `--silence` filter and are always printed.
+- The silence level can also be set programmatically by calling `set_silence()` from `src/nexus/core/trackers/logging_utils.py` in custom code.
+
+
 Docking config loading expands environment variables and `~` for declared `Path` fields. Prep, fetch, and MD config loaders do not perform the same global expansion. Prefer absolute paths or paths relative to the current working directory when launching the command.
 
 Docking and MD loaders append `common.project_name` to the configured parent directories:

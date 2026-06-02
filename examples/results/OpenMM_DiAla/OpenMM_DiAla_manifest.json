@@ -1,5 +1,5 @@
 {
-  "created_utc": "2026-05-29T03:38:21.566760+00:00",
+  "created_utc": "2026-06-02T03:27:47.733310+00:00",
   "host": "irene2",
   "platform": "Linux-6.12.0-124.56.1.el10_1.x86_64-x86_64-with-glibc2.39",
   "python_version": "3.11.15",
@@ -13,12 +13,12 @@
     "Copying to results": "running"
   },
   "timings_sec": {
-    "Setup": 0.291,
-    "Minimization": 0.535,
-    "Heating": 59.775,
-    "Equilibration": 43.397,
-    "Production": 73.929
+    "Setup": 0.355,
+    "Minimization": 0.612,
+    "Heating": 52.633,
+    "Equilibration": 43.347,
+    "Production": 73.556
   },
-  "total_wall_time": "177.932",
-  "finished_utc": "2026-05-29T03:41:19.498959+00:00"
+  "total_wall_time": "170.508",
+  "finished_utc": "2026-06-02T03:30:38.241341+00:00"
 }

@@ -11,8 +11,5 @@
     "status": "done",
     "output": null
   },
-  "Final copy to results": {
-    "status": "done",
-    "output": null
-  }
+  "Final copy to results": "running"
 }

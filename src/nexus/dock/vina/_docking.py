@@ -1,6 +1,3 @@
-from pathlib import Path
-from string import Template
-
 from nexus.core.executors.shell import shell
 from nexus.core.executors.python_parallel import python_parallel
 from functools import partial

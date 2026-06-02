@@ -1,7 +1,7 @@
 data_6W63
 #
-_model_server_result.job_id            03r9ZbbTLjO37d29eVJ_6g 
-_model_server_result.datetime_utc      '2026-05-28 21:01:14' 
+_model_server_result.job_id            y6a9l3Lw0ZntQRzVR1vyYA 
+_model_server_result.datetime_utc      '2026-06-02 02:11:09' 
 _model_server_result.server_version    0.9.12 
 _model_server_result.query_name        assembly 
 _model_server_result.source_id         pdb-bcif 
@@ -11230,10 +11230,10 @@ A A ASM_2 '_2' 1 2 . . . . .
 B B ASM_2 '_2' 1 2 . . . . . 
 C C ASM_2 '_2' 1 2 . . . . . 
 #
-_model_server_stats.io_time_ms              16 
+_model_server_stats.io_time_ms              13 
 _model_server_stats.parse_time_ms           9 
-_model_server_stats.create_model_time_ms    4 
-_model_server_stats.query_time_ms           328 
-_model_server_stats.encode_time_ms          192 
+_model_server_stats.create_model_time_ms    8 
+_model_server_stats.query_time_ms           218 
+_model_server_stats.encode_time_ms          100 
 _model_server_stats.element_count           9990 
 #

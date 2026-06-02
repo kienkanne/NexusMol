@@ -2,7 +2,7 @@
 
 NexusMol is a command-line toolkit for structure-based drug discovery workflows. It brings common preparation, docking, molecular dynamics, and analysis steps behind one Python CLI while delegating scientific heavy lifting to established tools such as ChimeraX, RDKit, Meeko, AutoDock Vina, DOCK6, Open Babel, AMBER, and OpenMM.
 
-Current package version: `2.3.0`.
+Current package version: `2.3.1`.
 
 ## What NexusMol Does
 
@@ -64,6 +64,23 @@ Verify that the package imports:
 ```bash
 python -c "import nexus; print('nexus import ok')"
 ```
+
+## Global CLI options
+
+Several options apply to all `nexus` subcommands when provided at the root level. The most commonly used is `--silence` (integer), which controls console verbosity for large batch jobs:
+
+- `--silence 0` (default): normal output (INFO, WARNING, ERROR).
+- `--silence 1`: mutes `INFO` messages; warnings and errors remain.
+- `--silence 2`: mutes `INFO`, `DEBUG`, and `WARNING`; only errors are shown.
+
+Example:
+
+```bash
+nexus --silence 1 dock vina -c vina_config.yaml
+```
+
+Note: pipeline stage messages logged with the `main_tracker` decorator bypass the `--silence` filter and are always printed. This ensures stage start/complete/failure messages remain visible even when informational logs are muted.
+
 
 If you use Amber through an environment module, load it before running `nexus prep sysmd`, `nexus md amber`, or `nexus md analyze`:
 

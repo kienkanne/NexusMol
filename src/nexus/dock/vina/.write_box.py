@@ -1,4 +1,8 @@
 def _write_box(center, size):
+    """
+    Currently depreciated
+    This function writes a PDB file to visualize the box size.
+    """
     cx, cy, cz = center
     sx, sy, sz = size
 

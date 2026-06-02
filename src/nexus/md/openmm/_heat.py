@@ -6,6 +6,7 @@ from nexus.md.openmm._reporter import add_reporters
 
 from nexus.core.trackers.main_tracker import main_tracker
 
+# NVT Heating, then NPT Equilibration (with barostat added in equilibration step)
 @main_tracker("Heating")
 def heat(mcfg: MDConfig, simulation: Simulation):
     working_dir = mcfg.common.working_dir
@@ -19,7 +20,7 @@ def heat(mcfg: MDConfig, simulation: Simulation):
     total_time = mcfg.heat.total_time
 
     simulation.reporters.clear()
-    # Heating outputs unused for now
+    # Ignore heating outputs for now
     simulation, h_outputs = add_reporters(simulation, "heat", working_dir, 10000, int(total_time / dt))
     
     restraint = mcfg.heat.restraint

@@ -7,7 +7,6 @@ from nexus.md.md_config import MDConfig
 def final_copy(mcfg: MDConfig, outputs):
     prmtop = mcfg.common.prmtop
 
-    working_dir = mcfg.common.working_dir
     results_dir = mcfg.common.results_dir
 
     shutil.copy2(prmtop, results_dir)
@@ -16,6 +15,7 @@ def final_copy(mcfg: MDConfig, outputs):
         shutil.copy2(prod_nc, results_dir)
         shutil.copy2(prod_ncrst, results_dir)
         shutil.copy2(prod_out, results_dir)
+        
         # Safely delete trajectory in artifacts
         if Path(results_dir / Path(prod_nc).name).is_file():
             Path(prod_nc).unlink(missing_ok=True)

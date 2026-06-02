@@ -6,12 +6,11 @@
 | PMEMD implementation of SANDER, Release 24
 
 |  Compiled date/time: Wed Aug 21 09:34:12 2024
-| Run on 05/28/2026 at 23:42:30
+| Run on 06/01/2026 at 23:17:43
 
 |   Executable path: pmemd.cuda
 | Working directory: /localscratch/kbui/NexusMol/examples
-|          Hostname: irene2
-
+|          Hostname: Unknown
   [-O]verwriting output
 
 File Assignments:
@@ -44,7 +43,7 @@ Minimization
 /                                                                              
 
 
-Note: ig = -1. Setting random seed to   195605 based on wallclock time in 
+Note: ig = -1. Setting random seed to   804741 based on wallclock time in 
       microseconds.
 | irandom = 1, using AMBER's internal random number generator (default).
  
@@ -657,14 +656,14 @@ ACE
 |
 |     Routine           Sec        %
 |     ------------------------------
-|     Nonbond           0.17   54.56
+|     Nonbond           0.17   53.61
 |     Bond              0.00    0.00
 |     Angle             0.00    0.00
 |     Dihedral          0.00    0.00
 |     Shake             0.00    0.00
-|     Other             0.14   45.44
+|     Other             0.14   46.39
 |     ------------------------------
-|     Total             0.32
+|     Total             0.31
 
 |  PME Nonbond Pairlist CPU Time:
 |
@@ -681,9 +680,9 @@ ACE
 |     ---------------------------------
 |     NonBonded Calc       0.00    0.00
 |     Exclude Masked       0.00    0.00
-|     Other                0.00    0.73
+|     Other                0.00    0.76
 |     ---------------------------------
-|     Total                0.00    0.73
+|     Total                0.00    0.76
 
 |  PME Reciprocal Force CPU Time:
 |
@@ -697,10 +696,10 @@ ACE
 |     ---------------------------------
 |     Total                0.00    0.00
 
-|  Setup CPU time:            0.22 seconds
-|  NonSetup CPU time:         0.32 seconds
-|  Total CPU time:            0.54 seconds     0.00 hours
+|  Setup CPU time:            0.19 seconds
+|  NonSetup CPU time:         0.31 seconds
+|  Total CPU time:            0.50 seconds     0.00 hours
 
 |  Setup wall time:           0    seconds
-|  NonSetup wall time:        1    seconds
-|  Total wall time:           1    seconds     0.00 hours
+|  NonSetup wall time:        0    seconds
+|  Total wall time:           0    seconds     0.00 hours

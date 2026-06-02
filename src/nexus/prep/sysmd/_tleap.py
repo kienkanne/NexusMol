@@ -39,6 +39,7 @@ def build_tleap_cmd(input_dict: dict):
         f"addIonsRand SYS Na+ {input_dict['n_ions']}",
         f"addIonsRand SYS Cl- {input_dict['n_ions']}",
         f"saveamberparm SYS {input_dict['output_suffix']}.prmtop {input_dict['output_suffix']}.inpcrd",
+        f"savepdb SYS {input_dict['output_suffix']}.pdb",
         "quit"   
     ])
     

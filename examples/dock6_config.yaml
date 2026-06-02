@@ -15,7 +15,7 @@ common:
 
 receptors:
   source: "/localscratch/kbui/NexusMol/examples/receptors/final"
-  suffix: ".pdb"
+  suffix: ".pdb" # used when `source` is a directory, ignored if `source` is a file
 
   pocket_option: "selection"
   selection: "/A:41,145,163,164,172" # Residues at the catalytic site
@@ -24,11 +24,11 @@ receptors:
 
 ligands:
   source: "/localscratch/kbui/NexusMol/examples/ligands/dock6"
-  suffix: "_prepared.mol2"
+  suffix: "_prepared.mol2" # used when `source` is a directory, ignored if `source` is a file
 
 dock6:
   max_orientations: 1000 # Higher for more accuracy at more cost
-  radius: 10.0
+  radius: 10.0 # in Angstroms, radius for sphere generation
 
 # You can write anything here, and they will be wrote to a JSON file in results directory
 # CSV summary file paths will also be included here for easy parsing

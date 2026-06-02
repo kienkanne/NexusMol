@@ -1,79 +1,10 @@
-2026-05-28 23:42:29 | INFO     | STAGE: Minimization started
-2026-05-28 23:42:29 | INFO     | Running: ; cmd: pmemd.cuda -AllowSmallBox -O -i /localscratch/kbui/NexusMol/examples/artifacts/AMBER_DiAla/min1.in -o /localscratch/kbui/NexusMol/examples/artifacts/AMBER_DiAla/min1.out -p /localscratch/kbui/NexusMol/examples/ALA.prmtop -c /localscratch/kbui/NexusMol/examples/ALA.inpcrd -ref /localscratch/kbui/NexusMol/examples/ALA.inpcrd -r /localscratch/kbui/NexusMol/examples/artifacts/AMBER_DiAla/min1.ncrst -x /localscratch/kbui/NexusMol/examples/artifacts/AMBER_DiAla/min1.nc -inf /localscratch/kbui/NexusMol/examples/artifacts/AMBER_DiAla/min1.info
-2026-05-28 23:42:30 | WARNING  | STDERR:            0
-Note: The following floating-point exceptions are signalling: IEEE_UNDERFLOW_FLAG IEEE_DENORMAL
-
-2026-05-28 23:42:30 | INFO     | Running: ; cmd: pmemd.cuda -AllowSmallBox -O -i /localscratch/kbui/NexusMol/examples/artifacts/AMBER_DiAla/min2.in -o /localscratch/kbui/NexusMol/examples/artifacts/AMBER_DiAla/min2.out -p /localscratch/kbui/NexusMol/examples/ALA.prmtop -c /localscratch/kbui/NexusMol/examples/artifacts/AMBER_DiAla/min1.ncrst -ref /localscratch/kbui/NexusMol/examples/artifacts/AMBER_DiAla/min1.ncrst -r /localscratch/kbui/NexusMol/examples/artifacts/AMBER_DiAla/min2.ncrst -x /localscratch/kbui/NexusMol/examples/artifacts/AMBER_DiAla/min2.nc -inf /localscratch/kbui/NexusMol/examples/artifacts/AMBER_DiAla/min2.info
-2026-05-28 23:42:30 | WARNING  | STDERR:            0
-Note: The following floating-point exceptions are signalling: IEEE_UNDERFLOW_FLAG IEEE_DENORMAL
-
-2026-05-28 23:42:30 | INFO     | Running: ; cmd: pmemd.cuda -AllowSmallBox -O -i /localscratch/kbui/NexusMol/examples/artifacts/AMBER_DiAla/min3.in -o /localscratch/kbui/NexusMol/examples/artifacts/AMBER_DiAla/min3.out -p /localscratch/kbui/NexusMol/examples/ALA.prmtop -c /localscratch/kbui/NexusMol/examples/artifacts/AMBER_DiAla/min2.ncrst -ref /localscratch/kbui/NexusMol/examples/artifacts/AMBER_DiAla/min2.ncrst -r /localscratch/kbui/NexusMol/examples/artifacts/AMBER_DiAla/min3.ncrst -x /localscratch/kbui/NexusMol/examples/artifacts/AMBER_DiAla/min3.nc -inf /localscratch/kbui/NexusMol/examples/artifacts/AMBER_DiAla/min3.info
-2026-05-28 23:42:31 | WARNING  | STDERR:            0
-Note: The following floating-point exceptions are signalling: IEEE_UNDERFLOW_FLAG IEEE_DENORMAL
-
-2026-05-28 23:42:31 | INFO     | Running: ; cmd: pmemd.cuda -AllowSmallBox -O -i /localscratch/kbui/NexusMol/examples/artifacts/AMBER_DiAla/min4.in -o /localscratch/kbui/NexusMol/examples/artifacts/AMBER_DiAla/min4.out -p /localscratch/kbui/NexusMol/examples/ALA.prmtop -c /localscratch/kbui/NexusMol/examples/artifacts/AMBER_DiAla/min3.ncrst -ref /localscratch/kbui/NexusMol/examples/artifacts/AMBER_DiAla/min3.ncrst -r /localscratch/kbui/NexusMol/examples/artifacts/AMBER_DiAla/min4.ncrst -x /localscratch/kbui/NexusMol/examples/artifacts/AMBER_DiAla/min4.nc -inf /localscratch/kbui/NexusMol/examples/artifacts/AMBER_DiAla/min4.info
-2026-05-28 23:42:32 | WARNING  | STDERR:            0
-Note: The following floating-point exceptions are signalling: IEEE_UNDERFLOW_FLAG IEEE_DENORMAL
-
-2026-05-28 23:42:32 | INFO     | Running: ; cmd: pmemd.cuda -AllowSmallBox -O -i /localscratch/kbui/NexusMol/examples/artifacts/AMBER_DiAla/min5.in -o /localscratch/kbui/NexusMol/examples/artifacts/AMBER_DiAla/min5.out -p /localscratch/kbui/NexusMol/examples/ALA.prmtop -c /localscratch/kbui/NexusMol/examples/artifacts/AMBER_DiAla/min4.ncrst -ref /localscratch/kbui/NexusMol/examples/artifacts/AMBER_DiAla/min4.ncrst -r /localscratch/kbui/NexusMol/examples/artifacts/AMBER_DiAla/min5.ncrst -x /localscratch/kbui/NexusMol/examples/artifacts/AMBER_DiAla/min5.nc -inf /localscratch/kbui/NexusMol/examples/artifacts/AMBER_DiAla/min5.info
-2026-05-28 23:42:32 | WARNING  | STDERR:            0
-Note: The following floating-point exceptions are signalling: IEEE_UNDERFLOW_FLAG IEEE_DENORMAL
-
-2026-05-28 23:42:32 | INFO     | Running: ; cmd: pmemd.cuda -AllowSmallBox -O -i /localscratch/kbui/NexusMol/examples/artifacts/AMBER_DiAla/min6.in -o /localscratch/kbui/NexusMol/examples/artifacts/AMBER_DiAla/min6.out -p /localscratch/kbui/NexusMol/examples/ALA.prmtop -c /localscratch/kbui/NexusMol/examples/artifacts/AMBER_DiAla/min5.ncrst -ref /localscratch/kbui/NexusMol/examples/artifacts/AMBER_DiAla/min5.ncrst -r /localscratch/kbui/NexusMol/examples/artifacts/AMBER_DiAla/min6.ncrst -x /localscratch/kbui/NexusMol/examples/artifacts/AMBER_DiAla/min6.nc -inf /localscratch/kbui/NexusMol/examples/artifacts/AMBER_DiAla/min6.info
-2026-05-28 23:42:33 | WARNING  | STDERR:            0
-Note: The following floating-point exceptions are signalling: IEEE_UNDERFLOW_FLAG IEEE_DENORMAL
-
-2026-05-28 23:42:33 | INFO     | Running: ; cmd: pmemd.cuda -AllowSmallBox -O -i /localscratch/kbui/NexusMol/examples/artifacts/AMBER_DiAla/min7.in -o /localscratch/kbui/NexusMol/examples/artifacts/AMBER_DiAla/min7.out -p /localscratch/kbui/NexusMol/examples/ALA.prmtop -c /localscratch/kbui/NexusMol/examples/artifacts/AMBER_DiAla/min6.ncrst -ref /localscratch/kbui/NexusMol/examples/artifacts/AMBER_DiAla/min6.ncrst -r /localscratch/kbui/NexusMol/examples/artifacts/AMBER_DiAla/min7.ncrst -x /localscratch/kbui/NexusMol/examples/artifacts/AMBER_DiAla/min7.nc -inf /localscratch/kbui/NexusMol/examples/artifacts/AMBER_DiAla/min7.info
-2026-05-28 23:42:34 | WARNING  | STDERR:            0
-Note: The following floating-point exceptions are signalling: IEEE_UNDERFLOW_FLAG IEEE_DENORMAL
-
-2026-05-28 23:42:34 | INFO     | STAGE: Minimization completed
-2026-05-28 23:42:34 | INFO     | STAGE: Heating started
-2026-05-28 23:42:34 | INFO     | Running: ; cmd: pmemd.cuda -AllowSmallBox -O -i /localscratch/kbui/NexusMol/examples/artifacts/AMBER_DiAla/heat.in -o /localscratch/kbui/NexusMol/examples/artifacts/AMBER_DiAla/heat.out -p /localscratch/kbui/NexusMol/examples/ALA.prmtop -c /localscratch/kbui/NexusMol/examples/artifacts/AMBER_DiAla/min7.ncrst -ref /localscratch/kbui/NexusMol/examples/artifacts/AMBER_DiAla/min7.ncrst -r /localscratch/kbui/NexusMol/examples/artifacts/AMBER_DiAla/heat.ncrst -x /localscratch/kbui/NexusMol/examples/artifacts/AMBER_DiAla/heat.nc -inf /localscratch/kbui/NexusMol/examples/artifacts/AMBER_DiAla/heat.info
-2026-05-28 23:44:30 | WARNING  | STDERR:            0
-Note: The following floating-point exceptions are signalling: IEEE_UNDERFLOW_FLAG IEEE_DENORMAL
-
-2026-05-28 23:44:30 | INFO     | STAGE: Heating completed
-2026-05-28 23:44:30 | INFO     | STAGE: Equilibration started
-2026-05-28 23:44:30 | INFO     | Running: ; cmd: pmemd.cuda -AllowSmallBox -O -i /localscratch/kbui/NexusMol/examples/artifacts/AMBER_DiAla/eq1.in -o /localscratch/kbui/NexusMol/examples/artifacts/AMBER_DiAla/eq1.out -p /localscratch/kbui/NexusMol/examples/ALA.prmtop -c /localscratch/kbui/NexusMol/examples/artifacts/AMBER_DiAla/heat.ncrst -ref /localscratch/kbui/NexusMol/examples/artifacts/AMBER_DiAla/heat.ncrst -r /localscratch/kbui/NexusMol/examples/artifacts/AMBER_DiAla/eq1.ncrst -x /localscratch/kbui/NexusMol/examples/artifacts/AMBER_DiAla/eq1.nc -inf /localscratch/kbui/NexusMol/examples/artifacts/AMBER_DiAla/eq1.info
-2026-05-28 23:44:42 | WARNING  | STDERR:            0
-Note: The following floating-point exceptions are signalling: IEEE_UNDERFLOW_FLAG IEEE_DENORMAL
-
-2026-05-28 23:44:42 | INFO     | Running: ; cmd: pmemd.cuda -AllowSmallBox -O -i /localscratch/kbui/NexusMol/examples/artifacts/AMBER_DiAla/eq2.in -o /localscratch/kbui/NexusMol/examples/artifacts/AMBER_DiAla/eq2.out -p /localscratch/kbui/NexusMol/examples/ALA.prmtop -c /localscratch/kbui/NexusMol/examples/artifacts/AMBER_DiAla/eq1.ncrst -ref /localscratch/kbui/NexusMol/examples/artifacts/AMBER_DiAla/eq1.ncrst -r /localscratch/kbui/NexusMol/examples/artifacts/AMBER_DiAla/eq2.ncrst -x /localscratch/kbui/NexusMol/examples/artifacts/AMBER_DiAla/eq2.nc -inf /localscratch/kbui/NexusMol/examples/artifacts/AMBER_DiAla/eq2.info
-2026-05-28 23:44:54 | WARNING  | STDERR:            0
-Note: The following floating-point exceptions are signalling: IEEE_UNDERFLOW_FLAG IEEE_DENORMAL
-
-2026-05-28 23:44:54 | INFO     | Running: ; cmd: pmemd.cuda -AllowSmallBox -O -i /localscratch/kbui/NexusMol/examples/artifacts/AMBER_DiAla/eq3.in -o /localscratch/kbui/NexusMol/examples/artifacts/AMBER_DiAla/eq3.out -p /localscratch/kbui/NexusMol/examples/ALA.prmtop -c /localscratch/kbui/NexusMol/examples/artifacts/AMBER_DiAla/eq2.ncrst -ref /localscratch/kbui/NexusMol/examples/artifacts/AMBER_DiAla/eq2.ncrst -r /localscratch/kbui/NexusMol/examples/artifacts/AMBER_DiAla/eq3.ncrst -x /localscratch/kbui/NexusMol/examples/artifacts/AMBER_DiAla/eq3.nc -inf /localscratch/kbui/NexusMol/examples/artifacts/AMBER_DiAla/eq3.info
-2026-05-28 23:45:06 | WARNING  | STDERR:            0
-Note: The following floating-point exceptions are signalling: IEEE_UNDERFLOW_FLAG IEEE_DENORMAL
-
-2026-05-28 23:45:06 | INFO     | Running: ; cmd: pmemd.cuda -AllowSmallBox -O -i /localscratch/kbui/NexusMol/examples/artifacts/AMBER_DiAla/eq4.in -o /localscratch/kbui/NexusMol/examples/artifacts/AMBER_DiAla/eq4.out -p /localscratch/kbui/NexusMol/examples/ALA.prmtop -c /localscratch/kbui/NexusMol/examples/artifacts/AMBER_DiAla/eq3.ncrst -ref /localscratch/kbui/NexusMol/examples/artifacts/AMBER_DiAla/eq3.ncrst -r /localscratch/kbui/NexusMol/examples/artifacts/AMBER_DiAla/eq4.ncrst -x /localscratch/kbui/NexusMol/examples/artifacts/AMBER_DiAla/eq4.nc -inf /localscratch/kbui/NexusMol/examples/artifacts/AMBER_DiAla/eq4.info
-2026-05-28 23:45:19 | WARNING  | STDERR:            0
-Note: The following floating-point exceptions are signalling: IEEE_UNDERFLOW_FLAG IEEE_DENORMAL
-
-2026-05-28 23:45:19 | INFO     | Running: ; cmd: pmemd.cuda -AllowSmallBox -O -i /localscratch/kbui/NexusMol/examples/artifacts/AMBER_DiAla/eq5.in -o /localscratch/kbui/NexusMol/examples/artifacts/AMBER_DiAla/eq5.out -p /localscratch/kbui/NexusMol/examples/ALA.prmtop -c /localscratch/kbui/NexusMol/examples/artifacts/AMBER_DiAla/eq4.ncrst -ref /localscratch/kbui/NexusMol/examples/artifacts/AMBER_DiAla/eq4.ncrst -r /localscratch/kbui/NexusMol/examples/artifacts/AMBER_DiAla/eq5.ncrst -x /localscratch/kbui/NexusMol/examples/artifacts/AMBER_DiAla/eq5.nc -inf /localscratch/kbui/NexusMol/examples/artifacts/AMBER_DiAla/eq5.info
-2026-05-28 23:45:31 | WARNING  | STDERR:            0
-Note: The following floating-point exceptions are signalling: IEEE_UNDERFLOW_FLAG IEEE_DENORMAL
-
-2026-05-28 23:45:31 | INFO     | Running: ; cmd: pmemd.cuda -AllowSmallBox -O -i /localscratch/kbui/NexusMol/examples/artifacts/AMBER_DiAla/eq6.in -o /localscratch/kbui/NexusMol/examples/artifacts/AMBER_DiAla/eq6.out -p /localscratch/kbui/NexusMol/examples/ALA.prmtop -c /localscratch/kbui/NexusMol/examples/artifacts/AMBER_DiAla/eq5.ncrst -ref /localscratch/kbui/NexusMol/examples/artifacts/AMBER_DiAla/eq5.ncrst -r /localscratch/kbui/NexusMol/examples/artifacts/AMBER_DiAla/eq6.ncrst -x /localscratch/kbui/NexusMol/examples/artifacts/AMBER_DiAla/eq6.nc -inf /localscratch/kbui/NexusMol/examples/artifacts/AMBER_DiAla/eq6.info
-2026-05-28 23:45:43 | WARNING  | STDERR:            0
-Note: The following floating-point exceptions are signalling: IEEE_UNDERFLOW_FLAG IEEE_DENORMAL
-
-2026-05-28 23:45:43 | INFO     | Running: ; cmd: pmemd.cuda -AllowSmallBox -O -i /localscratch/kbui/NexusMol/examples/artifacts/AMBER_DiAla/eq7.in -o /localscratch/kbui/NexusMol/examples/artifacts/AMBER_DiAla/eq7.out -p /localscratch/kbui/NexusMol/examples/ALA.prmtop -c /localscratch/kbui/NexusMol/examples/artifacts/AMBER_DiAla/eq6.ncrst -ref /localscratch/kbui/NexusMol/examples/artifacts/AMBER_DiAla/eq6.ncrst -r /localscratch/kbui/NexusMol/examples/artifacts/AMBER_DiAla/eq7.ncrst -x /localscratch/kbui/NexusMol/examples/artifacts/AMBER_DiAla/eq7.nc -inf /localscratch/kbui/NexusMol/examples/artifacts/AMBER_DiAla/eq7.info
-2026-05-28 23:45:56 | WARNING  | STDERR:            0
-Note: The following floating-point exceptions are signalling: IEEE_UNDERFLOW_FLAG IEEE_DENORMAL
-
-2026-05-28 23:45:56 | INFO     | STAGE: Equilibration completed
-2026-05-28 23:45:56 | INFO     | STAGE: Production started
-2026-05-28 23:45:56 | INFO     | Running: ; cmd: pmemd.cuda -AllowSmallBox -O -i /localscratch/kbui/NexusMol/examples/artifacts/AMBER_DiAla/seed1.in -o /localscratch/kbui/NexusMol/examples/artifacts/AMBER_DiAla/seed1.out -p /localscratch/kbui/NexusMol/examples/ALA.prmtop -c /localscratch/kbui/NexusMol/examples/artifacts/AMBER_DiAla/eq7.ncrst -ref /localscratch/kbui/NexusMol/examples/artifacts/AMBER_DiAla/eq7.ncrst -r /localscratch/kbui/NexusMol/examples/artifacts/AMBER_DiAla/seed1.ncrst -x /localscratch/kbui/NexusMol/examples/artifacts/AMBER_DiAla/seed1.nc -inf /localscratch/kbui/NexusMol/examples/artifacts/AMBER_DiAla/seed1.info
-2026-05-28 23:46:20 | WARNING  | STDERR:            0
-Note: The following floating-point exceptions are signalling: IEEE_UNDERFLOW_FLAG IEEE_DENORMAL
-
-2026-05-28 23:46:20 | INFO     | Running: ; cmd: pmemd.cuda -AllowSmallBox -O -i /localscratch/kbui/NexusMol/examples/artifacts/AMBER_DiAla/prod1.in -o /localscratch/kbui/NexusMol/examples/artifacts/AMBER_DiAla/prod1.out -p /localscratch/kbui/NexusMol/examples/ALA.prmtop -c /localscratch/kbui/NexusMol/examples/artifacts/AMBER_DiAla/seed1.ncrst -ref /localscratch/kbui/NexusMol/examples/artifacts/AMBER_DiAla/seed1.ncrst -r /localscratch/kbui/NexusMol/examples/artifacts/AMBER_DiAla/prod1.ncrst -x /localscratch/kbui/NexusMol/examples/artifacts/AMBER_DiAla/prod1.nc -inf /localscratch/kbui/NexusMol/examples/artifacts/AMBER_DiAla/prod1.info
-2026-05-28 23:48:16 | WARNING  | STDERR:            0
-Note: The following floating-point exceptions are signalling: IEEE_UNDERFLOW_FLAG IEEE_DENORMAL
-
-2026-05-28 23:48:16 | INFO     | Finished full run with seed 1
-2026-05-28 23:48:16 | INFO     | STAGE: Production completed
-2026-05-28 23:48:16 | INFO     | STAGE: Copying to results started
-2026-05-28 23:48:16 | INFO     | Pipeline completed
+2026-06-01 23:17:43 | INFO     | STAGE: Minimization started
+2026-06-01 23:17:47 | INFO     | STAGE: Minimization completed
+2026-06-01 23:17:47 | INFO     | STAGE: Heating started
+2026-06-01 23:19:42 | INFO     | STAGE: Heating completed
+2026-06-01 23:19:42 | INFO     | STAGE: Equilibration started
+2026-06-01 23:21:07 | INFO     | STAGE: Equilibration completed
+2026-06-01 23:21:07 | INFO     | STAGE: Production started
+2026-06-01 23:23:27 | INFO     | STAGE: Production completed
+2026-06-01 23:23:27 | INFO     | STAGE: Copying to results started
+2026-06-01 23:23:27 | INFO     | Pipeline completed

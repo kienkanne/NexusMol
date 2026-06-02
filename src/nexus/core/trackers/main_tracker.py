@@ -2,7 +2,13 @@ from pydantic import BaseModel
 from typing import Any, Optional
 
 
+
+
 def main_tracker(stage_name, checkpoint=False):
+    """
+    NOTE: Main tracker logging ignores the --silence flag, as it is meant to track the main stages of a pipeline regardless of logging level
+    This decorator wraps a function to automatically log its execution as a stage in the pipeline, with optional checkpointing.
+    """
     def decorator(func):
         def wrapper(*args, **kwargs):
             ctx = PipelineContext.get_ctx()
@@ -12,11 +18,11 @@ def main_tracker(stage_name, checkpoint=False):
             runstate = ctx.runstate   
 
             if checkpoint and runstate.is_done(stage_name):
-                logger.info(f"STAGE: {stage_name} already done, skipping")
+                logger.info(f"STAGE: {stage_name} already done, skipping", extra={"is_tracker": True})
                 return runstate.get_output(stage_name)
 
             try:
-                logger.info(f"STAGE: {stage_name} started")
+                logger.info(f"STAGE: {stage_name} started", extra={"is_tracker": True})
                 manifest.stage_start(stage_name)
                 runstate.mark_running(stage_name)
 
@@ -24,12 +30,12 @@ def main_tracker(stage_name, checkpoint=False):
 
                 runstate.mark_done(stage_name, result if checkpoint else None)
                 manifest.stage_done(stage_name)
-                logger.info(f"STAGE: {stage_name} completed")
+                logger.info(f"STAGE: {stage_name} completed", extra={"is_tracker": True})
 
             except Exception as e:
                 runstate.mark_failed(stage_name)
                 manifest.stage_failed(stage_name, e)
-                logger.exception(f"STAGE: {stage_name} failed")
+                logger.exception(f"STAGE: {stage_name} failed", extra={"is_tracker": True})
                 manifest.finalize(success=False)
                 raise
 
@@ -82,7 +88,7 @@ def final_copy_trackers(results_dir):
     runstate = ctx.runstate
 
     manifest.finalize(success=True)
-    logger.info("Pipeline completed")
+    logger.info("Pipeline completed", extra={"is_tracker": True})
 
     log_path = logger.get_path()
     manifest_path = manifest.get_path()

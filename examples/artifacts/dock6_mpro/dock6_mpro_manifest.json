@@ -1,5 +1,5 @@
 {
-  "created_utc": "2026-05-28T21:52:43.706212+00:00",
+  "created_utc": "2026-06-02T02:20:29.860136+00:00",
   "host": "irene2",
   "platform": "Linux-6.12.0-124.56.1.el10_1.x86_64-x86_64-with-glibc2.39",
   "python_version": "3.11.15",
@@ -11,11 +11,11 @@
     "Final copy to results": "done"
   },
   "timings_sec": {
-    "Prepare receptor for DOCK6": 152.194,
-    "Batch docking with DOCK6": 27.639,
-    "Write summary csv": 0.002,
+    "Prepare receptor for DOCK6": 154.314,
+    "Batch docking with DOCK6": 27.383,
+    "Write summary csv": 0.003,
     "Final copy to results": 0.002
   },
-  "total_wall_time": "179.837",
-  "finished_utc": "2026-05-28T21:55:43.543230+00:00"
+  "total_wall_time": "181.703",
+  "finished_utc": "2026-06-02T02:23:31.563208+00:00"
 }
