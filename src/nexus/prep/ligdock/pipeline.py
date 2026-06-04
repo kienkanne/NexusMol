@@ -36,11 +36,11 @@ class LigdockPipeline(BaseModel):
 
         output_list = [output_dir / f"{name}{suffix}" for name in names]
 
-        if Path(suffix).suffix == ".pdbqt":
+        if output_list[0].suffix == ".pdbqt":
             from nexus.prep.ligdock._meeko_charge import _parallel_meeko_charge
             prepared_ligs = _parallel_meeko_charge(mol_with_h_list, output_list, n_jobs)
 
-        elif Path(suffix).suffix == ".mol2":
+        elif output_list[0].suffix == ".mol2":
             from nexus.prep.ligdock._obabel_charge import _parallel_obabel_charge
             prepared_ligs = _parallel_obabel_charge(mol_with_h_list, output_list, n_jobs)
 

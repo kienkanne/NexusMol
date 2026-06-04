@@ -11,7 +11,7 @@ def _run_cpptraj(cpptraj_input: str, output_dir: Path, name: str= "", logger=Non
     try:
         os.chdir(output_dir)
 
-        cpptraj_in = output_dir / f"{name}.in"
+        cpptraj_in = output_dir / f"analysis_{name}.in"
         cpptraj_in.write_text(cpptraj_input)
 
         cpptraj_cmd = [
