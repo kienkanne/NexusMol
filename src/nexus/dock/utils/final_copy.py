@@ -4,7 +4,7 @@ from nexus.core.trackers.main_tracker import main_tracker, final_copy_trackers
 
 
 @main_tracker("Final copy to results")
-def final_copy(dcfg, rec_bundles, docking_summary, out_files):
+def final_copy(dcfg, rec_bundles, written_scores, written_clusters, out_files):
     working_dir = dcfg.common.working_dir
     results_dir = dcfg.common.results_dir
 
@@ -43,18 +43,32 @@ def final_copy(dcfg, rec_bundles, docking_summary, out_files):
         if pocket and pocket.exists():
             shutil.copy2(pocket, rec_dir)
 
-    # copy docking summary files to respective receptor dirs or to root
+    # Copy csv files to respective receptor dirs or to root
     csv_paths_dict = {} # Used to add to metadata
-    if isinstance(docking_summary, (list, tuple)):
-        for csv in docking_summary:
+
+    if isinstance(written_scores, (list, tuple)):
+        for csv in written_scores:
             for rec in rec_names:
                 if rec in str(csv.stem):
                     src = working_dir / csv
                     dst = results_dir / rec / Path(csv).name
                     if src.exists():
                         shutil.copy2(src, dst)
-                    csv_paths_dict[rec] = dst
+                        
+                    csv_paths_dict[f"{rec}_scores"] = dst
                     break
+
+    if isinstance(written_clusters, (list, tuple)):
+        for csv in written_clusters:
+            for rec in rec_names:
+                if rec in str(csv.stem):
+                    src = working_dir / csv
+                    dst = results_dir / rec / Path(csv).name
+                    if src.exists():
+                        shutil.copy2(src, dst)
+                        
+                    csv_paths_dict[f"{rec}_clusters"] = dst
+                    break                
 
     for name, csv_path in csv_paths_dict.items():
         setattr(dcfg.metadata, name, str(csv_path))

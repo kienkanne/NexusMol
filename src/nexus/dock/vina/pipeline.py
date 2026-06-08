@@ -20,6 +20,6 @@ class VinaPipeline():
 
         pairs = matchmixer(rec_bundles, lig_paths)
         out_files = vina_parallel_docking(self.dcfg, pairs)
-        docking_summary = write_summary_csv(self.dcfg, out_files, rec_bundles)
+        written_scores, written_clusters = write_summary_csv(self.dcfg, out_files, rec_bundles)
 
-        final_copy(self.dcfg, rec_bundles, docking_summary, out_files)
+        final_copy(self.dcfg, rec_bundles, written_scores, written_clusters, out_files)

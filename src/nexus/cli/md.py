@@ -49,10 +49,10 @@ def fbe(
     start_frame: int = typer.Option(1, "-s", "--start-frame", help="Starting frame for MMPBSA analysis"),
     end_frame: int = typer.Option(9999999, "-e", "--end-frame", help="Ending frame for MMPBSA analysis"),
     interval: int = typer.Option(10, "-i", "--interval", help="Frame interval for MMPBSA analysis"),
-    n_jobs: int = typer.Option(1, "-j", "--n-jobs", help="Number of MPI jobs to use for MMPBSA")
+    n_cores: int = typer.Option(1, "-c", "--n-cores", help="Number of MPI cores to use for MMPBSA")
 ):
     """Run free binding energy analysis using MMPBSA."""
-    from nexus.md.analysis.fbe import fbe
+    from nexus.md.fbe.fbe import fbe
 
     if name is None:
         name = prmtop.stem
@@ -60,4 +60,4 @@ def fbe(
         output_dir = Path.cwd()
 
     fbe(prmtop=prmtop, trajin=trajin, mask=mask, name=name, output_dir=output_dir, 
-                 startframe=start_frame, endframe=end_frame, interval=interval, n_jobs=n_jobs)
+                 startframe=start_frame, endframe=end_frame, interval=interval, n_cores=n_cores)

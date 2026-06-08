@@ -3,7 +3,7 @@ from nexus.core.executors.shell import shell
 import os
 
 
-def _run_mmpbsa(mmgbsa_input: str, prmtop: Path, trajin: Path, output_dir: Path, mask: str, name: str= "", n_jobs: int=1, logger=None):
+def _run_mmpbsa(mmgbsa_input: str, prmtop: Path, trajin: Path, output_dir: Path, mask: str, name: str= "", n_cores: int=1, logger=None):
     output_dir = Path(output_dir).resolve()
     output_dir.mkdir(parents=True, exist_ok=True)
 
@@ -42,7 +42,7 @@ def _run_mmpbsa(mmgbsa_input: str, prmtop: Path, trajin: Path, output_dir: Path,
         mmpbsa_py_mpi_cmd = [
             "mpirun",
             "-np",
-            str(n_jobs),
+            str(n_cores),
             "MMPBSA.py.MPI",
             "-O",
             "-i",
@@ -73,3 +73,4 @@ def _run_mmpbsa(mmgbsa_input: str, prmtop: Path, trajin: Path, output_dir: Path,
     
     finally:
         os.chdir(cwd)
+        

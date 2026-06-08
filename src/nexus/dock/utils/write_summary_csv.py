@@ -1,7 +1,9 @@
 import csv
-import math
+import numpy as np
 from pathlib import Path
-from nexus.core.executors.base import base
+import pandas as pd
+
+from nexus.dock.utils._compute_clusters import compute_clusters
 from nexus.core.trackers.main_tracker import main_tracker
 
 
@@ -27,6 +29,12 @@ def parse_scores(output, max_poses, program):
         
     return scores
 
+
+def pose1_sort(row):
+    score = row[1] if len(row) > 1 else ""
+    return float(score) if score != "" else np.inf
+
+
 @main_tracker("Write summary csv")
 def write_summary_csv(dcfg, out_files, rec_bundles):
 
@@ -34,7 +42,9 @@ def write_summary_csv(dcfg, out_files, rec_bundles):
     max_poses = dcfg.common.max_poses
     working_dir = dcfg.common.working_dir
 
-    written = []
+    # Initialize list of written scores csv and clusters csv for each receptor
+    written_scores = []
+    written_clusters = []
 
     # Group out_files by receptor name derived from rec_bundles
     if rec_bundles is None:
@@ -54,22 +64,38 @@ def write_summary_csv(dcfg, out_files, rec_bundles):
     headers = ["name"] + [f"pose{i}" for i in range(1, max_poses + 1)]
 
     for rec, files in groups.items():
-        rows = []
+        scores_rows = []
+        cluster_results = []
+
         for out in files:
+            # Parse raw scores
             lig_name = Path(out).stem.replace(f"{rec}_", "").replace("_scored", "")
             scores = parse_scores(out, max_poses, dcfg.common.program)
-            rows.append([lig_name] + scores + [""] * (max_poses - len(scores)))
+            scores_rows.append([lig_name] + scores + [""] * (max_poses - len(scores)))
 
-        def pose1_sort(row):
-            score = row[1] if len(row) > 1 else ""
-            return float(score) if score != "" else math.inf
+            # Compute cluster metrics
+            compute_clusters(lig_name, out, cluster_results)
 
-        rows = sorted(rows, key=pose1_sort)
-        csv_name = working_dir / f"{project_name}_{rec}_docking_summary.csv"
-        with open(csv_name, "w", newline="") as handle:
+        csv_name = f"{project_name}_{rec}"
+        scores_csv_name = working_dir / f"Scores_{csv_name}.csv"
+        cluster_csv_name = working_dir / f"Clusters_{csv_name}.csv"
+
+        # Write scores csv
+        scores_rows = sorted(scores_rows, key=pose1_sort)
+        
+        with open(scores_csv_name, "w", newline="") as handle:
             writer = csv.writer(handle)
             writer.writerow(headers)
-            writer.writerows(rows)
-        written.append(csv_name)
+            writer.writerows(scores_rows)
+        written_scores.append(scores_csv_name)
 
-    return written
+        # Write clusters csv
+        df = pd.DataFrame(cluster_results)
+
+        # Sort by ligand name, then by cluster size (largest clusters at the top)
+        df = df.sort_values(by=["ligand_name", "cluster_size"], ascending=[True, False])
+        df.to_csv(cluster_csv_name, index=False)
+
+        written_clusters.append(cluster_csv_name)
+
+    return written_scores, written_clusters

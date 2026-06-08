@@ -4,8 +4,8 @@ libs:
 
 common:
   project_name: vina_mpro
-  working_dir: "/localscratch/kbui/NexusMol/examples/artifacts"
-  results_dir: "/localscratch/kbui/NexusMol/examples/results"
+  working_dir: "/localscratch/kbui/NexusMol/examples/_artifacts"
+  results_dir: "/localscratch/kbui/NexusMol/examples/_results"
 
   padding: 4.0 # Extra buffer distance for the search grid
   n_jobs: 16 # Total number of concurrent jobs, adjust to your machine

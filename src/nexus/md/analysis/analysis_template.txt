@@ -5,7 +5,7 @@ autoimage
 
 
 # --- RMS analysis ---
-rmsd first ${mask}@CA out rmsd_${name}.out
+rmsd first ${mask}@CA out rmsd_${name}.dat
 atomicfluct out rmsf_bb_${name}.dat @CA,C,N byres
 
 run
