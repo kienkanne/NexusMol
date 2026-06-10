@@ -1,23 +1,12 @@
-from pydantic import BaseModel, ConfigDict, model_validator
-from typing import Optional, Literal, List
+from pydantic import BaseModel, ConfigDict, Field
+from typing import Optional, List
 from pathlib import Path
 
 class CommonConfig(BaseModel):
     input: Optional[Path] = None
-    output_dir: Optional[Path] = None
+    output_dir: Optional[Path] = Path.cwd()
     suffix: Optional[str] = None
 
-    chimerax: Optional[Path] = "/usr/local/chimerax/bin/ChimeraX"
-    working_dir: Optional[Path] = Path.cwd() ### Only used by sysmd
-
-    model_config = ConfigDict(extra='allow')
-
-    @model_validator(mode="after")
-    def default_output_dir(self):
-        if self.output_dir is None:
-            self.output_dir = Path.cwd()
-        self.output_dir.mkdir(parents=True, exist_ok=True)
-        return self
 
 class RecConfig(BaseModel):
     dry: Optional[bool] = False
@@ -25,33 +14,14 @@ class RecConfig(BaseModel):
 class MutateConfig(BaseModel):
     mutations: Optional[List[str]] = None
 
-class LigdockConfig(BaseModel):
+class LigConfig(BaseModel):
     n_jobs: Optional[int] = 1
-    model_config = ConfigDict(extra='allow')
     
-class SysmdConfig(BaseModel):
-    system_name: Optional[str] = None
-    ligand: Optional[Path] = None
-    pose_num: Optional[int] = 1
-
-    # Technically these are literal, but there are a lot of options
-    force_field: Optional[str] = "ff19SB"
-    water_model: Optional[str] = "opc"
-
-    box_type: Optional[Literal["Box", "Oct"]] = "Oct"
-    box_size: Optional[float] = 12.0
-    salt_conc: Optional[float] = 0.15    
 
 class PrepConfig(BaseModel):
-    common: Optional[CommonConfig] = CommonConfig()
-    rec: Optional[RecConfig] = RecConfig()
-    mutate: Optional[MutateConfig] = MutateConfig()
-    ligdock: Optional[LigdockConfig] = LigdockConfig()
-    sysmd: Optional[SysmdConfig] = SysmdConfig()
+    common: CommonConfig = Field(default_factory=CommonConfig)
+    rec: RecConfig = Field(default_factory=RecConfig)
+    mutate: MutateConfig = Field(default_factory=MutateConfig)
+    lig: LigConfig = Field(default_factory=LigConfig)
 
-
-def load_prep_config(path):
-    import yaml
-    with open(path) as f:
-        data = yaml.safe_load(f)
-    return PrepConfig.model_validate(data)
+    model_config = ConfigDict(extra="allow")

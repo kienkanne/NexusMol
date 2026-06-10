@@ -1,0 +1,30 @@
+common:
+  job_name: dock6_mpro
+  output_dir: results
+  padding: 4.0 # Extra buffer distance for the search grid
+  n_jobs: 16 # Total number of concurrent jobs, adjust to your machine
+  max_poses: 8 # Total number of pose scores to be displayed in summary csv
+
+receptors:
+  source: receptors/final
+  suffix: ".pdb" # used when `source` is a directory, ignored if `source` is a file
+  pocket_option: selection
+  selection: "/A:41,145,163,164,172" # Residues at the catalytic site
+  reference: null # only used when "pocket_option" is "reference"
+  reference_suffix: null
+
+ligands:
+  source: ligands/dock6
+  suffix: "_prepared.mol2" # used when `source` is a directory, ignored if `source` is a file
+
+engine:
+  program: dock6
+  max_orientations: 1000 # Higher for more accuracy at more cost
+  radius: 10.0 # in Angstroms, radius for sphere generation
+
+# You can write anything here, and they will be wrote to a JSON file in results directory
+# CSV summary file paths will also be included here for easy parsing
+metadata:
+  tool: dock6
+  grid: catalytic_site
+  example: mpro

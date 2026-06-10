@@ -1,9 +1,0 @@
-{
-    "tool": "vina",
-    "grid": "catalytic_site",
-    "settings": "default",
-    "6W63_scores": "/localscratch/kbui/NexusMol/examples/_results/vina_mpro/6W63/Scores_vina_mpro_6W63.csv",
-    "7K40_scores": "/localscratch/kbui/NexusMol/examples/_results/vina_mpro/7K40/Scores_vina_mpro_7K40.csv",
-    "6W63_clusters": "/localscratch/kbui/NexusMol/examples/_results/vina_mpro/6W63/Scores_vina_mpro_6W63.csv",
-    "7K40_clusters": "/localscratch/kbui/NexusMol/examples/_results/vina_mpro/7K40/Scores_vina_mpro_7K40.csv"
-}

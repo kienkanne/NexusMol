@@ -12,7 +12,7 @@ def write_docking_config(path, tmp_path, receptor_source, ligand_source, recepto
         "  chimera: chimera\n"
         "  dock_home: dock6\n"
         "common:\n"
-        "  project_name: demo\n"
+        "  job_name: demo\n"
         f"  working_dir: {tmp_path / 'work'}\n"
         f"  results_dir: {tmp_path / 'results'}\n"
         "  n_jobs: 2\n"

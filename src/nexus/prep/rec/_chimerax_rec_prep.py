@@ -5,13 +5,13 @@ from string import Template
 from nexus.prep.prep_config import PrepConfig
 from nexus.core.trackers.logging_utils import CustomLogger
 
-def chimerax_rec_prep(pcfg: PrepConfig):
-    input = pcfg.common.input
-    output_dir = pcfg.common.output_dir
-    suffix = pcfg.common.suffix
-    chimerax = pcfg.common.chimerax
+def chimerax_rec_prep(cfg: PrepConfig):
+    input = cfg.common.input
+    output_dir = cfg.common.output_dir
+    suffix = cfg.common.suffix
+    chimerax = cfg._global.software.chimerax
 
-    dry = pcfg.rec.dry
+    dry = cfg.rec.dry
 
     for input_path in input:
         output_path = output_dir / f"{input_path.stem}{suffix}"

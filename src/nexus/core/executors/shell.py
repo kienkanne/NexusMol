@@ -1,7 +1,7 @@
 import subprocess
 import os
 from nexus.core.trackers.logging_utils import DummyLogger
-from nexus.core.trackers.main_tracker import PipelineContext
+from nexus.core.trackers.main_tracker import TrackerContext
 from contextlib import contextmanager
 
 
@@ -10,7 +10,7 @@ def shell(cmd, stdin=None, title=""):
     try:
         cmd = [os.path.expandvars(i) for i in cmd]
 
-        ctx = PipelineContext.get_ctx()
+        ctx = TrackerContext.get_ctx()
         try:
             logger = ctx.logger if ctx.logger is not None else DummyLogger()
         except:

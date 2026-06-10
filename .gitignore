@@ -55,7 +55,6 @@ htmlcov/
 
 # Build artifacts
 
-build/
 dist/
 *.egg-info/
 
@@ -123,4 +122,3 @@ tokens.txt
 !examples/**/*.log
 !examples/**/*.out
 !examples/results
-!examples/artifacts

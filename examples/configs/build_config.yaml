@@ -1,0 +1,16 @@
+common:
+  receptor: inputs/6W63.pdb
+  output_dir: results
+  job_name: 6W63_mol4_solvated
+
+ligand:
+  # Alternatively, we can choose to not include these to build a solvated receptor only with no ligands
+  ligand: inputs/6W63_mol4_prepared_scored.pdbqt
+  pose_num: 1 # Highest-scoring pose. Leave 1 if only one pose is present in the input file.
+
+system:
+  force_field: "ff19SB" # or "ff14SB" ...
+  water_model: "tip3p" # or "opc" ...
+  box_type: "Oct" # or "Box" ...
+  box_size: 12.0 # in Angstroms, distance from the solute to the edge of the box
+  salt_conc: 0.15 # in molar (M), so 0.15 M is physiological salt concentration

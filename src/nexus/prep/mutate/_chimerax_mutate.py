@@ -5,12 +5,12 @@ from typing import List
 from nexus.prep.prep_config import PrepConfig
 from nexus.core.trackers.logging_utils import CustomLogger
 
-def chimerax_mutate(pcfg: PrepConfig):
-    input: List[Path] = pcfg.common.input
-    output_dir = pcfg.common.output_dir
-    suffix = pcfg.common.suffix
-    chimerax = pcfg.common.chimerax
-    mutations = pcfg.mutate.mutations
+def chimerax_mutate(cfg: PrepConfig):
+    input: List[Path] = cfg.common.input
+    output_dir = cfg.common.output_dir
+    suffix = cfg.common.suffix
+    chimerax = cfg._global.software.chimerax
+    mutations = cfg.mutate.mutations
 
     ## 1. Parse and Validate Selections
 

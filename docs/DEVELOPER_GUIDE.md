@@ -1,169 +1,121 @@
 # Developer Guide
 
-This guide is for contributors working on NexusMol locally. It focuses on the current codebase rather than historical documentation.
+This guide is for contributors working on the current Nexus codebase.
 
-## Local Environment Setup
-
-1. Create and activate the conda environment:
+## Local Setup
 
 ```bash
 conda env create -f environment.yaml
 conda activate nexus
-```
-
-2. Install NexusMol in editable mode with test dependencies:
-
-```bash
 pip install -e ".[test]"
 ```
 
-3. Confirm the package imports:
+Smoke tests:
 
 ```bash
+nexus --help
+nexus config --help
 python -c "import nexus; print('nexus import ok')"
 ```
 
-`nexus --help` should be the normal smoke test, but it can currently fail offline because the fetch command imports `rcsb-api` at CLI import time. That import-time network behavior is tracked in `SECURITY_AND_BUGS.md`.
+Run tests:
 
-4. Install or load workflow-specific external tools:
+```bash
+pytest
+```
+
+## External Tools
+
+The conda environment covers the Python stack and several open-source tools, but full workflow testing also requires external scientific software:
 
 | Tool | Needed for |
 | --- | --- |
-| ChimeraX | receptor cleaning, mutation, Vina and DOCK6 pocket generation |
-| Legacy UCSF Chimera | DOCK6 DMS generation |
-| DOCK6 | `nexus dock dock6` |
-| AmberTools/Amber | `nexus prep sysmd`, `nexus md amber`, `nexus md analyze` |
-| OpenMM | `nexus md openmm` |
-| Vina | `nexus dock vina` |
-| Open Babel | ligand conversion and pose splitting |
-| GNU Parallel | legacy compatibility only; new workflows do not depend on it directly |
+| ChimeraX | `prep rec`, `prep mutate`, Vina receptor prep, DOCK6 receptor prep |
+| Legacy UCSF Chimera | DOCK6 receptor prep |
+| DOCK6 | `dock run` with `engine.program: dock6` |
+| AmberTools/Amber | `md build`, Amber `md run`, `md analyze` |
+| OpenMM | `md run` with `engine.program: openmm` |
+| Open Babel | ligand preparation and MD-build ligand pose processing |
+| Vina | `dock run` with `engine.program: vina` |
 
-5. Set required environment variables when applicable:
-
-```bash
-module load amber/24
-echo "$AMBERHOME"
-```
-
-6. Update YAML config paths for your machine:
-
-```yaml
-libs:
-  chimerax: /usr/local/chimerax/bin/ChimeraX
-  chimera: /usr/local/chimera/chimera-1.8/bin/chimera
-  dock_home: /path/to/dock6
-```
+Machine-specific paths belong in `~/.config/nexus/config.yaml`, not in workflow configs.
 
 ## Repository Tour
 
 ```text
-src/nexus/cli/          Typer commands
-src/nexus/core/         execution wrappers, trackers, logging/state
-src/nexus/fetch/        RCSB fetch pipeline
-src/nexus/prep/         receptor, mutation, ligand, and sysmd preparation
-src/nexus/dock/         docking configs, Vina, DOCK6, score summaries
-src/nexus/md/           Amber pipeline, OpenMM pipeline, and CPPTRAJ analysis
-examples/*.yaml         example config templates
+src/nexus/cli/          Typer command groups
+src/nexus/config.py     global config model and helpers
+src/nexus/core/         executors, config loading, tracking
+src/nexus/fetch/        RCSB fetching
+src/nexus/prep/         receptor, mutation, ligand prep
+src/nexus/dock/         Vina and DOCK6 workflows
+src/nexus/md/build/     Amber system building
+src/nexus/md/run/       Amber and OpenMM MD engines
+src/nexus/md/analyze/   CPPTRAJ analysis
+src/nexus/md/mmpbsa/    MM-PBSA/GBSA work in progress
+examples/configs/       runnable example YAMLs
+docs/                   user and developer documentation
 ```
 
-## Development Workflow
+## Current Patterns
 
-Use short-lived topic branches:
-
-| Change type | Branch pattern |
-| --- | --- |
-| Feature | `feat/<area>-<short-name>` |
-| Bug fix | `fix/<area>-<short-name>` |
-| Documentation | `docs/<topic>` |
-| Maintenance | `chore/<topic>` |
-
-Recommended loop:
-
-1. Start from a clean working tree.
-2. Make a small, focused change.
-3. Add or update tests when the behavior can be tested without proprietary tools or large data.
-4. Run fast checks locally.
-5. Update the relevant root-level documentation when CLI behavior, config fields, outputs, or prerequisites change.
-6. Keep `CHANGELOG.md` changes for explicit release/update work only.
-
-## Running Tests
-
-The package defines a `test` extra with `pytest`:
-
-```bash
-pip install -e ".[test]"
-pytest
-```
-
-Many workflows depend on external binaries and large scientific inputs, so unit tests should isolate pure Python behavior where possible:
-
-- Config validation and path normalization.
-- CSV parsing.
-- Command construction.
-- Score parsing.
-- Manifest and state handling.
-- Error paths for missing inputs.
-
-For integration testing, use tiny fixtures and set `n_jobs: 1` first. Full Vina, DOCK6, Amber, and OpenMM tests should be separated from fast unit tests because they require installed external programs.
-
-## Coding Patterns
-
-Follow the current architecture:
-
-- Put command-line entrypoints in `src/nexus/cli/`.
-- Put YAML models in `*_config.py` files.
-- Keep pipeline classes thin. They should orchestrate stages, not bury command construction.
-- Put external command construction in helper functions.
+- Put CLI commands in `src/nexus/cli/`.
+- Keep imports for heavy workflow modules inside command functions where practical.
+- Define user-facing YAML with Pydantic models in `*_config.py`.
+- Use `load_config(Model, path)` for tracked YAML workflows.
+- Use the global config for machine-specific software and scratch paths.
+- Keep pipeline classes thin; put command construction in helper modules.
 - Use `pathlib.Path` for filesystem paths.
-- Use Pydantic defaults and validation instead of ad hoc config mutation where practical.
-- Install runtime services through `setup_context()` and read them with `PipelineContext.get_ctx()`.
-- Wrap major stages with `main_tracker()` so failures update `manifest.json` and `state.json`.
-- Use `shell()` and `python_parallel()` instead of raw subprocess calls unless a tool requires special handling.
-- Treat `base()` and `gnu_parallel()` as deprecated compatibility shims only.
+- Use `shell()` for external commands and `python_parallel()` for independent Python work.
+- Wrap major stages with `main_tracker()`.
+- Copy trackers to results with `final_copy_trackers()`.
 
-## Adding a New CLI Command
+## Adding a Command
 
-1. Add a function to the appropriate `src/nexus/cli/*.py` module.
-2. Type CLI parameters with Typer annotations.
-3. Load or construct a config object.
-4. Import the pipeline inside the command body to keep CLI import time light.
-5. Register new command groups in `src/nexus/cli/main.py` when needed.
-6. Add examples and config fields to `CONFIGURATION.md`.
+1. Add the Typer function in the correct `src/nexus/cli/*.py` file.
+2. Decide whether it uses flags, YAML, or both.
+3. Add or update a Pydantic config model if YAML is needed.
+4. For tracked workflows, call `load_config(Model, config_path)`.
+5. Instantiate a small pipeline or call a focused runner.
+6. Update `docs/CLI_REFERENCE.md`, `docs/CONFIGURATION.md`, and relevant examples.
 
 ## Adding a Pipeline Stage
 
-1. Decide whether the stage is pure Python, one shell command, many shell commands, or many Python tasks.
-2. Use the matching executor:
-   - `shell()` for one external command.
-   - `python_parallel()` for independent Python callables.
-   - `base()` only when maintaining old call sites.
-   - `gnu_parallel()` only when maintaining old call sites.
-3. Wrap the stage with `main_tracker(cfg, "Stage Name")`.
-4. Return paths or simple serializable values if the stage output may be stored in `state.json`.
-5. Make failures explicit with `ValueError`, `FileNotFoundError`, or `RuntimeError` before launching expensive external work.
+1. Validate cheap preconditions before launching external tools.
+2. Use `shell()` or `python_parallel()`.
+3. Return paths or simple serializable values if checkpoint output may be needed later.
+4. Decorate major stages with `@main_tracker("Stage name")`.
+5. Keep intermediate files in `cfg._global.path.scratch_dir`.
+6. Copy only user-relevant outputs to `cfg.common.output_dir`.
 
-## Debugging Tips
+## Testing Guidance
 
-- Start with `nexus <group> <command> --help` to confirm CLI parsing.
-- Run with the smallest possible receptor/ligand set.
-- Set `common.n_jobs: 1` or `ligdock.n_jobs: 1` to simplify logs.
-- Inspect `artifacts/<project>/run.log` for executed commands and stderr.
-- Inspect `artifacts/<project>/manifest.json` for stage timings and failure reasons.
-- Inspect `artifacts/<project>/state.json` for the last stage status.
-- For ChimeraX selection issues, reproduce the selection in ChimeraX before rerunning the full pipeline.
-- For Amber workflows, check `AMBERHOME`, confirm `pdb4amber`, `tleap`, `antechamber`, `parmchk2`, `pmemd.cuda`, and `cpptraj` are on `PATH`.
-- For OpenMM workflows, confirm the OpenMM Python environment can import the package and that CUDA is available when the pipeline selects the CUDA platform.
-- For ligand preparation failures, validate the CSV header exactly as `smiles,name` and reduce to one ligand while debugging.
-- For Vina and DOCK6 score-summary failures, verify that scored pose files were created before `write_summary_csv()` runs.
+Fast tests should cover:
 
-## Known Development Hotspots
+- Config model validation.
+- File discovery with `extract_files()`.
+- CSV parsing and filename sanitization.
+- Command construction.
+- Score parsing and cluster-summary utilities.
+- Manifest and run-state behavior.
+- Error paths for missing inputs.
 
-See `SECURITY_AND_BUGS.md` for current defects and remediation suggestions. High-priority areas include fetch config handling, sysmd receptor-only behavior, ligand-prep result/name alignment when parallel jobs fail, docking mode propagation, deprecated executor cleanup, and MD analysis working-directory restoration.
+Integration tests that call Vina, DOCK6, ChimeraX, Amber, or OpenMM should be isolated because they require external programs and real scientific inputs.
 
-## Current Architecture Notes
+## Debugging
 
-- `PipelineContext` now owns the active logger, manifest, and run state.
-- `shell()` and `python_parallel()` are context managers rather than simple wrappers.
-- `main_tracker()` no longer depends on config objects directly.
-- Docking and MD configs now derive project-scoped output folders from `common.project_name`.
-- The OpenMM pipeline is the new MD path alongside the Amber pipeline.
+- Start with `nexus <group> <command> --help`.
+- Run with one receptor, one ligand, and `n_jobs: 1`.
+- Check `<scratch_dir>/<job_name>/<job_name>_run.log` or terminal outputs.
+- Check `<scratch_dir>/<job_name>/<job_name>_manifest.json`.
+- Check `<scratch_dir>/<job_name>/<job_name>_state.json`.
+- For global path issues, run `nexus config show` and `nexus config validate`.
+- For ChimeraX selection issues, reproduce the selection inside ChimeraX.
+- For Amber workflows, verify `AMBERHOME`, `pdb4amber`, `tleap`, `antechamber`, `parmchk2`, `pmemd`, and `cpptraj` are exported to PATH.
+
+## Manual Review Hotspots
+
+- `nexus md mmpbsa` currently has a CLI-to-runner mismatch and a stale notebook filename reference.
+- `AnalyzeConfig.trajectory` booleans are modeled but not used by the analysis runner yet.
+- Several Pydantic defaults still use mutable list literals in MD run config; those are worth tightening in a code-focused cleanup.
+- Fetch/prep commands attach global config differently from tracked YAML workflows; this is intentional today but should be kept consistent in future refactors.

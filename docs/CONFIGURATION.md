@@ -1,387 +1,349 @@
-# Configuration Reference
+# Configuration
 
-NexusMol uses YAML files for the larger workflows and command-line flags for smaller utility commands. YAML is parsed with PyYAML and validated with Pydantic models in the corresponding `*_config.py` modules.
+NexusMol uses two layers of configuration:
 
-## Command Configuration Matrix
+1. A global machine config for software paths and scratch space.
+2. Per-workflow YAML files for scientific inputs, parameters, and output folders.
 
-| Command | Config file | Important flags | Notes |
-| --- | --- | --- | --- |
-| `nexus fetch rcsb` | Optional `-c/--config` | `-i/--input`, `-o/--output_dir`, `-l/--ligand_name` | Use flags for current fetch runs. |
-| `nexus prep rec` | Optional `-c/--config` | `-i`, `-o`, `-s`, `-d/--dry` | Flags override config values. |
-| `nexus prep mutate` | Optional `-c/--config` | `-i`, `-o`, `-s`, `-m/--mutations` | Flags override config values. |
-| `nexus prep ligdock` | Optional `-c/--config` | `-i`, `-o`, `-s`, `-t/--ctype` | Input type is inferred from file extension. |
-| `nexus prep sysmd` | Required `-c/--config` | None beyond `-c` | Requires `AMBERHOME`. |
-| `nexus dock vina` | Required `-c/--config` | None beyond `-c` | Requires prepared `.pdbqt` ligands. |
-| `nexus dock dock6` | Required `-c/--config` | None beyond `-c` | Requires prepared `.mol2` ligands and `libs.dock_home`. |
-| `nexus md amber` | Required `-c/--config` | None beyond `-c` | Requires `AMBERHOME` and `pmemd.cuda`. |
-| `nexus md analyze` | No YAML config | `-p`, `-t`, `-m`, `-n`, `-o` | Runs CPPTRAJ analysis directly from flags. |
+The previous independent loaders have been replaced by a shared YAML path through `nexus.core.utils.load_config.load_config` for tracked workflows. The shared loader reads YAML with PyYAML, validates it with the relevant Pydantic model, attaches the global config as `_global`, creates job-scoped folders, and initializes run tracking.
 
-## Path Handling
+## Global Config
 
-## Logging and CLI verbosity
+Global config lives at:
 
-- Nexus supports a root-level CLI option to control logging verbosity across all subcommands.
-
-- Flag: `--silence` (integer)
-  - `0` (default): normal behavior; `INFO`, `WARNING`, and `ERROR` messages are emitted.
-  - `1`: mutes `INFO` messages; `WARNING` and `ERROR` still shown.
-  - `2`: mutes `INFO`, `DEBUG`, and `WARNING`; only `ERROR` and above are shown.
-
-This flag is implemented in the top-level CLI entrypoint (it is parsed before subcommands run) and sets a global silence level consumed by the logging utilities. The `CustomLogger` and `DummyLogger` implementations respect this level so that console output from `shell()` and most pipeline messages can be reduced for large batch runs.
-
-Important: pipeline stage logs emitted via the `main_tracker` decorator are always shown regardless of the `--silence` level. Those messages are emitted with the internal `is_tracker` flag (e.g. `extra={"is_tracker": True}`) and the logger bypasses the silence filter for them so that stage start/complete/failure messages remain visible even when other informational output is muted.
-
-Example:
-
-```bash
-nexus --silence 1 dock vina -c vina_config.yaml
+```text
+~/.config/nexus/config.yaml
 ```
 
-Notes:
+Default file shape:
 
-- `ERROR` messages are always printed regardless of the silence level.
-- Pipeline stage logs emitted via the `main_tracker` decorator bypass the `--silence` filter and are always printed.
-- The silence level can also be set programmatically by calling `set_silence()` from `src/nexus/core/trackers/logging_utils.py` in custom code.
+```yaml
+software:
+  chimerax: null
+  chimera: null
+  dock6: null
+path:
+  scratch_dir: null
+```
 
+Field meanings:
 
-Docking config loading expands environment variables and `~` for declared `Path` fields. Prep, fetch, and MD config loaders do not perform the same global expansion. Prefer absolute paths or paths relative to the current working directory when launching the command.
+| Field | Used by | Meaning |
+| --- | --- | --- |
+| `software.chimerax` | `prep rec`, `prep mutate`, Vina docking, DOCK6 docking | ChimeraX executable. |
+| `software.chimera` | DOCK6 docking | Legacy UCSF Chimera executable. |
+| `software.dock6` | DOCK6 docking | DOCK6 installation root that contains `bin/dock6`, `bin/grid`, and related tools. |
+| `path.scratch_dir` | `dock run`, `md build`, `md run`, `md analyze`, `md mmpbsa` | Parent scratch/workspace directory. Nexus creates `<scratch_dir>/<job_name>/`. |
 
-Docking and MD loaders append `common.project_name` to the configured parent directories:
+`nexus config validate` reports `OK`, `Missing path`, or `Not configured` for every global path. Missing configured paths cause a non-zero exit status.
+
+## Workflow Directory Rules
+
+Workflow configs with `common.job_name` use both the global scratch directory and the workflow output directory:
 
 ```yaml
 common:
-  project_name: vina_mpro
-  working_dir: artifacts
-  results_dir: results
+  job_name: vina_mpro
+  output_dir: results
 ```
 
 Effective directories:
 
 ```text
-artifacts/vina_mpro/
+<global path.scratch_dir>/vina_mpro/
 results/vina_mpro/
 ```
 
-## Fetch Flags
+The loader creates both directories before the pipeline starts. Fetch and prep configs are simpler and do not require `common.job_name`.
 
-Current implementation:
+## Command Matrix
 
-```bash
-nexus fetch rcsb -i 6W63 -i 7K40 -o fetched_structures -l ligand
+| Command | Config | Required? | Notes |
+| --- | --- | --- | --- |
+| `nexus config init` | Global | No | Creates `~/.config/nexus/config.yaml`. |
+| `nexus config show` | Global | No | Prints loaded global YAML. |
+| `nexus config validate` | Global | No | Validates configured paths. |
+| `nexus fetch rcsb` | `FetchConfig` | Optional | Flags can supply all fields. |
+| `nexus prep rec` | `PrepConfig` | Optional | Flags override YAML values. |
+| `nexus prep mutate` | `PrepConfig` | Optional | Flags override YAML values. |
+| `nexus prep lig` | `PrepConfig` | Optional | Output suffix selects `.pdbqt` or `.mol2`. |
+| `nexus dock run` | `DockConfig` | Yes | `engine.program` chooses `vina` or `dock6`. |
+| `nexus md build` | `BuildConfig` | Yes | Builds Amber-compatible topology and coordinates. |
+| `nexus md run` | `MDConfig` | Yes | `engine.program` chooses `amber` or `openmm`. |
+| `nexus md analyze` | `AnalyzeConfig` | Yes | Runs the current CPPTRAJ template. |
+| `nexus md mmpbsa` | `MMPBSAConfig` | Yes | Exposed by CLI, but current runner needs manual implementation review. |
+
+## Fetch Config
+
+Model: `src/nexus/fetch/fetch_config.py`
+
+```yaml
+input:
+  - 6W63
+  - 7K40
+ligand_name: ligand
+output_dir: receptors/fetched
 ```
-
-| Flag | Type | Description |
-| --- | --- | --- |
-| `-i`, `--input` | Repeatable string | PDB ID values, or one text file path containing one ID per line. |
-| `-o`, `--output_dir` | Path | Output directory. Defaults to current directory if omitted. |
-| `-l`, `--ligand_name` | String | Optional output ligand name used in SDF filenames. |
-| `-c`, `--config` | Path | Path to YAML config. |
-
-Fetch outputs:
-
-- `<PDB_ID>.cif`
-- `<PDB_ID>_<LIGAND>.sdf` or `<PDB_ID>_<ligand_name>.sdf`
-
-## Preparation Config
-
-Preparation commands use `PrepConfig` from `src/nexus/prep/prep_config.py`.
-
-### `common`
-
-| Field | Type | Default | Used by | Description |
-| --- | --- | --- | --- | --- |
-| `input` | Path | `null` | all prep commands | Input file or directory. |
-| `output_dir` | Path | current directory | `rec`, `mutate`, `ligdock`, `sysmd` | Destination directory. Created during config validation. |
-| `suffix` | String | command-specific | `rec`, `mutate`, `ligdock` | Output filename suffix. |
-| `chimerax` | Path | `/usr/local/chimerax/bin/ChimeraX` | `rec`, `mutate` | ChimeraX executable. |
-| `working_dir` | Path | current directory | `sysmd` | SysMD scratch parent directory. |
-
-### `rec`
 
 | Field | Type | Default | Description |
 | --- | --- | --- | --- |
-| `dry` | Boolean | `false` | Passed to the ChimeraX cleaning script to remove water. |
+| `input` | list of strings or path | `null` | PDB IDs, or a text file containing one ID per line. |
+| `ligand_name` | string or null | `null` | Optional ligand filename label. If omitted, the CCD ligand ID is used. |
+| `output_dir` | path or null | current directory at runtime | Output folder for CIF and SDF files. |
 
-Example with flags:
+Outputs:
 
-```bash
-nexus prep rec -i fetched_structures -o cleaned_receptors -s "_cleaned.pdb" -d
+```text
+<output_dir>/<PDB_ID>.cif
+<output_dir>/<PDB_ID>_<LIGAND>.sdf
 ```
 
-Example YAML:
+## Prep Config
+
+Model: `src/nexus/prep/prep_config.py`
+
+Shared fields:
 
 ```yaml
 common:
-  input: fetched_structures
-  output_dir: cleaned_receptors
+  input: receptors/fetched
+  output_dir: receptors/cleaned
   suffix: "_cleaned.pdb"
-  chimerax: /usr/local/chimerax/bin/ChimeraX
+```
 
+| Field | Type | Default | Description |
+| --- | --- | --- | --- |
+| `common.input` | path or null | `null` | Input file or directory. |
+| `common.output_dir` | path or null | current working directory | Destination folder. |
+| `common.suffix` | string or null | command-specific | Suffix appended to output stems. |
+
+### Receptor Cleaning
+
+```yaml
+common:
+  input: receptors/fetched
+  output_dir: receptors/cleaned
+  suffix: "_cleaned.pdb"
 rec:
   dry: true
 ```
 
-### `mutate`
+`rec.dry` defaults to `false`. When true, waters are removed by the ChimeraX cleaning script.
 
-| Field | Type | Default | Description |
-| --- | --- | --- | --- |
-| `mutations` | List of strings | `null` | Each item uses `selection-NEW_RES`. |
-
-Example:
+Command equivalent:
 
 ```bash
-nexus prep mutate \
-  -i cleaned_receptors/6W63_cleaned.pdb \
-  -o mutated_receptors \
-  -s "_mutated.pdb" \
-  -m ":41-HIP" \
-  -m ":145-CYM"
+nexus prep rec -i receptors/fetched -o receptors/cleaned -s "_cleaned.pdb" -d
 ```
 
-YAML:
+### Mutation and Protonation
 
 ```yaml
 common:
-  input: cleaned_receptors/6W63_cleaned.pdb
-  output_dir: mutated_receptors
+  input: receptors/cleaned/7K40_cleaned.pdb
+  output_dir: receptors/mutated
   suffix: "_mutated.pdb"
-
 mutate:
   mutations:
+    - ":64,80-HIE"
     - ":41-HIP"
     - ":145-CYM"
 ```
 
-### `ligdock`
+Each mutation string uses `selection-NEW_RES`. The selection is passed to ChimeraX. Nexus then rewrites Amber protonation labels back to standard residue names in the PDB while preserving protonation through hydrogens.
 
-| Field | Type | Default | Description |
-| --- | --- | --- | --- |
-| `n_jobs` | Integer | `1` | Number of Python/Open Babel preparation workers. |
-| `type` | `GAFF` or `AM1-BCC` | `GAFF` | Exposed as `--ctype`; currently not used deeply by the implementation. |
-| `source` | Internal | `smiles` | The pipeline infers CSV versus SDF. Do not set `source: sdf` in YAML because the model does not currently accept it. |
-
-Suffix selects the output format:
-
-| Suffix contains | Output | Tool path |
-| --- | --- | --- |
-| `.pdbqt` | Vina ligand | RDKit/Meeko |
-| `.mol2` | DOCK6 ligand | RDKit/Open Babel |
-
-CSV input must have exactly this header:
-
-```csv
-smiles,name
-CC(=O)OC1=CC=CC=C1C(=O)O,aspirin
-```
-
-The parser rejects empty rows, duplicate SMILES, and duplicate names after filename sanitization.
-
-Examples:
-
-```bash
-nexus prep ligdock -i ligands.csv -o vina_ligands -s "_prepared.pdbqt"
-nexus prep ligdock -i ligand_sdfs -o dock6_ligands -s "_prepared.mol2"
-```
-
-### `sysmd`
-
-`nexus prep sysmd` builds Amber topology and coordinate files through AmberTools.
+### Ligand Preparation
 
 ```yaml
 common:
-  input: receptors/6W63.pdb
-  working_dir: artifacts
-  output_dir: results
+  input: inputs/ligand_list.csv
+  output_dir: ligands/vina
+  suffix: "_prepared.pdbqt"
+lig:
+  n_jobs: 4
+```
 
-sysmd:
-  system_name: 6W63_mol4_solvated
-  ligand: poses/6W63_mol4_prepared_scored.pdbqt
+| Field | Type | Default | Description |
+| --- | --- | --- | --- |
+| `lig.n_jobs` | integer | `1` | Number of ligand-preparation workers. |
+
+Input can be:
+
+- CSV with exact header `smiles,name`.
+- One SDF file.
+- A directory searched recursively for `.sdf` files.
+
+Suffix controls output format:
+
+| Suffix | Output | Toolchain |
+| --- | --- | --- |
+| `.pdbqt` | Vina ligand files | RDKit plus Meeko |
+| `.mol2` | DOCK6 ligand files | RDKit plus Open Babel |
+
+## Dock Config
+
+Model: `src/nexus/dock/dock_config.py`
+
+The same command runs Vina or DOCK6:
+
+```bash
+nexus dock run -c configs/vina_config.yaml
+nexus dock run -c configs/dock6_config.yaml
+```
+
+The selected engine is declared in YAML.
+
+### Vina Example
+
+```yaml
+common:
+  job_name: vina_mpro
+  output_dir: results
+  padding: 4.0
+  n_jobs: 8
+  max_poses: 8
+
+receptors:
+  source: receptors/final
+  suffix: ".pdb"
+  pocket_option: selection
+  selection: "/A:41,145,163,164,172"
+
+ligands:
+  source: ligands/vina
+  suffix: "_prepared.pdbqt"
+
+engine:
+  program: vina
+  exhaustiveness: 32
+  num_modes: 8
+
+metadata:
+  tool: vina
+  grid: catalytic_site
+```
+
+### DOCK6 Example
+
+```yaml
+common:
+  job_name: dock6_mpro
+  output_dir: results
+  padding: 4.0
+  n_jobs: 8
+  max_poses: 8
+
+receptors:
+  source: receptors/final
+  suffix: ".pdb"
+  pocket_option: selection
+  selection: "/A:41,145,163,164,172"
+
+ligands:
+  source: ligands/dock6
+  suffix: "_prepared.mol2"
+
+engine:
+  program: dock6
+  max_orientations: 1000
+  radius: 10.0
+
+metadata:
+  tool: dock6
+  grid: catalytic_site
+```
+
+Field reference:
+
+| Field | Default | Description |
+| --- | --- | --- |
+| `common.job_name` | `docking` | Job folder and tracker basename. |
+| `common.output_dir` | `<cwd>/results` | Parent results folder. |
+| `common.padding` | `5.0` | Search-box or pocket padding in angstroms. |
+| `common.n_jobs` | `1` | Parallel worker count. |
+| `common.max_poses` | `8` | Maximum pose scores parsed into CSV summaries. |
+| `receptors.source` | `null` | Receptor file or directory. |
+| `receptors.suffix` | `.pdb` | Receptor suffix when source is a directory. Must include `.pdb` or `.cif`. |
+| `receptors.pocket_option` | `selection` | `selection` or `reference`. |
+| `receptors.selection` | `null` | ChimeraX selection string or CSV mapping receptor stem to selection. |
+| `receptors.reference` | `null` | Reference pocket file or directory. |
+| `receptors.reference_suffix` | `_pocket.pdb` | Suffix for matching multiple reference pockets. |
+| `ligands.source` | `null` | Prepared ligand file or directory. |
+| `ligands.suffix` | `.sdf` | Prepared ligand suffix. Use `.pdbqt` for Vina and `.mol2` for DOCK6. |
+| `engine.program` | required | `vina` or `dock6`. |
+| `metadata` | empty object | Extra values copied to `<job_name>_metadata.json`. |
+
+Docking pairs every receptor with every ligand.
+
+## MD Build Config
+
+Model: `src/nexus/md/build/build_config.py`
+
+```yaml
+common:
+  receptor: inputs/6W63.pdb
+  output_dir: results
+  job_name: 6W63_mol4_solvated
+
+ligand:
+  ligand: inputs/6W63_mol4_prepared_scored.pdbqt
   pose_num: 1
-  force_field: ff14SB
+
+system:
+  force_field: ff19SB
   water_model: tip3p
   box_type: Oct
   box_size: 12.0
   salt_conc: 0.15
 ```
 
-| Field | Type | Default | Description |
-| --- | --- | --- | --- |
-| `system_name` | String | `null` | Subdirectory and output file base name. |
-| `ligand` | Path or null | `null` | Prepared ligand pose file. Current receptor-only behavior has a known bug; see `SECURITY_AND_BUGS.md`. |
-| `pose_num` | Integer | `1` | Pose number selected after Open Babel splits the ligand file. |
-| `force_field` | String | `ff19SB` | Amber protein force field suffix used in `leaprc.protein.<force_field>`. |
-| `water_model` | String | `opc` | Amber water model suffix used in `leaprc.water.<water_model>`. |
-| `box_type` | `Box` or `Oct` | `Oct` | Produces `solvateBox` or `solvateOct`. |
-| `box_size` | Float | `12.0` | Solvent padding distance in angstrom. |
-| `salt_conc` | Float | `0.15` | Salt concentration used to estimate ion pairs from the initial `tleap` volume. |
+| Field | Default | Description |
+| --- | --- | --- |
+| `common.receptor` | required | Receptor PDB passed to `pdb4amber`. |
+| `common.output_dir` | `<cwd>/results` | Parent results folder. |
+| `common.job_name` | `solvated_system` | Output basename and job folder. |
+| `ligand.ligand` | `null` | Optional docked ligand pose file. |
+| `ligand.pose_num` | `1` | Pose selected after Open Babel splits multi-pose files. |
+| `system.force_field` | `ff19SB` | Amber protein force field suffix. |
+| `system.water_model` | `opc` | Amber water model suffix. |
+| `system.box_type` | `Oct` | `Oct` or `Box`. |
+| `system.box_size` | `12.0` | Solvent padding distance. |
+| `system.salt_conc` | `0.15` | Salt concentration used to estimate ion pairs. |
 
-## Docking Config
+Outputs:
 
-Docking commands use `DockConfig` from `src/nexus/dock/dock_config.py`.
-
-### Minimal Vina Config
-
-```yaml
-libs:
-  chimerax: /usr/local/chimerax/bin/ChimeraX
-
-common:
-  project_name: vina_mpro
-  working_dir: artifacts
-  results_dir: results
-  padding: 4.0
-  n_jobs: 8
-  max_poses: 8
-
-receptors:
-  source: final_receptors
-  suffix: ".pdb"
-  pocket_option: selection
-  selection: "/A:41,145"
-
-ligands:
-  source: vina_ligands
-  suffix: "_prepared.pdbqt"
-
-vina:
-  exhaustiveness: 32
-  num_modes: 8
-
-metadata:
-  tool: vina
-  anything: anything
+```text
+<output_dir>/<job_name>/<job_name>.prmtop
+<output_dir>/<job_name>/<job_name>.inpcrd
+<output_dir>/<job_name>/<job_name>.pdb
 ```
 
-### Minimal DOCK6 Config
+## MD Run Config
 
-```yaml
-libs:
-  chimerax: /usr/local/chimerax/bin/ChimeraX
-  chimera: /usr/local/chimera/chimera-1.8/bin/chimera
-  dock_home: /path/to/dock6
-
-common:
-  project_name: dock6_mpro
-  working_dir: artifacts
-  results_dir: results
-  padding: 4.0
-  n_jobs: 8
-  max_poses: 8
-
-receptors:
-  source: final_receptors
-  suffix: ".pdb"
-  pocket_option: selection
-  selection: "/A:41,145"
-
-ligands:
-  source: dock6_ligands
-  suffix: "_prepared.mol2"
-
-dock6:
-  max_orientations: 1000
-  radius: 10.0
-
-metadata:
-  tool: vina
-  something: something
-```
-
-### `libs`
-
-| Field | Type | Default | Required for | Description |
-| --- | --- | --- | --- | --- |
-| `chimerax` | Path | `/usr/local/chimerax/bin/ChimeraX` | Vina, DOCK6 receptor prep | ChimeraX executable. |
-| `chimera` | Path | `/usr/local/chimera/chimera-1.8/bin/chimera` | DOCK6 | Legacy UCSF Chimera executable. |
-| `dock_home` | Path | `null` | DOCK6 | DOCK6 installation root containing `bin/dock6`, `bin/grid`, etc. |
-
-### `common`
-
-| Field | Type | Default | Description |
-| --- | --- | --- | --- |
-| `project_name` | String | `docking` | Added to working/results parent directories. |
-| `working_dir` | Path | `<cwd>/artifacts` | Parent scratch directory. |
-| `results_dir` | Path | `<cwd>/results` | Parent results directory. |
-| `padding` | Float | `5.0` | Extra receptor pocket padding in angstrom. |
-| `n_jobs` | Integer | `1` | GNU Parallel or Python worker count. |
-| `max_poses` | Integer | `8` | Number of scores parsed into summaries. |
-| `mode` | `mix` or `match` | `mix` | `mix` is the active, reliable mode. `match` is incompletely wired in current pipelines. |
-| `program` | Runtime string | `null` | Set internally to `vina` or `dock6`. |
-
-### `receptors`
-
-| Field | Type | Default | Description |
-| --- | --- | --- | --- |
-| `source` | Path | `null` | Receptor file, receptor directory, or list of receptor files. |
-| `suffix` | String | `.pdb` | File suffix used when `source` is a directory. Must contain `.pdb` or `.cif`. |
-| `pocket_option` | `selection` or `reference` | `selection` | How to define the docking pocket. |
-| `selection` | String or CSV path | `null` | ChimeraX selection string, or CSV mapping receptor stem to selection. |
-| `reference` | Path | `null` | Reference pocket file or directory. |
-| `reference_suffix` | String | `_pocket.pdb` | Suffix used to match multiple reference pockets to receptors. |
-
-Selection CSV format has no header:
-
-```csv
-receptor1,/A:41,145
-receptor2,/B:50,100,150
-```
-
-Reference matching uses the receptor stem before the first underscore. For receptor `6W63_cleaned.pdb` and `reference_suffix: _pocket.pdb`, the expected reference name is `6W63_pocket.pdb`.
-
-### `ligands`
-
-| Field | Type | Default | Description |
-| --- | --- | --- | --- |
-| `source` | Path | `null` | Prepared ligand file, directory, or list of files. |
-| `suffix` | String | `.sdf` | File suffix used when `source` is a directory. Vina requires `.pdbqt`; DOCK6 requires `.mol2`. |
-
-### `vina`
-
-| Field | Type | Default | Description |
-| --- | --- | --- | --- |
-| `exhaustiveness` | Integer | `32` | Appended to the generated Vina config. |
-| `num_modes` | Integer | `8` | Appended to the generated Vina config. |
-
-The code also appends `cpu = 1` to each receptor-specific Vina config, because concurrency is controlled externally by GNU Parallel.
-
-### `dock6`
-
-| Field | Type | Default | Description |
-| --- | --- | --- | --- |
-| `max_orientations` | Integer | `1000` | Used in the DOCK6 flex input template. |
-| `radius` | Float | `10.0` | Sphere selection radius around the generated pocket. |
-
-### `metadata`
-
-You can store any data here in this field, and it will be dumped to a JSON file to results directory as `<common.project_name>_metadata.json`. The csv file paths will also be stored here.
-
-## Amber MD Config
-
-`nexus md amber` uses `MDConfig` from `src/nexus/md/md_config.py`.
+Model: `src/nexus/md/run/md_config.py`
 
 ```yaml
 common:
-  project_name: MD_Dialanine
-  working_dir: artifacts
-  results_dir: results
-  prmtop: md_input/ALA.prmtop
-  inpcrd: md_input/ALA.inpcrd
+  prmtop: inputs/ALA.prmtop
+  inpcrd: inputs/ALA.inpcrd
+  mask: ":1-3"
   temp: 300.0
   dt: 0.002
   cut: 10.0
-  mask: ":1-3"
+  job_name: AMBER_DiAla
+  output_dir: results
 
 min:
   n_min_runs: 7
   ncyc: 1000
-  maxcyc: 1000
+  maxcyc: 5000
   restraints: [10.0, 5.0, 2.0, 1.0, 0.5, 0.1, 0.0]
 
 heat:
   mid_temp: 100.0
-  time1: 100.0
-  time2: 500.0
-  total_time: 2000.0
+  time_mid_temp: 100.0
+  time_temp: 500.0
+  total_time: 1000.0
   restraint: 10.0
 
 eq:
@@ -392,53 +354,85 @@ eq:
 prod:
   num_seeds: 1
   rand_time: 200.0
-  prod_time: 2500.0
+  prod_time: 1000.0
   prod_freq: 10.0
 
-metadata:
-  tool: amber
-  everything: everything
+engine:
+  program: amber
 ```
 
-### `common`
+Set `engine.program: openmm` for the OpenMM implementation.
 
-| Field | Type | Default | Description |
-| --- | --- | --- | --- |
-| `project_name` | String | `md` | Added to working/results parent directories. |
-| `working_dir` | Path | `<cwd>/artifacts` | Parent scratch directory. |
-| `results_dir` | Path | `<cwd>/results` | Parent results directory. |
-| `prmtop` | Path | `null` | Amber topology file. Required. |
-| `inpcrd` | Path | `null` | Amber coordinate file. Required. |
-| `temp` | Float | `300.0` | Target temperature. |
-| `dt` | Float | `0.002` | MD timestep. |
-| `cut` | Float | `10.0` | Nonbonded cutoff. |
-| `mask` | String | `null` | Amber atom mask used in generated templates. |
+Important field names:
 
-### Stage Sections
+| Field | Default | Description |
+| --- | --- | --- |
+| `common.prmtop` | required | Amber topology. |
+| `common.inpcrd` | required | Starting coordinates. |
+| `common.mask` | required | Solute or restraint mask. |
+| `common.temp` | `300.0` | Temperature in K. |
+| `common.dt` | `0.002` | Time step in ps. |
+| `common.cut` | `10.0` | Nonbonded cutoff in angstroms. |
+| `heat.time_mid_temp` | `100.0` | Time to reach `mid_temp`. |
+| `heat.time_temp` | `500.0` | Time to reach final `common.temp`. |
+| `prod.prod_freq` | `10.0` | Reporting interval control used by the engines. |
+| `engine.program` | required | `amber` or `openmm`. |
 
-| Section | Fields |
-| --- | --- |
-| `min` | `n_min_runs`, `ncyc`, `maxcyc`, `restraints` |
-| `heat` | `mid_temp`, `time1`, `time2`, `total_time`, `restraint` |
-| `eq` | `n_eq_runs`, `eq_time`, `restraints` |
-| `prod` | `num_seeds`, `rand_time`, `prod_time`, `prod_freq` |
+## MD Analysis Config
 
-`prod_freq` is used as a divisor when calculating `ntpr`, `ntwx`, and `ntwr` from total production steps. For example, `prod_freq: 10` creates roughly ten reporting intervals, not an every-10-steps output interval.
+Model: `src/nexus/md/analyze/analyze_config.py`
 
-## MD Analysis Flags
+```yaml
+common:
+  prmtop: results/AMBER_DiAla/ALA.prmtop
+  trajin: results/AMBER_DiAla/prod1.nc
+  mask: ":1-3"
+  job_name: DiAla_analysis
+  output_dir: results
 
-`nexus md analyze` renders and runs a CPPTRAJ input file.
+trajectory:
+  rmsd: true
+  hbond: true
+  pca: true
+```
+
+`trajectory.rmsd`, `trajectory.hbond`, and `trajectory.pca` exist in the config model, but the current runner renders one fixed CPPTRAJ template. They are not yet used to selectively enable or disable analysis blocks.
+
+Outputs include the rendered `analysis_<job_name>.in`, RMSD/RMSF files, hydrogen-bond files, secondary-structure files, PCA files, clustering files, and `Visual_<job_name>.ipynb`.
+
+## MM-PBSA/GBSA Config
+
+Model: `src/nexus/md/mmpbsa/mmpbsa_config.py`
+
+The CLI exposes:
 
 ```bash
-nexus md analyze -p system.prmtop -t prod1.nc -m ":1-198" -n run1 -o analysis_output
+nexus md mmpbsa -c configs/mmpbsa_config.yaml
 ```
 
-| Flag | Required | Description |
-| --- | --- | --- |
-| `-p`, `--prmtop` | Yes | Amber topology file. |
-| `-t`, `--trajin` | Yes | Trajectory file. |
-| `-m`, `--mask` | Yes | CPPTRAJ mask expression. |
-| `-n`, `--name` | No | Analysis name. Defaults to `prmtop.stem`. |
-| `-o`, `--output-dir` | No | Output directory. Defaults to current directory. |
+Current status: the CLI loads `MMPBSAConfig`, but the runner currently expects positional arguments instead of a config object and references a notebook filename that is not present. Treat this command as requiring implementation review before use.
 
-The analysis writes RMSD/RMSF, hydrogen-bond, secondary-structure, PCA, clustering, and notebook outputs.
+Config model shape:
+
+```yaml
+common:
+  prmtop: system.prmtop
+  trajin: prod1.nc
+  mask: ":1-198"
+  job_name: mmpbsa
+  output_dir: results
+  start_frame: 1
+  end_frame: 9999999
+  interval: 10
+  n_cores: 1
+
+gb:
+  run: true
+  igb: 5
+  saltcon: 0.15
+
+pb:
+  run: false
+  istrng: 0.15
+  fillratio: 4.0
+```

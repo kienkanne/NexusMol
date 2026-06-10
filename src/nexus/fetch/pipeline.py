@@ -5,16 +5,16 @@ from pathlib import Path
 
 @dataclass(frozen=True)
 class FetchPipeline:
-    fcfg: FetchConfig
+    cfg: FetchConfig
 
     def _run(self):
-        if Path(self.fcfg.input[0]).is_file():
-            with open(self.fcfg.input[0], "r") as f:
-                self.fcfg.input = f.read().splitlines()
+        if Path(self.cfg.input[0]).is_file():
+            with open(self.cfg.input[0], "r") as f:
+                self.cfg.input = f.read().splitlines()
         else:
-            self.fcfg.input = list(self.fcfg.input)
+            self.cfg.input = list(self.cfg.input)
 
-        if self.fcfg.output_dir is None:
-            self.fcfg.output_dir = Path.cwd()
+        if self.cfg.output_dir is None:
+            self.cfg.output_dir = Path.cwd()
 
-        rcsb_fetch(self.fcfg)
+        rcsb_fetch(self.cfg)

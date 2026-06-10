@@ -14,25 +14,29 @@ class VinaReceptorBundle:
     name: str
 
 
-def _prep_rec(dcfg: DockConfig, receptor_bundle: VinaReceptorBundle):
+def _prep_rec(cfg: DockConfig, receptor_bundle: VinaReceptorBundle):
     if hasattr(receptor_bundle, "receptor"):
         receptor = receptor_bundle.receptor
         bundle = receptor_bundle
     else:
         receptor = receptor_bundle
         bundle = None
+
     name = Path(receptor).stem
     suffix = "prepared"
-    working_dir = dcfg.common.working_dir
-    prepped_receptor_pdbqt = working_dir / f"{name}_{suffix}.pdbqt"
-    pocket = working_dir / f"{name}_pocket.pdb"
-    vina_config = working_dir / f"{name}_vina_config.txt"
+
+    scratch_dir = cfg._global.path.scratch_dir
+    prepped_receptor_pdbqt = scratch_dir / f"{name}_{suffix}.pdbqt"
+    pocket = scratch_dir / f"{name}_pocket.pdb"
+    vina_config = scratch_dir / f"{name}_vina_config.txt"
 
     ###### ================ ######
     ###### 1. generate_site 
     ###### ================ ######
 
-    chimerax = dcfg.libs.chimerax
+    chimerax = cfg._global.software.chimerax
+    if chimerax is None:
+        raise ValueError("ChimeraX path not configured in global nexus config")
 
     if bundle is not None and bundle.reference_path is not None:
         input_file = bundle.reference_path
@@ -65,7 +69,7 @@ def _prep_rec(dcfg: DockConfig, receptor_bundle: VinaReceptorBundle):
     ###### 2. meeko_prep_rec 
     ###### ================ ######
 
-    padding = dcfg.common.padding
+    padding = cfg.common.padding
 
     cmd = [
             "mk_prepare_receptor.py",
@@ -90,8 +94,8 @@ def _prep_rec(dcfg: DockConfig, receptor_bundle: VinaReceptorBundle):
     ###### 2'. add_configs 
     ###### ================ ######
     
-    exhaustiveness = dcfg.vina.exhaustiveness
-    num_modes = dcfg.vina.num_modes
+    exhaustiveness = cfg.engine.exhaustiveness
+    num_modes = cfg.engine.num_modes
     extra_configs = {
                 "exhaustiveness": exhaustiveness,
                 "num_modes": num_modes,
@@ -118,16 +122,16 @@ from typing import List
 
 
 @main_tracker("Prepare receptor for Vina")
-def vina_parallel_prep_rec(dcfg) -> List[VinaReceptorBundle]:
+def vina_parallel_prep_rec(cfg: DockConfig) -> List[VinaReceptorBundle]:
     tasks = []
-    bundles = getattr(dcfg.receptors, "bundles", None)
+    bundles = getattr(cfg.receptors, "bundles", None)
     if bundles:
         for b in bundles:
-            tasks.append(partial(_prep_rec, dcfg, b))
+            tasks.append(partial(_prep_rec, cfg, b))
     else:
         raise ValueError
     
-    with python_parallel(tasks, dcfg.common.n_jobs, title="vina_parallel_prep_rec()", skip=True) as output_bundles:
+    with python_parallel(tasks, cfg.common.n_jobs, title="vina_parallel_prep_rec()", skip=True) as output_bundles:
         pass
 
     return output_bundles

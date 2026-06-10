@@ -1,6 +1,6 @@
 import concurrent.futures
 from nexus.core.trackers.logging_utils import DummyLogger
-from nexus.core.trackers.main_tracker import PipelineContext
+from nexus.core.trackers.main_tracker import TrackerContext
 
 def _execute_parallel_task(task):
     """
@@ -19,7 +19,7 @@ from contextlib import contextmanager
 
 @contextmanager
 def python_parallel(tasks, n_jobs=1, title="", skip=False):
-    ctx = PipelineContext.get_ctx()
+    ctx = TrackerContext.get_ctx()
     try:
         logger = ctx.logger if ctx.logger is not None else DummyLogger()
     except:

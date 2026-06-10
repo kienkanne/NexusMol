@@ -9,21 +9,17 @@ from nexus.dock.utils.final_copy import final_copy
 
 @dataclass(frozen=True)
 class DOCK6Pipeline():
-    dcfg: DockConfig
+    cfg: DockConfig
 
     def _run(self):
-        self.dcfg.common.program = "dock6"
-        if self.dcfg.libs.dock_home is None:
-            raise ValueError("libs.dock_home is missing")
-
-        if ".mol2" not in self.dcfg.ligands.suffix:
+        if ".mol2" not in self.cfg.ligands.suffix:
             raise ValueError("Ligands for DOCK6 must have '.mol2' suffix.")
-        lig_paths = self.dcfg.ligands.source
+        lig_paths = self.cfg.ligands.source
 
-        rec_bundles = dock6_parallel_prep_rec(self.dcfg)
+        rec_bundles = dock6_parallel_prep_rec(self.cfg)
         pairs = matchmixer(rec_bundles, lig_paths)
-        out_files = dock6_parallel_docking(self.dcfg, pairs)
+        out_files = dock6_parallel_docking(self.cfg, pairs)
 
-        written_scores, written_clusters = write_summary_csv(self.dcfg, out_files, rec_bundles)
+        written_scores, written_clusters = write_summary_csv(self.cfg, out_files, rec_bundles)
 
-        final_copy(self.dcfg, rec_bundles, written_scores, written_clusters, out_files)
+        final_copy(self.cfg, rec_bundles, written_scores, written_clusters, out_files)

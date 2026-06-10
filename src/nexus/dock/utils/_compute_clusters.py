@@ -5,10 +5,10 @@ import re
 # Converts either pdbqt or mol2 docked poses to individual mol2 files, making it easy for RDKIT to read
 def extract_poses(docked_poses_path: Path):
     docked_poses_path = Path(docked_poses_path)
-    working_dir = docked_poses_path.parent
+    scratch_dir = docked_poses_path.parent
     ligand_name = docked_poses_path.stem    
     
-    output_prefix = working_dir / f"{ligand_name}_pose_.mol2"
+    output_prefix = scratch_dir / f"{ligand_name}_pose_.mol2"
 
     cmd = ["obabel", str(docked_poses_path), "-O", str(output_prefix), "-m"]
 
@@ -141,7 +141,6 @@ def calculate_cluster_metrics(rmsd_matrix: np.ndarray, threshold: float = 2.0) -
     clusters = {}
 
     for cluster_id, pose_indices in cluster_indices_dict.items():
-        print (pose_indices)
         n_members = len(pose_indices)
 
         # Case 1: Single-element cluster (singleton)
@@ -150,7 +149,7 @@ def calculate_cluster_metrics(rmsd_matrix: np.ndarray, threshold: float = 2.0) -
                 "representative_idx": pose_indices[0],
                 "mean_internal_distance": 0.0,
                 "cluster_diameter": 0.0,
-                "pose_indices": [0]
+                "pose_indices": pose_indices
             }
             continue
             
@@ -215,7 +214,6 @@ def compute_clusters(
     clusters = calculate_cluster_metrics(matrix, threshold=2.0)
 
     for cluster_id, metrics in clusters.items():
-        print (metrics)
         results_list.append({
             "ligand_name": ligand_name,
             "cluster_id": cluster_id,

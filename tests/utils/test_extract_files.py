@@ -1,6 +1,6 @@
 import pytest
 
-from nexus.core.extract_files import extract_files
+from nexus.core.utils.extract_files import extract_files
 
 
 def test_extract_files_returns_matching_directory_children(tmp_path):

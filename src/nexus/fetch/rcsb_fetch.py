@@ -40,10 +40,10 @@ def get_ligands_in_structure(id):
     return ligand_ids
 
 
-def rcsb_fetch(fcfg: FetchConfig):
-    id_list = fcfg.input
-    ligand_name = fcfg.ligand_name
-    output_dir = fcfg.output_dir
+def rcsb_fetch(cfg: FetchConfig):
+    id_list = cfg.input
+    ligand_name = cfg.ligand_name
+    output_dir = cfg.output_dir
 
     output_dir.mkdir(parents=True, exist_ok=True)
 

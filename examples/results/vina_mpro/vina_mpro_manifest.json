@@ -1,5 +1,5 @@
 {
-  "created_utc": "2026-06-02T05:15:33.028967+00:00",
+  "created_utc": "2026-06-09T09:17:24.977956+00:00",
   "host": "irene2",
   "platform": "Linux-6.12.0-124.56.1.el10_1.x86_64-x86_64-with-glibc2.39",
   "python_version": "3.11.15",
@@ -11,10 +11,10 @@
     "Final copy to results": "running"
   },
   "timings_sec": {
-    "Prepare receptor for Vina": 7.918,
-    "Batch docking with Vina": 59.851,
-    "Write summary csv": 0.002
+    "Prepare receptor for Vina": 8.829,
+    "Batch docking with Vina": 61.471,
+    "Write summary csv": 0.141
   },
-  "total_wall_time": "67.775",
-  "finished_utc": "2026-06-02T05:16:40.804106+00:00"
+  "total_wall_time": "70.759",
+  "finished_utc": "2026-06-09T09:18:35.736564+00:00"
 }

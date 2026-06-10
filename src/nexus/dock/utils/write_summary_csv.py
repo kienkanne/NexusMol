@@ -35,12 +35,14 @@ def pose1_sort(row):
     return float(score) if score != "" else np.inf
 
 
-@main_tracker("Write summary csv")
-def write_summary_csv(dcfg, out_files, rec_bundles):
+from nexus.dock.dock_config import DockConfig
 
-    project_name = dcfg.common.project_name
-    max_poses = dcfg.common.max_poses
-    working_dir = dcfg.common.working_dir
+@main_tracker("Write summary csv")
+def write_summary_csv(cfg: DockConfig, out_files, rec_bundles):
+
+    job_name = cfg.common.job_name
+    max_poses = cfg.common.max_poses
+    scratch_dir = cfg._global.path.scratch_dir
 
     # Initialize list of written scores csv and clusters csv for each receptor
     written_scores = []
@@ -70,15 +72,15 @@ def write_summary_csv(dcfg, out_files, rec_bundles):
         for out in files:
             # Parse raw scores
             lig_name = Path(out).stem.replace(f"{rec}_", "").replace("_scored", "")
-            scores = parse_scores(out, max_poses, dcfg.common.program)
+            scores = parse_scores(out, max_poses, cfg.engine.program)
             scores_rows.append([lig_name] + scores + [""] * (max_poses - len(scores)))
 
             # Compute cluster metrics
             compute_clusters(lig_name, out, cluster_results)
 
-        csv_name = f"{project_name}_{rec}"
-        scores_csv_name = working_dir / f"Scores_{csv_name}.csv"
-        cluster_csv_name = working_dir / f"Clusters_{csv_name}.csv"
+        csv_name = f"{job_name}_{rec}"
+        scores_csv_name = scratch_dir / f"Scores_{csv_name}.csv"
+        cluster_csv_name = scratch_dir / f"Clusters_{csv_name}.csv"
 
         # Write scores csv
         scores_rows = sorted(scores_rows, key=pose1_sort)

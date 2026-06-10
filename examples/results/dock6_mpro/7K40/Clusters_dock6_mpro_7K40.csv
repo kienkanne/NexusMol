@@ -1,0 +1,35 @@
+ligand_name,cluster_id,cluster_size,rep_pose_idx,mean_internal_dist,mean_dist_to_others,cluster_diameter,pose_indices
+aspirin_prepared,3,6,1,1.74,3.062,2.355,"[1, 4, 5, 6, 9, 10]"
+aspirin_prepared,1,2,0,1.472,2.919,1.472,"[0, 12]"
+aspirin_prepared,2,2,2,1.736,2.92,1.736,"[2, 7]"
+aspirin_prepared,4,1,3,0.0,2.957,0.0,[3]
+aspirin_prepared,6,1,8,0.0,3.319,0.0,[8]
+aspirin_prepared,5,1,11,0.0,2.988,0.0,[11]
+mol1_prepared,4,3,2,1.308,2.994,2.067,"[0, 2, 4]"
+mol1_prepared,1,2,1,0.866,2.816,0.866,"[1, 6]"
+mol1_prepared,3,2,3,0.887,3.059,0.887,"[3, 7]"
+mol1_prepared,2,1,5,0.0,3.256,0.0,[5]
+mol2_prepared,3,2,0,1.659,3.265,1.659,"[0, 3]"
+mol2_prepared,9,1,1,0.0,3.348,0.0,[1]
+mol2_prepared,7,1,2,0.0,3.05,0.0,[2]
+mol2_prepared,4,1,4,0.0,3.229,0.0,[4]
+mol2_prepared,8,1,5,0.0,3.152,0.0,[5]
+mol2_prepared,5,1,6,0.0,3.106,0.0,[6]
+mol2_prepared,6,1,7,0.0,3.168,0.0,[7]
+mol2_prepared,1,1,8,0.0,3.755,0.0,[8]
+mol2_prepared,10,1,9,0.0,3.432,0.0,[9]
+mol2_prepared,2,1,10,0.0,3.712,0.0,[10]
+mol3_prepared,7,1,0,0.0,5.426,0.0,[0]
+mol3_prepared,1,1,1,0.0,5.06,0.0,[1]
+mol3_prepared,3,1,2,0.0,4.67,0.0,[2]
+mol3_prepared,5,1,3,0.0,3.971,0.0,[3]
+mol3_prepared,4,1,4,0.0,3.883,0.0,[4]
+mol3_prepared,2,1,5,0.0,4.408,0.0,[5]
+mol3_prepared,6,1,6,0.0,4.581,0.0,[6]
+mol4_prepared,1,1,0,0.0,3.931,0.0,[0]
+mol4_prepared,4,1,1,0.0,3.858,0.0,[1]
+mol4_prepared,3,1,2,0.0,4.531,0.0,[2]
+mol4_prepared,7,1,3,0.0,4.733,0.0,[3]
+mol4_prepared,5,1,4,0.0,4.306,0.0,[4]
+mol4_prepared,6,1,5,0.0,3.979,0.0,[5]
+mol4_prepared,2,1,6,0.0,4.129,0.0,[6]

@@ -1,0 +1,11 @@
+common:
+  prmtop: results/AMBER_DiAla/ALA.prmtop
+  trajin: results/AMBER_DiAla/prod1.nc
+  mask: ":1-3"
+  job_name: DiAla_analysis
+  output_dir: results
+
+trajectory:
+  rmsd: true
+  hbond: true
+  pca: true

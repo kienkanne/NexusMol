@@ -1,16 +1,16 @@
-2026-06-01 23:27:47 | INFO     | STAGE: Setup started
-2026-06-01 23:27:48 | INFO     | Running simulation on CUDA (Mixed Precision)
-2026-06-01 23:27:48 | INFO     | STAGE: Setup completed
-2026-06-01 23:27:48 | INFO     | STAGE: Minimization started
-2026-06-01 23:27:48 | INFO     | Initial PE: -40527.96628813751 kJ/mol
-2026-06-01 23:27:48 | INFO     | Final PE: -50893.5966612552 kJ/mol
-2026-06-01 23:27:48 | INFO     | STAGE: Minimization completed
-2026-06-01 23:27:48 | INFO     | STAGE: Heating started
-2026-06-01 23:28:41 | INFO     | STAGE: Heating completed
-2026-06-01 23:28:41 | INFO     | STAGE: Equilibration started
-2026-06-01 23:29:24 | INFO     | STAGE: Equilibration completed
-2026-06-01 23:29:24 | INFO     | STAGE: Production started
-2026-06-01 23:30:38 | INFO     | Finished full run with seed 1
-2026-06-01 23:30:38 | INFO     | STAGE: Production completed
-2026-06-01 23:30:38 | INFO     | STAGE: Copying to results started
-2026-06-01 23:30:38 | INFO     | Pipeline completed
+2026-06-09 06:05:05 | INFO     | STAGE: Setup started
+2026-06-09 06:05:07 | INFO     | Running simulation on CUDA (Mixed Precision)
+2026-06-09 06:05:07 | INFO     | STAGE: Setup completed
+2026-06-09 06:05:07 | INFO     | STAGE: Minimization started
+2026-06-09 06:05:07 | INFO     | Initial PE: -40527.9662861792 kJ/mol
+2026-06-09 06:05:07 | INFO     | Final PE: -51066.03305623686 kJ/mol
+2026-06-09 06:05:07 | INFO     | STAGE: Minimization completed
+2026-06-09 06:05:07 | INFO     | STAGE: Heating started
+2026-06-09 06:06:01 | INFO     | STAGE: Heating completed
+2026-06-09 06:06:01 | INFO     | STAGE: Equilibration started
+2026-06-09 06:06:44 | INFO     | STAGE: Equilibration completed
+2026-06-09 06:06:44 | INFO     | STAGE: Production started
+2026-06-09 06:07:58 | INFO     | Finished full run with seed 1
+2026-06-09 06:07:58 | INFO     | STAGE: Production completed
+2026-06-09 06:07:58 | INFO     | STAGE: Copying to results started
+2026-06-09 06:07:58 | INFO     | Pipeline completed

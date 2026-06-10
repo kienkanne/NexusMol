@@ -10,7 +10,7 @@ flowchart TD
     B --> C[Pydantic model or direct flag values]
     C --> D[Pipeline orchestration]
     D --> E[External scientific tools]
-    E --> F[Intermediate files in working_dir]
+    E --> F[Intermediate files in scratch_dir]
     F --> G[Summaries and selected outputs]
     G --> H[results_dir]
     D --> I[run.log]
@@ -18,9 +18,16 @@ flowchart TD
     D --> K[state.json]
 ```
 
-The CLI starts each run. Config loaders create typed config objects, then pipelines resolve files, install the global `PipelineContext`, launch tools, parse outputs, and copy final artifacts into results directories.
+Tracked jobs use:
 
-## Fetch Data Path
+```text
+<global scratch_dir>/<job_name>/
+<common.output_dir>/<job_name>/
+```
+
+Fetch and prep commands usually write directly to their requested output directory and do not use job tracking unless they are part of a larger tracked workflow.
+
+## Fetch
 
 Input:
 
@@ -29,11 +36,13 @@ Input:
 
 Processing:
 
-1. `FetchPipeline.run()` converts input into a list of IDs.
-2. `rcsb_fetch()` queries RCSB nonpolymer entities.
-3. Common solvent, ions, and crystallization agents are filtered out.
-4. Each remaining ligand is downloaded as SDF.
-5. The biological assembly is downloaded as CIF.
+```mermaid
+flowchart LR
+    A[PDB IDS or text file] --> B[List of IDs.]
+    B --> C[Queries RCSB nonpolymer entities.]
+    C --> D[SDF ligand]
+    C --> E[CIF biological assembly]
+```
 
 Output:
 
@@ -44,9 +53,11 @@ Output:
 
 Ligand download failures are printed and the command continues to the assembly download. Missing or empty assembly files raise exceptions.
 
-## Preparation Data Paths
+## Receptor Prep
 
-### Receptor Cleaning
+Input can be one `.pdb`/`.cif` file or a directory scanned for `.pdb` and `.cif`.
+
+Processing:
 
 ```mermaid
 flowchart LR
@@ -57,21 +68,19 @@ flowchart LR
     D --> F[Per-receptor log]
 ```
 
-`nexus prep rec` accepts a file or directory. Directory input is scanned for `.pdb` and `.cif`. The pipeline creates a short ChimeraX Python script from `_clean_template.py`, runs it, deletes the temporary script, and logs chain/protonation information.
-
-Output:
+Outputs:
 
 ```text
-<output_dir>/<input_stem><suffix>
-<output_dir>/<input_stem><suffix_without_extension>.log
+receptors/cleaned/<stem>_cleaned.pdb
+receptors/cleaned/<stem>_cleaned.log
 ```
 
-### Receptor Mutation
+## Mutation and Protonation
 
-Input mutation strings use:
+Command:
 
-```text
-selection-NEW_RES
+```bash
+nexus prep mutate -i receptors/cleaned/7K40_cleaned.pdb -o receptors/mutated -s "_mutated.pdb" -m ":41-HIP" -m ":145-CYM"
 ```
 
 Processing:
@@ -79,16 +88,26 @@ Processing:
 1. `MutatePipeline` splits each mutation string on `-`.
 2. `chimerax_mutate()` builds ChimeraX stdin commands.
 3. ChimeraX selects the residue, deletes hydrogens, assigns the residue name, adds hydrogens/charges, and saves the receptor.
-4. ChimeraX stdout is parsed for empty selections and assigned residue names.
+4. Nexus rewrites Amber protonation residue labels such as `HIP` or `CYM` back to standard PDB residue names while preserving added hydrogens.
 
-Output:
+Outputs:
 
 ```text
-<output_dir>/<input_stem><suffix>
-<output_dir>/<input_stem><suffix_without_extension>.log
+receptors/mutated/<stem>_mutated.pdb
+receptors/mutated/<stem>_mutated.log
 ```
 
-### Ligand Docking Preparation
+## Ligand Prep
+
+CSV input is validated strictly:
+
+- Header must be exactly `smiles,name`.
+- SMILES values cannot be empty or duplicated.
+- Ligand names are sanitized for filenames and cannot collide after sanitization.
+
+SDF input can be a file or directory. Directory input is searched recursively for `.sdf`.
+
+Processing:
 
 ```mermaid
 flowchart TD
@@ -104,15 +123,7 @@ flowchart TD
     H --> J[Prepared DOCK6 ligands]
 ```
 
-CSV input is validated strictly:
-
-- Header must be exactly `smiles,name`.
-- SMILES values cannot be empty or duplicated.
-- Ligand names are sanitized for filenames and cannot collide after sanitization.
-
-SDF input can be a file or directory. Directory input is searched recursively for `.sdf`.
-
-Output:
+Output suffix decides format:
 
 ```text
 <output_dir>/<ligand_name>_prepared.pdbqt
@@ -121,12 +132,22 @@ Output:
 
 When `skip=True` is used by the Python parallel executor, failed ligand tasks are logged and filtered out of downstream results. The surviving molecules can be misaligned with the original names list when a task fails.
 
-## Docking Data Path
+## Docking
+
+Input config:
+
+- `common.job_name`, `common.output_dir`, `common.padding`, `common.n_jobs`, `common.max_poses`
+- `receptors.source`, `receptors.suffix`, pocket definition
+- `ligands.source`, `ligands.suffix`
+- `engine.program`
+- optional `metadata`
+
+Processing:
 
 ```mermaid
 sequenceDiagram
     participant CLI
-    participant Config as load_dock_config
+    participant Config as load_config(DockConfig, config)
     participant Prep as Receptor prep
     participant Pair as matchmixer
     participant Dock as Docking executor
@@ -142,28 +163,10 @@ sequenceDiagram
     Prep->>Pair: Return receptor bundles
     Pair->>Dock: Receptor/ligand pairs
     Dock->>Dock: Run executor-managed jobs
-    Dock->>Summary: Scored pose files
+    Dock->>Summary: Scores csv and rmsd clustering csv
     Summary->>Copy: Docking summary CSV paths
     Copy->>Copy: Copy results, logs, manifest, state
 ```
-
-### Configuration Resolution
-
-Input YAML:
-
-- `libs`
-- `common`
-- `receptors`
-- `ligands`
-- `vina` or `dock6`
-
-`load_dock_config()` transforms raw YAML into runtime config:
-
-1. Validates fields with `DockConfig`.
-2. Appends `project_name` to working/results directories.
-3. Creates logger, manifest, and state objects.
-4. Extracts receptor and ligand files from files, directories, or lists.
-5. Resolves receptor pocket definitions into `ReceptorConfigBundle` objects.
 
 ### Receptor Bundle States
 
@@ -208,7 +211,38 @@ Each bundle carries:
 6. `write_summary_csv()` parses `Grid_Score` lines.
 7. `final_copy()` copies selected outputs and run metadata.
 
-## SysMD Data Path
+Vina outputs use `.pdbqt` poses and `REMARK VINA RESULT` score parsing.
+
+DOCK6 outputs use `.mol2` poses and `Grid_Score` parsing.
+
+Results:
+
+```text
+results/<job_name>/<receptor>/
+  <receptor input copy>
+  <pocket file>
+  Scores_<job_name>_<receptor>.csv
+  Clusters_<job_name>_<receptor>.csv
+  poses/
+    <receptor>_<ligand>_scored.pdbqt
+```
+
+The metadata JSON is written at:
+
+```text
+results/<job_name>/<job_name>_metadata.json
+```
+
+## MD Build
+
+Inputs:
+
+- Receptor PDB.
+- Optional docked ligand pose file.
+- Optional pose index.
+- Force-field, water, box, and salt settings.
+
+Processing:
 
 ```mermaid
 flowchart TD
@@ -221,29 +255,38 @@ flowchart TD
     H --> I[parmchk2]
     I --> J[FRCMOD]
     C --> K[tleap volume pass]
-    H --> K
     J --> K
     K --> L[Ion count calculation]
     L --> M[tleap final pass]
     M --> N[PRMTOP and INPCRD]
 ```
 
-Input:
-
-- `common.input`: receptor file.
-- `sysmd.ligand`: prepared ligand pose file.
-- `sysmd.pose_num`: pose index.
-
-Output:
+Outputs:
 
 ```text
-<output_dir>/<system_name>/<system_name>.prmtop
-<output_dir>/<system_name>/<system_name>.inpcrd
+results/<job_name>/<job_name>.prmtop
+results/<job_name>/<job_name>.inpcrd
+results/<job_name>/<job_name>.pdb
 ```
 
-The current code treats `ligand` as optional in the schema, but receptor-only runs still have a known `None` handling issue in `tleap` command construction.
+## MD Run
 
-## Amber MD Data Path
+Command:
+
+```bash
+nexus md run -c configs/amber_config.yaml
+nexus md run -c configs/openmm_config.yaml
+```
+
+Inputs:
+
+- `common.prmtop`
+- `common.inpcrd`
+- `common.mask`
+- timing/restraint sections
+- `engine.program: amber` or `openmm`
+
+Amber Data Path
 
 ```mermaid
 sequenceDiagram
@@ -278,17 +321,30 @@ seed*.in / seed*.out / seed*.ncrst / seed*.nc / seed*.info
 prod*.in / prod*.out / prod*.ncrst / prod*.nc / prod*.info
 ```
 
-Current result copying includes the input topology, production restart files, production output logs, and run metadata. Production trajectory files remain in the working directory.
+OpenMM Data Path is similar but passes the `simulation` object sequentially instead of intermediate files.
 
-## MD Analysis Data Path
+Results:
 
-Input:
+```text
+results/<job_name>/
+  <input topology>
+  prod*.nc or prod*.dcd
+  prod*.ncrst or prod*.chk
+  prod*.out or prod*.log
+  <job_name>_run.log
+  <job_name>_manifest.json
+  <job_name>_state.json
+```
 
-- `--prmtop`
-- `--trajin`
-- `--mask`
-- optional `--name`
-- optional `--output-dir`
+## MD Analyze
+
+Command:
+
+Inputs:
+
+- Topology (`common.prmtop`)
+- Trajectory (`common.trajin`)
+- Mask (`common.mask`)
 
 Processing:
 
@@ -306,6 +362,12 @@ Output:
 - PCA outputs.
 - Clustering outputs.
 - Visualization notebook.
+
+The `trajectory` booleans are present in the config model but are not used yet to enable or disable specific template sections.
+
+## MM-PBSA/GBSA
+
+`nexus md mmpbsa` is visible in help output and has a config model, but the current runner needs implementation review before it should be used as a stable workflow.
 
 ## Error Handling Along the Data Path
 

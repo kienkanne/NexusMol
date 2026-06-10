@@ -15,7 +15,6 @@ def _run(session, input_path, output_path):
     # 3. Rename remaining chains using your sequential Python logic
     # ChimeraX chains are stored in model.chains
     for idx, chain_id in enumerate(model.chains):
-        print (idx, chain_id)
         if int(idx) < len(LEGAL_CHAIN_IDS):
             new_id = LEGAL_CHAIN_IDS[idx]
         else:

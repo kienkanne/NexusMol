@@ -1,32 +1,19 @@
-from pydantic import BaseModel, ConfigDict
-from typing import Literal, Optional, Union, List
+from pydantic import BaseModel, ConfigDict, model_validator, Field
+from typing import Literal, Optional, Union, List, Annotated
 from pathlib import Path
-import os
-
-
-class LibsConfig(BaseModel):
-    chimerax: Optional[Path] = "/usr/local/chimerax/bin/ChimeraX"
-    chimera: Optional[Path] = "/usr/local/chimera/chimera-1.8/bin/chimera"
-
-    dock_home: Optional[Path] = None
 
 
 class CommonConfig(BaseModel):
-    model_config = ConfigDict(extra='allow')
-
-    project_name: Optional[str] = "docking"
-    working_dir: Optional[Path] = Path.cwd() / "artifacts"
-    results_dir: Optional[Path] = Path.cwd() / "results"
+    job_name: Optional[str] = "docking"
+    output_dir: Optional[Path] = Path.cwd() / "results"
 
     padding: Optional[float] = 5.0
     n_jobs: Optional[int] = 1
     max_poses: Optional[int] = 8
 
-    program: Optional[Literal["vina", "dock6"]] = None
-
 
 class ReceptorsConfig(BaseModel):
-    source: Optional[Path] = None
+    source: Path = None
     suffix: Optional[str] = ".pdb"
 
     pocket_option: Literal["selection", "reference"] = "selection"
@@ -36,106 +23,68 @@ class ReceptorsConfig(BaseModel):
 
 
 class LigandsConfig(BaseModel):
-    source: Optional[Path] = None
+    source: Path = None
     suffix: Optional[str] = ".sdf"
 
 
 class VinaConfig(BaseModel):
+    program: Literal["vina"]
     exhaustiveness: Optional[int] = 32
     num_modes: Optional[int] = 8
 
-
 class DOCK6Config(BaseModel):
+    program: Literal["dock6"]
     max_orientations: Optional[int] = 1000
     radius: Optional[float] = 10.0
 
+EngineConfig = Annotated[
+    Union[VinaConfig, DOCK6Config],
+    Field(discriminator="program")
+]
 
 class MetadataConfig(BaseModel):
-    # Allow arbitrary extra fields in YAML that aren't explicitly defined here
-    # Import files will be added, and at the end a json will be dumped to results dir
     model_config = ConfigDict(extra="allow")
 
 
 class DockConfig(BaseModel):
-    libs: Optional[LibsConfig] = LibsConfig()
-    common: Optional[CommonConfig] = CommonConfig()
-    vina: Optional[VinaConfig] = VinaConfig()
-    dock6: Optional[DOCK6Config] = DOCK6Config()
-    receptors: Optional[ReceptorsConfig] = ReceptorsConfig()
-    ligands: Optional[LigandsConfig] = LigandsConfig()
-    metadata: Optional[MetadataConfig] = MetadataConfig()
+    common: CommonConfig = Field(default_factory=CommonConfig)
+    receptors: ReceptorsConfig = Field(default_factory=ReceptorsConfig)
+    ligands: LigandsConfig = Field(default_factory=LigandsConfig)
+    metadata: MetadataConfig = Field(default_factory=MetadataConfig)
+
+    engine: EngineConfig
+
+    model_config = ConfigDict(extra="allow")
+
+    @model_validator(mode="after")
+    def run_setup(self) -> "DockConfig":
+        _find_files(self)
+        _validate_and_normalize_receptors(self)
+        return self
 
 
-def load_dock_config(path):
-    import yaml
-    with open(path) as f:
-        data = yaml.safe_load(f)
-    dcfg = DockConfig.model_validate(data)
-
-    dcfg = _setup_dirs(dcfg)
-    dcfg = _find_files(dcfg)
-
-    # Validate and normalize receptor-related configuration (selection/reference semantics)
-    validate_and_normalize_receptors(dcfg, dcfg.receptors.reference_suffix)
-
-    from nexus.core.trackers.main_tracker import setup_context
-    setup_context(dcfg.common.working_dir, dcfg.common.project_name)
-
-    return dcfg
-
-
-def _find_files(dcfg: DockConfig):
-    from nexus.core.extract_files import extract_files
+def _find_files(cfg: DockConfig):
+    from nexus.core.utils.extract_files import extract_files
     
-    if ".pdb" not in dcfg.receptors.suffix and ".cif" not in dcfg.receptors.suffix:
+    if ".pdb" not in cfg.receptors.suffix and ".cif" not in cfg.receptors.suffix:
         raise ValueError("Input receptor suffix must have 'pdb' or 'cif'.")
 
-    receptors_source = dcfg.receptors.source
-    dcfg.receptors.source = extract_files(dcfg.receptors.source, dcfg.receptors.suffix)
-    if not dcfg.receptors.source:
-        raise ValueError(f"No receptor with '{dcfg.receptors.suffix}' found in  {receptors_source}.")
+    receptors_source = cfg.receptors.source
+    cfg.receptors.source = extract_files(cfg.receptors.source, cfg.receptors.suffix)
+    if not cfg.receptors.source:
+        raise ValueError(f"No receptor with '{cfg.receptors.suffix}' found in  {receptors_source}.")
         
-    if dcfg.receptors.reference is not None:
-        dcfg.receptors.reference = extract_files(dcfg.receptors.reference, dcfg.receptors.reference_suffix)
+    if cfg.receptors.reference is not None:
+        cfg.receptors.reference = extract_files(cfg.receptors.reference, cfg.receptors.reference_suffix)
 
-    ligands_source = dcfg.ligands.source
-    dcfg.ligands.source = extract_files(dcfg.ligands.source, dcfg.ligands.suffix)
-    if not dcfg.ligands.source:
-        raise ValueError(f"No ligand with '{dcfg.ligands.suffix}' found in  {ligands_source}.")
-    return dcfg
-
-
-def _setup_dirs(dcfg: DockConfig):
-    for subcfg_name in DockConfig.model_fields:
-        subcfg = getattr(dcfg, subcfg_name)
-        
-        # 1. Skip if the sub-config is None (Optional fields)
-        if subcfg is None:
-            continue
-            
-        # 2. Safely get the fields regardless of Pydantic version
-        if hasattr(subcfg, "model_fields"):
-            fields = subcfg.model_fields  # Pydantic v2
-        elif hasattr(subcfg, "__fields__"):
-            fields = subcfg.__fields__    # Pydantic v1
-        else:
-            continue                      # Not a Pydantic model, skip it
-
-        for field_name in fields:
-            value = getattr(subcfg, field_name)
-            if isinstance(value, Path):
-                expanded_path = Path(os.path.expandvars(str(value))).expanduser()
-                setattr(subcfg, field_name, expanded_path)
-
-    project_name = dcfg.common.project_name
-
-    dcfg.common.working_dir = dcfg.common.working_dir/ project_name
-    dcfg.common.results_dir = dcfg.common.results_dir / project_name
-
-    return dcfg
+    ligands_source = cfg.ligands.source
+    cfg.ligands.source = extract_files(cfg.ligands.source, cfg.ligands.suffix)
+    if not cfg.ligands.source:
+        raise ValueError(f"No ligand with '{cfg.ligands.suffix}' found in  {ligands_source}.")
 
 
 from dataclasses import dataclass
+
 
 @dataclass
 class ReceptorConfigBundle:
@@ -146,18 +95,18 @@ class ReceptorConfigBundle:
     reference_path: Optional[Path] = None
 
 
-def validate_and_normalize_receptors(dcfg: DockConfig, reference_suffix: str = "_pocket.cif") -> List[ReceptorConfigBundle]:
+def _validate_and_normalize_receptors(cfg: DockConfig) -> List[ReceptorConfigBundle]:
     """
-    Validate and normalize receptor-related fields on `dcfg` (RootConfig).
+    Validate and normalize receptor-related fields on `cfg` (RootConfig).
     Returns a list of ReceptorConfigBundle objects with resolved selection strings and reference paths.
     """
-    receptors = dcfg.receptors.source
-    pocket_option = dcfg.receptors.pocket_option
+    receptors = cfg.receptors.source
+    pocket_option = cfg.receptors.pocket_option
     bundles: List[ReceptorConfigBundle] = []
 
     # Handle reference-based pockets: either a single global reference or per-receptor references
     if pocket_option == "reference":
-        references = sorted(dcfg.receptors.reference)
+        references = sorted(cfg.receptors.reference)
         if not references:
             raise FileNotFoundError(f"pocket_option is 'reference' but no reference pockets found/provided (expected suffix {reference_suffix})")
 
@@ -170,13 +119,14 @@ def validate_and_normalize_receptors(dcfg: DockConfig, reference_suffix: str = "
                 bundles.append(ReceptorConfigBundle(receptor=rec, name=rec.stem, reference_path=references[0]))
         else:
             # Multiple references: match by base name and attach per-receptor reference paths
+            reference_suffix = cfg.receptors.reference_suffix
             ref_map = match_references_to_receptors(receptors, references, reference_suffix)
             for rec in receptors:
                 bundles.append(ReceptorConfigBundle(receptor=rec, name=rec.stem, reference_path=ref_map[rec]))
 
     # Handle selection-based pockets: either a global selection string or a per-receptor CSV mapping
     elif pocket_option == "selection":
-        sel = dcfg.receptors.selection
+        sel = cfg.receptors.selection
         if sel is None:
             raise ValueError("pocket_option is 'selection' but no selection provided in config")
 
@@ -200,12 +150,12 @@ def validate_and_normalize_receptors(dcfg: DockConfig, reference_suffix: str = "
     else:
         raise ValueError(f"Unknown pocket_option: {pocket_option}")
 
-    # Attach normalized receptor list and the built bundles to the dcfg object so downstream code
+    # Attach normalized receptor list and the built bundles to the cfg object so downstream code
     try:
-        setattr(dcfg.receptors, "bundles", bundles)
+        setattr(cfg.receptors, "bundles", bundles)
     except Exception:
         # As a fallback, set attribute directly (pydantic models allow attribute assignment post-creation)
-        dcfg.receptors.__dict__["bundles"] = bundles
+        cfg.receptors.__dict__["bundles"] = bundles
 
     return bundles
 

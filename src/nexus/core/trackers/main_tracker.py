@@ -2,8 +2,6 @@ from pydantic import BaseModel
 from typing import Any, Optional
 
 
-
-
 def main_tracker(stage_name, checkpoint=False):
     """
     NOTE: Main tracker logging ignores the --silence flag, as it is meant to track the main stages of a pipeline regardless of logging level
@@ -11,7 +9,7 @@ def main_tracker(stage_name, checkpoint=False):
     """
     def decorator(func):
         def wrapper(*args, **kwargs):
-            ctx = PipelineContext.get_ctx()
+            ctx = TrackerContext.get_ctx()
 
             logger = ctx.logger
             manifest = ctx.manifest
@@ -43,17 +41,17 @@ def main_tracker(stage_name, checkpoint=False):
         return wrapper
     return decorator
 
-class PipelineContext(BaseModel):
+class TrackerContext(BaseModel):
     logger: Optional[Any] = None
     manifest: Optional[Any] = None
     runstate: Optional[Any] = None
 
     # internal class variable to store instance
     # hint is user read only
-    _active_context: "Optional[PipelineContext]" = None
+    _active_context: "Optional[TrackerContext]" = None
 
     @classmethod
-    def set_ctx(cls, ctx: "PipelineContext"):
+    def set_ctx(cls, ctx: "TrackerContext"):
         cls._active_context = ctx
 
     @classmethod
@@ -68,21 +66,21 @@ from nexus.core.trackers.manifest import Manifest
 from nexus.core.trackers.runstate import RunState
 
 
-def setup_context(working_dir, project_name):
-    PipelineContext.set_ctx(PipelineContext(
-        logger = CustomLogger(working_dir / f"{project_name}_run.log"),
-        manifest = Manifest(working_dir / f"{project_name}_manifest.json"),
-        runstate = RunState(working_dir / f"{project_name}_state.json")
+def setup_context(scratch_dir, job_name):
+    TrackerContext.set_ctx(TrackerContext(
+        logger = CustomLogger(scratch_dir / f"{job_name}_run.log"),
+        manifest = Manifest(scratch_dir / f"{job_name}_manifest.json"),
+        runstate = RunState(scratch_dir / f"{job_name}_state.json")
     ))
 
 
-def final_copy_trackers(results_dir):
+def final_copy_trackers(output_dir):
     """
     Mark a pipeline completed and copy trackers to results directory
     """
     from pathlib import Path
     import shutil
-    ctx = PipelineContext.get_ctx()
+    ctx = TrackerContext.get_ctx()
     logger = ctx.logger
     manifest = ctx.manifest
     runstate = ctx.runstate
@@ -95,7 +93,7 @@ def final_copy_trackers(results_dir):
     runstate_path = runstate.get_path()
 
     for src in (log_path, manifest_path, runstate_path):
-        dst = results_dir / Path(src).name
+        dst = output_dir / Path(src).name
         if src.exists():
             shutil.copy2(src, dst)
 

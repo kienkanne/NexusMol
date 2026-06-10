@@ -1,87 +1,192 @@
 # Examples
 
-This folder contains some example uses of the toolkit. In this top level folder, input files can be found. The folders are contain the results of these example pipelines.
+This directory contains example inputs, configs, generated artifacts, and results for the current Nexus CLI.
 
-## Fetching and receptors preparation
-
-The `-d` flag is to dry, and you almost always want to use it to remove crystallographic waters to prepare receptors for docking. For molecular dynamics, you might want to keep those near the binding site manually.
+Run the examples from this directory:
 
 ```bash
-nexus fetch rcsb -i id_list.txt -o receptors/fetched/ -l "ligand"
-nexus prep rec -i receptors/fetched/ -o receptors/cleaned/ -s "_cleaned.pdb" -d
+cd examples
 ```
 
-The output from `nexus prep rec` tells us the non-standard protonation states that ChimeraX assigned, especially histidine.
+The workflow configs in `configs/` use paths relative to `examples/`. See the config files for details about each input parameter.
 
-## Change protonation states of receptors
+## 1. Global Config
+
+Create the global config:
+
+```bash
+nexus config init
+```
+
+Edit `~/.config/nexus/config.yaml`. For example:
+
+```yaml
+software:
+  chimerax: /usr/local/chimera/chimera-1.8/bin/chimera
+  chimera: /usr/local/chimerax/bin/ChimeraX
+  dock6: ~/apps/dock6
+path:
+  scratch_dir: /localscratch/$USER
+```
+
+Check it:
+
+```bash
+nexus config show
+nexus config validate
+```
+
+## 2. Fetch and Prepare Receptors
+
+Fetch biological assemblies and non-covalent ligands from RCSB:
+
+```bash
+nexus fetch rcsb -i inputs/id_list.txt -o receptors/fetched -l "ligand"
+```
+
+> The `-l` flag is the suffix you want to attach to the fetched ligand. If it's not specified, the ligand's original name from RCSB is used.
+
+Clean receptors with ChimeraX:
+
+```bash
+nexus prep rec -i receptors/fetched -o receptors/cleaned -s "_cleaned.pdb" -d
+```
+
+> The `-d` flag is to dry, and you almost always want to use it to remove crystallographic waters to prepare receptors for docking. For molecular dynamics, you might want to keep those near the binding site manually.
+
+Review the generated `.log` files. They report chain spans and non-standard protonation states assigned by ChimeraX.
+
+## 3. Adjust Protonation States
 
 Based on the output from `nexus prep rec`, we adjust the protonation state of the receptors based on biological knowledge of the receptor. 
 
-> For example, 6W63 and 7K40 are protein structures of the SARS-CoV-2 main protease (mpro), and if we want to model the ionic pair at the catalytic side, we can assign His41 to be doubly protonated (HIP) and Cys145 to be deprotonated (CYM). We can also adjust other histidines that was assigned to be HIP by chimerax to be neutral (HIE/HID), for example.
-
 ```bash
-nexus prep mutate -i receptors/cleaned/6W63_cleaned.pdb -o receptors/mutated/ -s "_mutated.pdb" -m ":145-CYM"
-nexus prep mutate -i receptors/cleaned/7K40_cleaned.pdb -o receptors/mutated/ -s "_mutated.pdb" -m ":64,80-HIE" -m ":41-HIP" -m ":145-CYM"
+nexus prep mutate -i receptors/cleaned/6W63_cleaned.pdb -o receptors/mutated -s "_mutated.pdb" -m ":145-CYM"
+nexus prep mutate -i receptors/cleaned/7K40_cleaned.pdb -o receptors/mutated -s "_mutated.pdb" -m ":64,80-HIE" -m ":41-HIP" -m ":145-CYM"
 ```
 
-After this step, our receptor names are quite long, so we might want to simplify their naming and put in a folder for docking, and in this example they were put in receptors/final/
+> For example, 6W63 and 7K40 are protein structures of the SARS-CoV-2 main protease (mpro), and if we want to model the ionic pair at the catalytic side, we can assign His41 to be doubly protonated (HIP) and Cys145 to be deprotonated (CYM). We can also adjust other histidines that was assigned to be HIP by chimerax to be neutral (HIE/HID), for example.
+
+Mutation strings use `selection-NEW_RES`, where `selection` is passed to ChimeraX and `NEW_RES` is the residue name to assign. Note that if the protonation state is changed, `NEW_RES` is used only to change the protonation state, while the residue stays standardized. See [examples/REFERENCES.md](examples/REFERENCES.md) for detailed selection syntax and AMBER residue naming conventions.
+
+After this step, our receptor names are quite long, so we might want to simplify their naming and put in a folder specified by the docking configs, and in this example they were put in receptors/final/.
 
 ```bash
-mkdir -p receptors/final/
+mkdir -p receptors/final
 cp receptors/mutated/6W63_cleaned_mutated.pdb receptors/final/6W63.pdb
 cp receptors/mutated/7K40_cleaned_mutated.pdb receptors/final/7K40.pdb
 ```
 
-## Ligands preparation for docking
+## 4. Prepare Ligands
 
 Vina requires the .pdbqt format, while dock6 requires .mol2.
 
 ```bash
-nexus prep ligdock -i ligand_list.csv -o ligands/vina/ -s "_prepared.pdbqt"
-nexus prep ligdock -i ligand_list.csv -o ligands/dock6/ -s "_prepared.mol2"
+nexus prep ligdock -i inputs/ligand_list.csv -o ligands/vina/ -s "_prepared.pdbqt"
+nexus prep ligdock -i inputs/ligand_list.csv -o ligands/dock6/ -s "_prepared.mol2"
 ```
 
-For the large pipelines below, see the working directory [artifacts](artifacts/) and output directory [results](results/) docking, system building, and molecular dynamics outputs.
+The CSV format is:
 
-## Docking
+```csv
+smiles,name
+CC(=O)OC1=CC=CC=C1C(=O)O,aspirin
+```
 
-Docking uses a config file for input, requiring prepared receptors and ligands. The results can be found in `results/vina_mpro/` and `results/dock6_mpro/`
+## 5. Molecular Docking
+
+Both docking engines use `nexus dock run`. In the config file, `engine.program` field selects `vina` or `dock6`.
 
 ```bash
-nexus dock vina -c vina_config.yaml
-nexus dock dock6 -c dock6_config.yaml
+nexus dock run -c configs/vina_config.yaml
+nexus dock run -c configs/dock6_config.yaml
 ```
 
-## Build solvated system for MD
+Outputs are grouped by receptor:
 
-After choosing a docked pose or using a crystal structure with ligand, build a solvated Amber-compatible system using `nexus prep sysmd`. Results can be found in `results/6W63_mol4_solvated/`
+```text
+results/vina_mpro/6W63/
+results/vina_mpro/7K40/
+results/dock6_mpro/6W63/
+results/dock6_mpro/7K40/
+```
 
-> AmberTools can be very verbose, so I suggest use the flag `--silence` to avoid having your terminal cluttered.
+Each receptor result folder contains prepared receptor/pocket files, scored poses, `Scores_...csv`, and `Clusters_...csv`.
+
+## 6. Build a Solvated MD System
+
+If Amber is provided by an environment module, load it before MD build/run/analyze commands:
 
 ```bash
-nexus --silence 2 prep sysmd -c sysmd_config.yaml
+module load amber/24
+echo "$AMBERHOME"
 ```
 
-Once the system files are generated, a full molecular dynamics pipeline can be run, including minimization, heating, equilibration, and production. Results can be found in `results/AMBER_DiAla` and `results/OpenMM_DiAla`. Currently, there is no difference between `amber_config.yaml` and `openmm_config.yaml`, with the exception of the `project_name` field; both share the same parameters.
+Build an Amber system from `inputs/6W63.pdb` and a docked ligand pose:
 
 ```bash
-nexus --silence 2 md amber -c amber_config.yaml
-nexus md openmm -c openmm_config.yaml
+nexus --silence 2 md build -c configs/build_config.yaml
 ```
 
-Molecular dynamics output can be analysis using the command:
+This command:
+- Prepare a receptor with `pdb4amber`.
+- Optionally select a docked ligand pose.
+- Add ligand hydrogens and AM1-BCC charges with `obabel` and `antechamber`.
+- Generate ligand parameters with `parmchk2`.
+- Solvate, ionize, and write Amber files with `tleap`.
+
+> AmberTools can be very verbose, so the flag `--silence 2` is recommended to avoid having your terminal cluttered.
+
+Outputs:
+
+```text
+results/6W63_mol4_solvated/6W63_mol4_solvated.prmtop
+results/6W63_mol4_solvated/6W63_mol4_solvated.inpcrd
+results/6W63_mol4_solvated/6W63_mol4_solvated.pdb
+```
+
+## 7. Run MD
+
+The example MD configs use dialanine inputs because they are small enough for demonstration. In the config file, `engine.program` selects `amber` or `openmm`.
 
 ```bash
-nexus --silence 2 md analyze -p your.prmtop -t trajectory.nc -m ":1-198" -n name -o results/
+nexus --silence 2 md run -c configs/amber_config.yaml
+nexus md run -c configs/openmm_config.yaml
 ```
 
-Example outputs can be found in `results/2BPW_analysis_output/`. 
+These commands:
+- Start from Amber topology and coordinates.
+- Minimize with a restraint schedule.
+- Heat to target temperature.
+- Equilibrate with a restraint schedule.
+- Run one or more randomized production seeds.
 
-> 2BPW is a HIV-1 protease-inhibitor complex, and was chosen for this example over DiAlanine because DiAlanine is too small to have meaningful protein analysis. This command can also load in the dcd trajectory format, which is the output when running openmm.
-
-> If you want to try out running these commands on your own, you can copy this folder (examples), excluding subfolders, to your desired destination and run these commands.
+## 8. Analyze a Trajectory
 
 ```bash
-mkdir -p ~/your_directory
-cp ./* ~/your_directory
+nexus --silence 2 md analyze -c configs/md_analyze.yaml
 ```
+
+This command:
+- Render the bundled CPPTRAJ template.
+- Run RMSD and RMSF analysis.
+- Run hydrogen-bond analysis.
+- Run secondary-structure analysis.
+- Run PCA and clustering.
+- Copy a visualization notebook.
+
+> The sample analysis config points at the generated Amber dialanine output so the paths exist in this example tree. The checked-in `results/2BPW_analysis/` folder is a larger representative analysis output set. 2BPW is a HIV-1 protease-inhibitor complex, and was chosen for this example over DiAlanine because DiAlanine is too small to have meaningful protein analysis.
+
+## Example Config Index
+
+| File | Purpose |
+| --- | --- |
+| `configs/global_config.yaml` | Template for `~/.config/nexus/config.yaml`. |
+| `configs/vina_config.yaml` | Run Vina docking. |
+| `configs/dock6_config.yaml` | Run DOCK6 docking. |
+| `configs/build_config.yaml` | Build an Amber system. |
+| `configs/amber_config.yaml` | Run Amber MD. |
+| `configs/openmm_config.yaml` | Run OpenMM MD. |
+| `configs/md_analyze.yaml` | Run CPPTRAJ analysis. |
+
+More configuration detail: [docs/CONFIGURATION.md](docs/CONFIGURATION.md).
