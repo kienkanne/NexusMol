@@ -2,7 +2,7 @@
 
 NexusMol is a command-line toolkit for structure-based drug discovery workflows. It coordinates common fetching, preparation, docking, molecular dynamics, and trajectory-analysis tasks while delegating scientific work to established tools such as ChimeraX, RDKit, Meeko, AutoDock Vina, DOCK6, Open Babel, AMBER, and OpenMM.
 
-Current package version: `2.4.0`.
+Current package version: `2.4.1`.
 
 ## What NexusMol Does
 
@@ -14,6 +14,7 @@ NexusMol currently supports:
 - Running AutoDock Vina and DOCK6 docking batches in parallel.
 - Building solvated AMBER systems from prepared receptors and docked ligand poses.
 - Running AMBER and OpenMM minimization, heating, equilibration, and production workflows.
+- Computing MM-PBSA/GBSA free energies and generating summary figures from MD trajectories.
 - Running a CPPTRAJ-based analysis workflow for existing trajectories.
 
 ## Install

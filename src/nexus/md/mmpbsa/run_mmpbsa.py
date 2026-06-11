@@ -1,32 +1,97 @@
+from nexus.core.executors.shell import shell
 import os
-from string import Template
-from pathlib import Path
-import shutil
 
-from nexus.md.mmpbsa._run_mmpbsa_cmd import _run_mmpbsa_cmd
+from nexus.md.mmpbsa.mmpbsa_config import MMPBSAConfig
 
-def run_mmpbsa(prmtop: Path, trajin: Path, mask: str, name: str, output_dir: Path, 
-                 startframe: int = 1, endframe: int = 9999999, interval: int = 10, n_cores: int=1):
-    AMBERHOME = os.environ.get("AMBERHOME")
-    if not AMBERHOME:
-        raise RuntimeError("AMBERHOME environment variable not set")
 
-    with open(Path(__file__).resolve().parents[0] / "mmpbsa_template.txt") as f:
-        mmpbsa_template = f.read()
+def run_mmpbsa(cfg: MMPBSAConfig, mmpbsa_input):
+    scratch_dir = cfg._global.path.scratch_dir
+    name = cfg.common.job_name
+    receptor_mask = cfg.common.receptor_mask
+    trajin = cfg.common.trajin
+    n_cores = cfg.common.n_cores
 
-    absolute_prmtop = Path(prmtop).resolve()
-    absolute_trajin = Path(trajin).resolve()
+    cwd = os.getcwd()
+    try:
+        os.chdir(scratch_dir)
 
-    output_dir = output_dir / name
+        system = str(cfg.common.prmtop)
+        complex = f"complex_{name}.prmtop"
+        receptor = f"receptor_{name}.prmtop"
+        ligand = f"ligand_{name}.prmtop"
 
-    mmgbsa_input = Template(mmpbsa_template).substitute(startframe=startframe, endframe=endframe, interval=interval)
+        ante_mmpbsa_cmd = [
+        "ante-MMPBSA.py",
+        "-p",
+        system,
+        "-c",
+        complex,
+        "-r",
+        receptor,
+        "-l",
+        ligand,
+        "-s",
+        ":WAT,Na+,Cl-",
+        "-m",
+        receptor_mask
+        ]
 
-    _run_mmpbsa_cmd(mmgbsa_input, 
-                prmtop=absolute_prmtop, 
-                trajin=absolute_trajin, 
-                output_dir=output_dir, 
-                mask=mask, 
-                name=name,
-                n_cores=n_cores)
+        with shell(ante_mmpbsa_cmd):
+            pass
 
-    shutil.copy2((Path(__file__).resolve().parents[0] / "visual_temnplate.ipynb"), output_dir / f"Visual_{name}.ipynb")
+        mmgbsa_in = scratch_dir / f"mmpbsa_{name}.in"
+        mmgbsa_in.write_text(mmpbsa_input)
+
+        outputs = {}
+        energy = f"energy_{name}.csv"
+        outputs["energy"] = scratch_dir / energy
+
+        if cfg.decomp.run:
+            decomp = f"decomp_{name}.csv"
+            outputs["decomp"] = scratch_dir / decomp
+
+        mmpbsa_py_mpi_cmd = [
+            "mpirun",
+            "-np",
+            str(n_cores),
+            "MMPBSA.py.MPI",
+            "-O",
+            "-i",
+            str(mmgbsa_in),
+            "-o",
+            f"mmpbsa_{name}.out",
+            "-sp",
+            system,
+            "-cp",
+            complex,
+            "-rp",
+            receptor,
+            "-lp",
+            ligand,
+            "-y",
+            str(trajin),
+            "-eo",
+            energy,
+        ]
+
+        if cfg.decomp.run:
+            mmpbsa_py_mpi_cmd.extend([
+                "-do",
+                decomp
+            ])
+
+        with shell(mmpbsa_py_mpi_cmd):
+            pass
+        
+        # TODO
+        import shutil
+        output_dir = cfg.common.output_dir
+        shutil.copy2(scratch_dir / f"mmpbsa_{name}.out", output_dir / f"mmpbsa_{name}.out")
+
+    except Exception as e:
+        raise RuntimeError(f"Failed to change working directory to {scratch_dir}: {e}")
+    
+    finally:
+        os.chdir(cwd)
+        
+    return outputs

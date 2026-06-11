@@ -10,8 +10,8 @@ if sys.version_info < (3, 10):
     )
 
 from nexus.fetch.fetch_config import FetchConfig
-from nexus.fetch.pipeline import FetchPipeline
-import nexus.fetch.pipeline as fetch_pipeline
+from nexus.fetch.fetch_pipeline import FetchPipeline
+import nexus.fetch.fetch_pipeline as fetch_pipeline
 import nexus.fetch.rcsb_fetch as rcsb_fetch
 
 

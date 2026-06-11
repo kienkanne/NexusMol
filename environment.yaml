@@ -13,6 +13,10 @@ dependencies:
   - rdkit
   - openmm
   - cuda=12.0
+  - scipy
+  - numpy
+  - pandas
+  - matplotlib
   - pip
   - pip:
     - rcsb-api

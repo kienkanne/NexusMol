@@ -53,7 +53,7 @@ def rec(
         unique_flags={"dry": dry}
     )
 
-    from nexus.prep.rec.pipeline import RecPipeline
+    from nexus.prep.rec.rec_pipeline import RecPipeline
     RecPipeline(cfg=cfg)._run()
 
 
@@ -72,7 +72,7 @@ def mutate(
         unique_flags={"mutations": mutations}
     )
 
-    from nexus.prep.mutate.pipeline import MutatePipeline
+    from nexus.prep.mutate.mutate_pipeline import MutatePipeline
     MutatePipeline(cfg=cfg)._run()
     
 
@@ -90,5 +90,5 @@ def lig(
         unique_flags={"n_jobs": n_jobs}
     )
     
-    from nexus.prep.lig.pipeline import LigPipeline
+    from nexus.prep.lig.lig_pipeline import LigPipeline
     LigPipeline(cfg=cfg)._run()

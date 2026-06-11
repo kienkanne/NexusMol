@@ -1,0 +1,38 @@
+## CPPTRAJ analysis config example
+# Supply `common.prmtop`, `common.trajin`, and `common.receptor_mask`.
+# The `figures` block controls plotting. `dt_frame` is the time between saved
+# frames in picoseconds (ps) and currently corresponds to `prod_freq` in MDConfig.
+common:
+  prmtop: inputs/2BPW.prmtop
+  trajin: inputs/2BPW_seed0.nc
+  receptor_mask: ":1-198"
+  
+  job_name: 2BPW_analysis_new
+  output_dir: results
+
+rms:
+  rms_option: "alpha" # or "backbone". Mask to rms align and perform rms analysis.
+
+hbonds:
+  pp: True
+  pw: True
+  bb: True
+  pl: True
+
+ss:
+  run: True
+
+pca:
+  run: True
+  n_eigen: 10
+
+cluster:
+  run: True
+  n_cluster: 5
+
+figures:
+  # `dt_frame`: time between saved frames (ps). Use this together with any
+  # sampling interval you used when creating the trajectory; the plotting
+  # routines convert frames → time using `dt_frame`.
+  dt_frame: 10.0
+  format: "png"  # Output format: pdf, png, or svg

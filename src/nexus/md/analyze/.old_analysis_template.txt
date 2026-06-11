@@ -58,17 +58,17 @@ run
 
 crdaction trajectory rms ref trajaverage @N,C,CA
 crdaction trajectory matrix covar name covmatrix @N,C,CA
-runanalysis diagmatrix covmatrix out evecs_${name}.dat vecs 10 name eigenvectors \
-nmwiz nmwizvecs 10 nmwizfile normalmodes_${name}.nmd nmwizmask @N,C,CA
+runanalysis diagmatrix covmatrix out evecs_${name}.dat vecs ${n_eigen} name eigenvectors \
+nmwiz nmwizvecs ${n_eigen} nmwizfile normalmodes_${name}.nmd nmwizmask @N,C,CA
 
-crdaction trajectory projection modes eigenvectors beg 1 end 10 \
+crdaction trajectory projection modes eigenvectors beg 1 end ${n_eigen} \
 @N,C,CA out pca_${name}.dat
 
 run
 
 # --- Clustering ---
 cluster c1 \
- kmeans clusters ${n_clusters} randompoint maxit 500 \
+ kmeans clusters ${n_cluster} randompoint maxit 500 \
  rms ${mask}@C,N,O,CA,CB \
  sieve 10 random \
  out cnumvtime_${name}.dat \

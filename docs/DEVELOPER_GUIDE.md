@@ -52,7 +52,7 @@ src/nexus/dock/         Vina and DOCK6 workflows
 src/nexus/md/build/     Amber system building
 src/nexus/md/run/       Amber and OpenMM MD engines
 src/nexus/md/analyze/   CPPTRAJ analysis
-src/nexus/md/mmpbsa/    MM-PBSA/GBSA work in progress
+src/nexus/md/mmpbsa/    MM-PBSA/GBSA
 examples/configs/       runnable example YAMLs
 docs/                   user and developer documentation
 ```
@@ -115,7 +115,6 @@ Integration tests that call Vina, DOCK6, ChimeraX, Amber, or OpenMM should be is
 
 ## Manual Review Hotspots
 
-- `nexus md mmpbsa` currently has a CLI-to-runner mismatch and a stale notebook filename reference.
-- `AnalyzeConfig.trajectory` booleans are modeled but not used by the analysis runner yet.
+- `nexus md analyze` and `nexus md mmpbsa` now build their pipeline inputs dynamically from flexible YAML or CLI inputs; update tests and examples that assumed static template files and verify notebook filenames in examples.
 - Several Pydantic defaults still use mutable list literals in MD run config; those are worth tightening in a code-focused cleanup.
 - Fetch/prep commands attach global config differently from tracked YAML workflows; this is intentional today but should be kept consistent in future refactors.

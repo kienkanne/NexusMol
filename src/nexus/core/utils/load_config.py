@@ -44,8 +44,8 @@ def setup_dir(path, name):
 
 def expand_paths(model: BaseModel) -> BaseModel:
     """
-    Recursively traverses a Pydantic model to find Path attributes
-    and expands environment variables and user shortcuts (~).
+    Recursively traverses a Pydantic model to find Path attributes and
+    expands environment variables, user shortcuts (~), and resolve to absoulte path.
     """
     updated_data = {}
 
@@ -54,7 +54,7 @@ def expand_paths(model: BaseModel) -> BaseModel:
 
         if isinstance(value, Path):
             expanded_str = os.path.expandvars(str(value))
-            updated_data[field_name] = Path(expanded_str).expanduser()
+            updated_data[field_name] = Path(expanded_str).expanduser().resolve()
             
         elif isinstance(value, BaseModel):
             updated_data[field_name] = expand_paths(value)

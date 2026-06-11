@@ -1,0 +1,20 @@
+# 06/10/26 12:55:25
+# Args:  -p 2BPW.prmtop
+# Loaded topologies:
+#   2BPW.prmtop
+trajin 2BPW_seed0.nc
+hbond ProtLig_All donormask ${mask} acceptormask !(${mask}) donormask !(${mask}) acceptormask ${mask} avgout Combined_avg_${name}.dat out PL_hbvtime_${name}.dat
+autoimage
+strip :Na+,Cl-,WAT
+hbond ProtLig_All \ donormask :1-198 acceptormask !(:1-198) \ donormask !(:1-198) acceptormask :1-198 \ avgout Combined_avg_${name}.dat \ out PL_hbvtime_${name}.dat run
+hbond ProtLig_All \ donormask :1-198 acceptormask !(:1-198) \ donormask !(:1-198) acceptormask :1-198 \ avgout Combined_avg_${name}.dat \ out PL_hbvtime_${name}.dat
+clear all
+parm 2BPW.prmtop
+trajin 2BPW_seed0.nc
+hbond ProtLig_All \ donormask :1-198 acceptormask !(:1-198) \ donormask !(:1-198) acceptormask :1-198 \ avgout Combined_avg_${name}.dat \ out PL_hbvtime_${name}.dat
+hbond ProtLig_All \\ donormask :1-198 acceptormask !(:1-198) \\ donormask !(:1-198) acceptormask :1-198 \\ avgout Combined_avg_${name}.dat \\ out PL_hbvtime_${name}.dat
+clear all
+parm 2BPW.prmtop
+trajin 2BPW_seed0.nc
+hbond ProtLig_All donormask :1-198 acceptormask !(:1-198) donormask !(:1-198) acceptormask :1-198 avgout Combined_avg_${name}.dat out PL_hbvtime_${name}.dat
+help hbond

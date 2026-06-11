@@ -139,7 +139,7 @@ Input config:
 - `common.job_name`, `common.output_dir`, `common.padding`, `common.n_jobs`, `common.max_poses`
 - `receptors.source`, `receptors.suffix`, pocket definition
 - `ligands.source`, `ligands.suffix`
-- `engine.program`
+- `engine.program`: `vina` or `dock6`
 - optional `metadata`
 
 Processing:
@@ -284,7 +284,7 @@ Inputs:
 - `common.inpcrd`
 - `common.mask`
 - timing/restraint sections
-- `engine.program: amber` or `openmm`
+- `engine.program`: `amber` or `openmm`
 
 Amber Data Path
 
@@ -344,18 +344,20 @@ Inputs:
 
 - Topology (`common.prmtop`)
 - Trajectory (`common.trajin`)
-- Mask (`common.mask`)
+- Mask (`common.receptor_mask`)
 
 Processing:
 
-1. `full_analyze()` checks `AMBERHOME`.
-2. It renders `analysis_template.txt`.
-3. `_run_cpptraj()` writes `<name>.in` and runs `cpptraj`.
-4. A notebook template is copied to `Visual_<name>.ipynb`.
+1. `full_analyze()` validates `AMBERHOME` and the supplied inputs.
+2. The pipeline calls `generate_input()` to assemble the CPPTRAJ input dynamically from the config flags (RMSD, hbonds, PCA, clustering, etc.) and the provided topology/trajectory inputs.
+3. `_run_cpptraj()` writes `<job_name>.in` and executes `cpptraj`.
+4. A visualization notebook template is copied and populated as `Visual_<job_name>.ipynb`.
+
+The analysis pipeline exposes `generate_analysis_figures(cfg, outputs)` to produce publication-quality figures from the cpptraj outputs. Configure `cfg.figures.dt_frame` (ps) and `cfg.figures.format` to control timing and output format; `dt_frame` is the time interval in picoseconds (ps) between recorded frames and currently matches `prod_freq` in `MDConfig`.
 
 Output:
 
-- CPPTRAJ input file.
+- CPPTRAJ input file (`analysis_<job_name>.in`).
 - RMSD/RMSF outputs.
 - Hydrogen-bond outputs.
 - Secondary-structure outputs.
@@ -363,11 +365,13 @@ Output:
 - Clustering outputs.
 - Visualization notebook.
 
-The `trajectory` booleans are present in the config model but are not used yet to enable or disable specific template sections.
+The boolean options in the config are used to enable or disable analysis sections in the generated CPPTRAJ input; the analysis input is assembled dynamically from the `common` inputs and the selected analysis options.
 
 ## MM-PBSA/GBSA
 
-`nexus md mmpbsa` is visible in help output and has a config model, but the current runner needs implementation review before it should be used as a stable workflow.
+`nexus md mmpbsa` dynamically constructs the MMPBSA input file from the `common` and method-specific config sections (`gb`, `pb`, `decomp`) and runs `ante-MMPBSA.py` and `MMPBSA.py.MPI`. Topology and trajectory inputs may be provided in YAML or via CLI flags.
+
+The MMPBSA pipeline exposes `generate_mmpbsa_figures(cfg, outputs)` to produce summary plots. Configure `cfg.figures.dt_frame` (ps), `cfg.figures.n_top_res`, and `cfg.figures.format` as needed; the effective frame time used in plots is `cfg.figures.dt_frame * cfg.common.interval` (ps).
 
 ## Error Handling Along the Data Path
 

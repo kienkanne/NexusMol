@@ -2,6 +2,7 @@ from pydantic import BaseModel, ConfigDict, Field
 from typing import Optional, List
 from pathlib import Path
 
+
 class CommonConfig(BaseModel):
     input: Optional[Path] = None
     output_dir: Optional[Path] = Path.cwd()

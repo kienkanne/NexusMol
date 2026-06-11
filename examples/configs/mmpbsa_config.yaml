@@ -1,0 +1,42 @@
+## Example MMPBSA config
+# Runs `ante-MMPBSA.py` (prepare) and `MMPBSA.py.MPI` (compute).
+# Provide topology (`prmtop`), trajectory (`trajin`), and `receptor_mask`.
+# `start_frame`/`end_frame`/`interval` control the frames sampled from the trajectory.
+# `interval` is in frames; plotted time = `figures.dt_frame * interval` (ps).
+# `n_cores` controls the `-np` value passed to `mpirun`.
+common:
+  prmtop: inputs/2BPW.prmtop
+  trajin: inputs/2BPW_seed0.nc
+  receptor_mask: ":1-198"
+  
+  job_name: 2BPW_mmpbsa
+  output_dir: results
+
+  # Frames to sample (1-based): start, end, and sampling interval (frames)
+  start_frame: 1
+  end_frame: 9999999
+  interval: 10
+  n_cores: 8 # controls the `-np` argument passed to `mpirun` for `MMPBSA.py.MPI`.
+
+gb:
+  run: True
+  igb: 5
+  saltcon: 0.150
+
+pb:
+  run: True
+  istrng: 0.150
+  fillratio: 4.0
+
+decomp:
+  # `run`: enable per-residue decomposition
+  # `idecomp`: decomposition scheme id passed to MMPBSA (1 is default)
+  run: True
+  idecomp: 1
+
+figures:
+  # `dt_frame`: time between saved frames in the trajectory in picoseconds (ps).
+  # Note: the plotted time between points is `dt_frame * common.interval` (ps).
+  dt_frame: 10.0
+  n_top_res: 25 # Number of top residues to highlight in per-residue plots.
+  format: "png" # Output format for figures: pdf, png, or svg

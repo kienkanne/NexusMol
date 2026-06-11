@@ -164,7 +164,7 @@ These commands:
 ## 8. Analyze a Trajectory
 
 ```bash
-nexus --silence 2 md analyze -c configs/md_analyze.yaml
+nexus --silence 2 md analyze -c configs/analyze_config.yaml
 ```
 
 This command:
@@ -173,9 +173,20 @@ This command:
 - Run hydrogen-bond analysis.
 - Run secondary-structure analysis.
 - Run PCA and clustering.
-- Copy a visualization notebook.
+- Generate professional figures from cpptraj output to output directory.
 
 > The sample analysis config points at the generated Amber dialanine output so the paths exist in this example tree. The checked-in `results/2BPW_analysis/` folder is a larger representative analysis output set. 2BPW is a HIV-1 protease-inhibitor complex, and was chosen for this example over DiAlanine because DiAlanine is too small to have meaningful protein analysis.
+
+## 9. Calculate the ligand free binding energy with MMPBSA
+
+```bash
+nexus --silence 2 md mmpbsa -c configs/mmpbsa_config.yaml
+```
+
+This command:
+- Prepares MMPBSA inputs with `ante-MMPBSA.py`, runs `MMPBSA.py.MPI`, and writes per-frame energy CSVs and optional decomposition CSVs (e.g. `energy_<job>.csv`, `decomp_<job>.csv`).
+- Generate professional figures from MMPBSA outputs
+
 
 ## Example Config Index
 
@@ -187,6 +198,7 @@ This command:
 | `configs/build_config.yaml` | Build an Amber system. |
 | `configs/amber_config.yaml` | Run Amber MD. |
 | `configs/openmm_config.yaml` | Run OpenMM MD. |
-| `configs/md_analyze.yaml` | Run CPPTRAJ analysis. |
+| `configs/analyze_config.yaml` | Run CPPTRAJ analysis. |
+| `configs/mmpbsa_config.yaml` | Run MM-PBSA/GBSA and generate summary figures. |
 
 More configuration detail: [docs/CONFIGURATION.md](docs/CONFIGURATION.md).

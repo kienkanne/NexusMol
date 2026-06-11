@@ -38,5 +38,5 @@ def rcsb(config: Optional[Path] = typer.Option(None, "-c", "--config", help = "P
         {"input": input, "output_dir": output_dir, "ligand_name": ligand_name}
 	)
     
-    from nexus.fetch.pipeline import FetchPipeline
+    from nexus.fetch.fetch_pipeline import FetchPipeline
     FetchPipeline(cfg=cfg)._run()

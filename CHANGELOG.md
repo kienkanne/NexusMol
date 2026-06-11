@@ -1,11 +1,19 @@
 # Changelog
 
+## 2.4.1
+
+- Added options for `nexus md analyze`, giving customizable cpptraj outputs
+- Added options for `nexus md mmpbsa`, such as `gb`, `pb`, or `decomp` for free energy calculation methods.
+- Updated visualization figures for `nexus md analyze` to a higher quailty and utilizing the cpptraj outputs more.
+- Added visualization figures for `nexus md mmpbsa`.
+
 ## 2.4.0
 
 - Added global configuration at `~/.config/nexus/config.yaml`; added `nexus config init`, `nexus config show`, and `nexus config validate`.
 - Moved machine-specific paths to global config fields: `software.chimerax`, `software.chimera`,  `software.dock6`, and global scratch configuration with `path.scratch_dir`.
 - Unified YAML loading through `nexus.core.utils.load_config.load_config`, which attaches global config and creates job-scoped scratch/results directories for configs with `common.job_name`.
 - Reorganized MD source modules into `md/build`, `md/run`, `md/analyze`, and `md/mmpbsa`.
+- `engine.program` now selects `vina` or `dock6` for `dock`; `amber` or `openmm` for `md`.
 - Replaced old top-level example YAML files with `examples/configs/` and moved reusable inputs into `examples/inputs/`.
 - Fixed Pydantic `default_factory` usage for prep, docking, and MD run sub-configs so optional YAML sections can be omitted safely.
 - Rewrote README, docs, and examples for the current architecture, command hierarchy, configuration models, and workflow outputs.

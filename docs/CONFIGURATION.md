@@ -70,8 +70,8 @@ The loader creates both directories before the pipeline starts. Fetch and prep c
 | `nexus dock run` | `DockConfig` | Yes | `engine.program` chooses `vina` or `dock6`. |
 | `nexus md build` | `BuildConfig` | Yes | Builds Amber-compatible topology and coordinates. |
 | `nexus md run` | `MDConfig` | Yes | `engine.program` chooses `amber` or `openmm`. |
-| `nexus md analyze` | `AnalyzeConfig` | Yes | Runs the current CPPTRAJ template. |
-| `nexus md mmpbsa` | `MMPBSAConfig` | Yes | Exposed by CLI, but current runner needs manual implementation review. |
+| `nexus md analyze` | `AnalyzeConfig` | Yes | Accepts flexible inputs and dynamically generates CPPTRAJ inputs from config/CLI flags. |
+| `nexus md mmpbsa` | `MMPBSAConfig` | Yes | Accepts flexible inputs and dynamically constructs MMPBSA input files from config/CLI flags. |
 
 ## Fetch Config
 
@@ -396,9 +396,11 @@ trajectory:
   pca: true
 ```
 
-`trajectory.rmsd`, `trajectory.hbond`, and `trajectory.pca` exist in the config model, but the current runner renders one fixed CPPTRAJ template. They are not yet used to selectively enable or disable analysis blocks.
+The configuration flags (for RMSD, hydrogen bonds, PCA, clustering, secondary-structure, etc.) are used by the analysis runner to selectively enable or disable blocks in the generated CPPTRAJ input. The analysis pipeline dynamically assembles `analysis_<job_name>.in` from the provided `common` inputs (`prmtop`, `trajin`, `receptor_mask`) and the selected analysis options; inputs may be provided via YAML or supplied directly on the CLI.
 
 Outputs include the rendered `analysis_<job_name>.in`, RMSD/RMSF files, hydrogen-bond files, secondary-structure files, PCA files, clustering files, and `Visual_<job_name>.ipynb`.
+
+The analysis pipeline also exposes `generate_analysis_figures(cfg, outputs)` to produce publication-quality figures from cpptraj outputs. Configure the `figures` block (for example, `figures.dt_frame` in picoseconds and `figures.format`) to control the timing and output format; `dt_frame` is the simulation time between saved frames (ps) and currently corresponds to `prod_freq` in `MDConfig` (this name may be clarified in future updates).
 
 ## MM-PBSA/GBSA Config
 
@@ -410,7 +412,9 @@ The CLI exposes:
 nexus md mmpbsa -c configs/mmpbsa_config.yaml
 ```
 
-Current status: the CLI loads `MMPBSAConfig`, but the runner currently expects positional arguments instead of a config object and references a notebook filename that is not present. Treat this command as requiring implementation review before use.
+The MMPBSA pipeline builds the MMPBSA input file (`mmpbsa_<job_name>.in`) dynamically from the `common` and method-specific sections (`gb`, `pb`, `decomp`) and then runs the standard `ante-MMPBSA.py` / `MMPBSA.py.MPI` steps. Topology and trajectory inputs may be supplied in YAML or via CLI flags.
+
+The pipeline also exposes `generate_mmpbsa_figures(cfg, outputs)` to create summary figures. Configure `figures.dt_frame` (ps), `figures.n_top_res`, and `figures.format` to control plots; note that the effective time between plotted points for MMPBSA is `figures.dt_frame * common.interval` (ps). As above, `dt_frame` corresponds to `prod_freq` in `MDConfig` and may be renamed later to avoid confusion.
 
 Config model shape:
 
