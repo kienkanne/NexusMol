@@ -14,8 +14,8 @@ NexusMol currently supports:
 - Running AutoDock Vina and DOCK6 docking batches in parallel.
 - Building solvated AMBER systems from prepared receptors and docked ligand poses.
 - Running AMBER and OpenMM minimization, heating, equilibration, and production workflows.
-- Computing MM-PBSA/GBSA free energies and generating summary figures from MD trajectories.
-- Running a CPPTRAJ-based analysis workflow for existing trajectories.
+- Running a CPPTRAJ-based analysis workflow and generating figures from MD trajectories.
+- Computing MM-PBSA/GBSA free energies and generating figures from MD trajectories.
 
 ## Install
 
@@ -45,6 +45,7 @@ The conda environment installs the Python dependencies plus Open Babel, Vina, Me
 | Amber MD | AmberTools, `AMBERHOME`, `pmemd.cuda` or `pmemd` |
 | OpenMM MD | OpenMM and a suitable platform such as CUDA or CPU |
 | MD analysis | AmberTools `cpptraj`, `AMBERHOME` |
+| MD mmpbsa | AmberTools `ante-MMPBSA.py`, `MMPBSA.py.MPI` |
 
 To install the external programs, see the links below:
 
