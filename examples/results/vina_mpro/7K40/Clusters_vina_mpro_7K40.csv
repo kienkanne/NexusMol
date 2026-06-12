@@ -1,26 +1,25 @@
 ligand_name,cluster_id,cluster_size,rep_pose_idx,mean_internal_dist,mean_dist_to_others,cluster_diameter,pose_indices
-aspirin_prepared,3,3,1,1.706,2.669,1.851,"[0, 1, 5]"
-aspirin_prepared,1,2,2,1.458,2.849,1.458,"[2, 4]"
-aspirin_prepared,2,2,3,1.283,2.749,1.283,"[3, 7]"
-aspirin_prepared,4,1,6,0.0,2.812,0.0,[6]
-mol1_prepared,3,4,6,1.62,2.265,2.606,"[0, 1, 4, 6]"
-mol1_prepared,2,2,2,1.319,2.149,1.319,"[2, 3]"
-mol1_prepared,1,2,5,1.66,2.179,1.66,"[5, 7]"
-mol2_prepared,1,4,3,1.411,3.45,1.884,"[0, 3, 4, 7]"
-mol2_prepared,2,2,1,1.399,3.103,1.399,"[1, 5]"
-mol2_prepared,3,1,2,0.0,2.774,0.0,[2]
-mol2_prepared,4,1,6,0.0,2.696,0.0,[6]
-mol3_prepared,3,2,2,1.3,3.49,1.3,"[2, 7]"
-mol3_prepared,6,1,0,0.0,3.819,0.0,[0]
-mol3_prepared,1,1,1,0.0,3.582,0.0,[1]
-mol3_prepared,5,1,3,0.0,3.451,0.0,[3]
-mol3_prepared,2,1,4,0.0,3.688,0.0,[4]
-mol3_prepared,7,1,5,0.0,4.003,0.0,[5]
-mol3_prepared,4,1,6,0.0,3.194,0.0,[6]
-mol4_prepared,3,2,3,1.325,3.337,1.325,"[3, 4]"
-mol4_prepared,5,1,0,0.0,3.497,0.0,[0]
-mol4_prepared,7,1,1,0.0,4.444,0.0,[1]
-mol4_prepared,1,1,2,0.0,4.16,0.0,[2]
-mol4_prepared,6,1,5,0.0,3.488,0.0,[5]
-mol4_prepared,2,1,6,0.0,4.186,0.0,[6]
-mol4_prepared,4,1,7,0.0,3.75,0.0,[7]
+aspirin_prepared,2,4,1,1.585,2.381,2.359,"[0, 1, 3, 7]"
+aspirin_prepared,1,3,2,1.252,2.794,1.588,"[2, 5, 6]"
+aspirin_prepared,3,1,4,0.0,2.645,0.0,[4]
+mol1_prepared,3,3,0,1.566,2.329,1.754,"[0, 1, 5]"
+mol1_prepared,2,3,3,1.373,2.774,1.756,"[2, 3, 7]"
+mol1_prepared,1,2,4,1.924,2.416,1.924,"[4, 6]"
+mol2_prepared,1,4,0,1.47,3.474,2.198,"[0, 3, 4, 6]"
+mol2_prepared,2,2,1,1.589,3.124,1.589,"[1, 5]"
+mol2_prepared,3,1,2,0.0,2.753,0.0,[2]
+mol2_prepared,4,1,7,0.0,2.73,0.0,[7]
+mol3_prepared,1,2,4,1.841,3.534,1.841,"[4, 6]"
+mol3_prepared,6,1,0,0.0,3.801,0.0,[0]
+mol3_prepared,5,1,1,0.0,3.719,0.0,[1]
+mol3_prepared,3,1,2,0.0,3.153,0.0,[2]
+mol3_prepared,2,1,3,0.0,3.408,0.0,[3]
+mol3_prepared,7,1,5,0.0,3.954,0.0,[5]
+mol3_prepared,4,1,7,0.0,3.44,0.0,[7]
+mol4_prepared,1,2,1,1.763,3.265,1.763,"[1, 4]"
+mol4_prepared,4,1,0,0.0,3.364,0.0,[0]
+mol4_prepared,5,1,2,0.0,3.614,0.0,[2]
+mol4_prepared,7,1,3,0.0,4.108,0.0,[3]
+mol4_prepared,2,1,5,0.0,3.228,0.0,[5]
+mol4_prepared,3,1,6,0.0,3.203,0.0,[6]
+mol4_prepared,6,1,7,0.0,4.013,0.0,[7]

@@ -7,7 +7,7 @@ common:
   trajin: inputs/2BPW_seed0.nc
   receptor_mask: ":1-198"
   
-  job_name: 2BPW_analysis_new
+  job_name: 2BPW_analysis
   output_dir: results
 
 rms:

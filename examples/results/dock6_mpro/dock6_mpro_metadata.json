@@ -1,7 +1,7 @@
 {
     "tool": "dock6",
     "grid": "catalytic_site",
-    "settings": "default",
+    "example": "mpro",
     "6W63_scores": "/localscratch/kbui/NexusMol/examples/results/dock6_mpro/6W63/Scores_dock6_mpro_6W63.csv",
     "7K40_scores": "/localscratch/kbui/NexusMol/examples/results/dock6_mpro/7K40/Scores_dock6_mpro_7K40.csv",
     "6W63_clusters": "/localscratch/kbui/NexusMol/examples/results/dock6_mpro/6W63/Clusters_dock6_mpro_6W63.csv",

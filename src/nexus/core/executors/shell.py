@@ -27,7 +27,7 @@ def shell(cmd, stdin=None, title=""):
         
         # logger stdout/stderr for debugging
         if result.stdout:
-            logger.info(f"STDOUT: {result.stdout}")
+            logger.debug(f"STDOUT: {result.stdout}")
         if result.stderr:
             logger.warning(f"STDERR: {result.stderr}")
 

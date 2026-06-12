@@ -82,8 +82,8 @@ cp receptors/mutated/7K40_cleaned_mutated.pdb receptors/final/7K40.pdb
 Vina requires the .pdbqt format, while dock6 requires .mol2.
 
 ```bash
-nexus prep ligdock -i inputs/ligand_list.csv -o ligands/vina/ -s "_prepared.pdbqt"
-nexus prep ligdock -i inputs/ligand_list.csv -o ligands/dock6/ -s "_prepared.mol2"
+nexus prep lig -i inputs/ligand_list.csv -o ligands/vina/ -s "_prepared.pdbqt"
+nexus prep lig -i inputs/ligand_list.csv -o ligands/dock6/ -s "_prepared.mol2"
 ```
 
 The CSV format is:
