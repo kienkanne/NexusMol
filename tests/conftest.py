@@ -1,5 +1,51 @@
 import sys
 import types
+
+
+# Provide lightweight stubs for executor modules used across the codebase so tests
+# don't attempt to import heavy or environment-specific tracker/context machinery.
+if "nexus.core.executors" not in sys.modules:
+    sys.modules["nexus.core.executors"] = types.ModuleType("nexus.core.executors")
+
+
+_pp = types.ModuleType("nexus.core.executors.python_parallel")
+
+def python_parallel(tasks, n_jobs, name, skip=True):
+    class DummyCtx:
+        def __init__(self, tasks, n_jobs, name, skip):
+            self.tasks = tasks
+
+        def __enter__(self):
+            # Simulate returning a result list equal in length to tasks
+            return [None] * len(self.tasks)
+
+        def __exit__(self, exc_type, exc, tb):
+            return False
+
+    return DummyCtx(tasks, n_jobs, name, skip)
+
+
+_pp.python_parallel = python_parallel
+sys.modules["nexus.core.executors.python_parallel"] = _pp
+
+
+_shell = types.ModuleType("nexus.core.executors.shell")
+
+def shell(cmd, title=None):
+    class DummyShell:
+        def __enter__(self):
+            return None
+
+        def __exit__(self, exc_type, exc, tb):
+            return False
+
+    return DummyShell()
+
+
+_shell.shell = shell
+sys.modules["nexus.core.executors.shell"] = _shell
+import sys
+import types
 from pathlib import Path
 
 

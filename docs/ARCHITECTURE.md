@@ -84,7 +84,10 @@ software:
   dock6: /path/to/dock6
 path:
   scratch_dir: /path/to/scratch
+  clear: false
 ```
+
+The `path.clear` boolean (default `false`) controls whether pipelines perform an automatic deletion of the parent scratch directory during cleanup; enabling it will remove all job subdirectories and should be used with caution.
 
 This replaced per-workflow software-path blocks and scratch/workspace settings.
 

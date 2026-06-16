@@ -1,7 +1,7 @@
 
 from pydantic import BaseModel
 from nexus.md.run.md_config import MDConfig
-
+from nexus.config import clear_scratch
 from nexus.md.run.openmm._setup import setup
 from nexus.md.run.openmm._minimize import minimize
 from nexus.md.run.openmm._heat import heat
@@ -24,3 +24,6 @@ class OpenMMPipeline(BaseModel):
         outputs = produce(self.cfg, simulation)
 
         final_copy(self.cfg, outputs)
+
+        clear_scratch(self.cfg)
+        

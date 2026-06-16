@@ -1,0 +1,10 @@
+# Template for ~/.config/nexus/config.yaml
+software:
+  chimerax: null
+  chimera: null
+  dock6: null
+path:
+  scratch_dir: /localscratch/$USER
+  # If true, Nexus will recursively remove the parent scratch directory
+  # (path.scratch_dir) during pipeline cleanup. Defaults to false.
+  clear: false

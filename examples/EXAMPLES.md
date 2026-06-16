@@ -27,6 +27,7 @@ software:
   dock6: ~/apps/dock6
 path:
   scratch_dir: /localscratch/$USER
+  clear: false
 ```
 
 Check it:
@@ -161,6 +162,10 @@ These commands:
 - Equilibrate with a restraint schedule.
 - Run one or more randomized production seeds.
 
+> Note: The sample analysis config points at the generated Amber dialanine output so the paths exist in this example tree. The dialanine system was used for illustrative purposes for the MD task above due to its small size, but it will not produce much meaningful analysis for the commands below.
+
+> Note: The checked-in `results/2BPW_analysis/` folder is a larger representative analysis output set. 2BPW is a HIV-1 protease-inhibitor complex, and was chosen for this example over DiAlanine because DiAlanine is too small to have meaningful protein analysis. The original input files were not uploaded to the repository due to their large size.
+
 ## 8. Analyze a Trajectory
 
 ```bash
@@ -174,8 +179,6 @@ This command:
 - Run secondary-structure analysis.
 - Run PCA and clustering.
 - Generate professional figures from cpptraj output to output directory.
-
-> The sample analysis config points at the generated Amber dialanine output so the paths exist in this example tree. The checked-in `results/2BPW_analysis/` folder is a larger representative analysis output set. 2BPW is a HIV-1 protease-inhibitor complex, and was chosen for this example over DiAlanine because DiAlanine is too small to have meaningful protein analysis.
 
 ## 9. Calculate the ligand free binding energy with MMPBSA
 

@@ -24,6 +24,7 @@ software:
   dock6: null
 path:
   scratch_dir: null
+  clear: null
 ```
 
 Field meanings:
@@ -34,6 +35,7 @@ Field meanings:
 | `software.chimera` | DOCK6 docking | Legacy UCSF Chimera executable. |
 | `software.dock6` | DOCK6 docking | DOCK6 installation root that contains `bin/dock6`, `bin/grid`, and related tools. |
 | `path.scratch_dir` | `dock run`, `md build`, `md run`, `md analyze`, `md mmpbsa` | Parent scratch/workspace directory. Nexus creates `<scratch_dir>/<job_name>/`. |
+| `path.clear` | `dock run`, `md build`, `md run`, `md analyze`, `md mmpbsa` | Boolean (default `false`). If `true`, Nexus will recursively remove the parent scratch directory (`path.scratch_dir`) when cleanup routines run. This deletes all job subdirectories; enable only when you want Nexus to manage the scratch root. |
 
 `nexus config validate` reports `OK`, `Missing path`, or `Not configured` for every global path. Missing configured paths cause a non-zero exit status.
 

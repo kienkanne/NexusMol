@@ -1,7 +1,7 @@
 import os
 from pydantic import BaseModel
 from nexus.md.run.md_config import MDConfig
-
+from nexus.config import clear_scratch
 from nexus.md.run.amber._minimize import minimize
 from nexus.md.run.amber._heat import heat
 from nexus.md.run.amber._equilibrate import equilibrate
@@ -32,3 +32,5 @@ class AmberPipeline(BaseModel):
         outputs = produce(self.cfg, prmtop, last_eq_ncrst)
 
         final_copy(self.cfg, outputs)
+
+        clear_scratch(self.cfg)

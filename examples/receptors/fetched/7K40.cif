@@ -1,7 +1,7 @@
 data_7K40
 #
-_model_server_result.job_id            Q4VyeSjKV29MwSQptzqcGA 
-_model_server_result.datetime_utc      '2026-06-12 01:53:27' 
+_model_server_result.job_id            ahLPivFlowq87saaJXwv_g 
+_model_server_result.datetime_utc      '2026-06-16 03:38:15' 
 _model_server_result.server_version    0.9.12 
 _model_server_result.query_name        assembly 
 _model_server_result.source_id         pdb-bcif 
@@ -6855,10 +6855,10 @@ F F ASM_2 '_2' 1 2 . . . . .
 G G ASM_2 '_2' 1 2 . . . . . 
 H H ASM_2 '_2' 1 2 . . . . . 
 #
-_model_server_stats.io_time_ms              10 
-_model_server_stats.parse_time_ms           9 
-_model_server_stats.create_model_time_ms    4 
-_model_server_stats.query_time_ms           304 
-_model_server_stats.encode_time_ms          105 
+_model_server_stats.io_time_ms              7 
+_model_server_stats.parse_time_ms           5 
+_model_server_stats.create_model_time_ms    3 
+_model_server_stats.query_time_ms           282 
+_model_server_stats.encode_time_ms          73 
 _model_server_stats.element_count           5526 
 #

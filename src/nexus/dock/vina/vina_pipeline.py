@@ -1,5 +1,5 @@
-from dataclasses import dataclass
-
+from pydantic import BaseModel
+from nexus.config import clear_scratch
 from nexus.dock.dock_config import DockConfig
 from nexus.dock.vina._prep_rec import vina_parallel_prep_rec
 from nexus.dock.utils.matchmixer import matchmixer
@@ -7,8 +7,8 @@ from nexus.dock.vina._docking import vina_parallel_docking
 from nexus.dock.utils.write_summary_csv import write_summary_csv
 from nexus.dock.utils.final_copy import final_copy
 
-@dataclass(frozen=True)
-class VinaPipeline():
+
+class VinaPipeline(BaseModel):
     cfg: DockConfig
 
     def _run(self):
@@ -23,3 +23,5 @@ class VinaPipeline():
         written_scores, written_clusters = write_summary_csv(self.cfg, out_files, rec_bundles)
 
         final_copy(self.cfg, rec_bundles, written_scores, written_clusters, out_files)
+
+        clear_scratch(self.cfg)

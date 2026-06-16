@@ -1,5 +1,5 @@
-from dataclasses import dataclass
-
+from pydantic import BaseModel
+from nexus.config import clear_scratch
 from nexus.dock.dock_config import DockConfig
 from nexus.dock.dock6._prep_rec import dock6_parallel_prep_rec
 from nexus.dock.dock6._docking import dock6_parallel_docking
@@ -7,8 +7,8 @@ from nexus.dock.utils.matchmixer import matchmixer
 from nexus.dock.utils.write_summary_csv import write_summary_csv
 from nexus.dock.utils.final_copy import final_copy
 
-@dataclass(frozen=True)
-class DOCK6Pipeline():
+
+class DOCK6Pipeline(BaseModel):
     cfg: DockConfig
 
     def _run(self):
@@ -23,3 +23,5 @@ class DOCK6Pipeline():
         written_scores, written_clusters = write_summary_csv(self.cfg, out_files, rec_bundles)
 
         final_copy(self.cfg, rec_bundles, written_scores, written_clusters, out_files)
+
+        clear_scratch(self.cfg)

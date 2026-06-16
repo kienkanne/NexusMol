@@ -1,6 +1,6 @@
 from pydantic import BaseModel
 import os
-
+from nexus.config import clear_scratch
 from nexus.md.mmpbsa.generate_mmpbsa_figures import generate_mmpbsa_figures
 from nexus.md.mmpbsa.mmpbsa_config import MMPBSAConfig
 from nexus.md.mmpbsa.generate_mmpbsa_input import generate_mmpbsa_input
@@ -19,4 +19,6 @@ class MMPBSAPipeline(BaseModel):
         mmpbsa_input = generate_mmpbsa_input(self.cfg)
         outputs = run_mmpbsa(self.cfg, mmpbsa_input)
         generate_mmpbsa_figures(self.cfg, outputs)
+        
+        clear_scratch(self.cfg)
         

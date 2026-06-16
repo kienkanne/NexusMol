@@ -15,6 +15,7 @@ class SoftwareConfig(BaseModel):
 
 class PathConfig(BaseModel):
     scratch_dir: Optional[Path] = "/localscratch/$USER"
+    clear: Optional[bool] = False
 
     @field_validator("scratch_dir", mode="before")
     @classmethod
@@ -26,6 +27,14 @@ class PathConfig(BaseModel):
 class GlobalConfig(BaseModel):
     software: SoftwareConfig = SoftwareConfig()
     path: PathConfig = PathConfig()
+
+
+def clear_scratch(cfg):
+    global_cfg = cfg._global
+    if global_cfg.path.clear:
+        import shutil
+        shutil.rmtree(global_cfg.path.scratch_dir, ignore_errors=True)
+        print(f"Scratch directory cleared: {global_cfg.path.scratch_dir}")
 
 
 def get_global_config_path() -> Path:

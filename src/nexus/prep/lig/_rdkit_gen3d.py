@@ -84,7 +84,7 @@ from functools import partial
 from nexus.core.executors.python_parallel import python_parallel
 
 
-def _smiles_to_mols(csv_path, n_jobs):
+def _parallel_rdkit_gen3d(csv_path, n_jobs):
     smiles_list, names = _parse_ligands_csv(csv_path)
 
     tasks = []

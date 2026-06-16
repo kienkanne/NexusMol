@@ -85,7 +85,7 @@ docs/                   user and developer documentation
 2. Use `shell()` or `python_parallel()`.
 3. Return paths or simple serializable values if checkpoint output may be needed later.
 4. Decorate major stages with `@main_tracker("Stage name")`.
-5. Keep intermediate files in `cfg._global.path.scratch_dir`.
+5. Keep intermediate files in `cfg._global.path.scratch_dir`. Note: Pipelines may call `clear_scratch(cfg)` which uses `cfg._global.path.clear`. Do not enable `path.clear` in development or CI environments; when true it will recursively delete the parent scratch directory and all job subdirectories.
 6. Copy only user-relevant outputs to `cfg.common.output_dir`.
 
 ## Testing Guidance

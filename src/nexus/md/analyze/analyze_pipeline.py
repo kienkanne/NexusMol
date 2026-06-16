@@ -1,5 +1,6 @@
 from pydantic import BaseModel
 import os
+from nexus.config import clear_scratch
 from nexus.md.analyze.analyze_config import AnalyzeConfig
 from nexus.md.analyze.generate_analysis_figures import generate_analysis_figures
 from nexus.md.analyze.generate_cpptraj_input import generate_cpptraj_input
@@ -17,3 +18,5 @@ class AnalyzePipeline(BaseModel):
         cpptraj_input, outputs = generate_cpptraj_input(self.cfg)
         outputs = run_cpptraj(self.cfg, cpptraj_input, outputs)
         generate_analysis_figures(self.cfg, outputs)
+
+        clear_scratch(self.cfg)

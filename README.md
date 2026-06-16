@@ -2,7 +2,7 @@
 
 NexusMol is a command-line toolkit for structure-based drug discovery workflows. It coordinates common fetching, preparation, docking, molecular dynamics, and trajectory-analysis tasks while delegating scientific work to established tools such as ChimeraX, RDKit, Meeko, AutoDock Vina, DOCK6, Open Babel, AMBER, and OpenMM.
 
-Current package version: `2.4.1`.
+Current package version: `2.4.2`.
 
 ## What NexusMol Does
 
@@ -79,7 +79,10 @@ software:
   dock6: /path/to/dock6
 path:
   scratch_dir: /path/to/nexus_scratch
+  clear: false
 ```
+
+The `path.clear` boolean (default `false`) controls whether Nexus will recursively remove the parent scratch directory (`path.scratch_dir`) when pipeline cleanup is invoked (via `clear_scratch`). Enabling this option will delete all job-scoped scratch folders; use it only when you want Nexus to manage and purge the scratch root.
 
 Tracked workflows create a job-scoped scratch folder under `path.scratch_dir` and a job-scoped results folder under each workflow config's `common.output_dir`.
 

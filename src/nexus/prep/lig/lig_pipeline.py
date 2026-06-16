@@ -24,8 +24,8 @@ class LigPipeline(BaseModel):
 
         if self.cfg.common.input.suffix == ".csv":
             csv_path = self.cfg.common.input
-            from nexus.prep.lig._smiles_to_mols import _smiles_to_mols
-            mol_with_h_list, names = _smiles_to_mols(csv_path, n_jobs)
+            from nexus.prep.lig._rdkit_gen3d import _parallel_rdkit_gen3d
+            mol_with_h_list, names = _parallel_rdkit_gen3d(csv_path, n_jobs)
 
         else:
             sdfs = extract_files(self.cfg.common.input, ".sdf", recursive=True)

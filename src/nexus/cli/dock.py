@@ -14,8 +14,8 @@ def run(config: Path = typer.Option(..., "-c", "--config", help="Path to dock co
 
     if cfg.engine.program == "vina":
         from nexus.dock.vina.vina_pipeline import VinaPipeline
-        VinaPipeline(cfg)._run()
+        VinaPipeline(cfg=cfg)._run()
 
     elif cfg.engine.program == "dock6":
         from nexus.dock.dock6.dock6_pipeline import DOCK6Pipeline
-        DOCK6Pipeline(cfg)._run()
+        DOCK6Pipeline(cfg=cfg)._run()
