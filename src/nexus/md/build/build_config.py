@@ -12,6 +12,7 @@ class CommonConfig(BaseModel):
 class LigandConfig(BaseModel):
     ligand: Optional[Path] = None
     pose_num: Optional[int] = 1
+    charge: Optional[int] = 0
 
 
 class SystemConfig(BaseModel):

@@ -3,7 +3,8 @@
 ## 2.4.2
 
 - Added `path.clear` global config option to optionally clear the global scratch directory during pipeline cleanup (use with caution).
-- Rewrote unit tests in `tests/`
+- Added option to specifiy ligand charge in `nexus md build`.
+- Rewrote unit tests in `tests/`.
 
 ## 2.4.1
 
