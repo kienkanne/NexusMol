@@ -162,9 +162,7 @@ These commands:
 - Equilibrate with a restraint schedule.
 - Run one or more randomized production seeds.
 
-> Note: The sample analysis config points at the generated Amber dialanine output so the paths exist in this example tree. The dialanine system was used for illustrative purposes for the MD task above due to its small size, but it will not produce much meaningful analysis for the commands below.
-
-> Note: The checked-in `results/2BPW_analysis/` folder is a larger representative analysis output set. 2BPW is a HIV-1 protease-inhibitor complex, and was chosen for this example over DiAlanine because DiAlanine is too small to have meaningful protein analysis. The original input files were not uploaded to the repository due to their large size.
+> Note: The sample analysis config points at a trajectory input file that was not uploaded to the repository due to their large size. The dialanine system was used for illustrative purposes for the MD task above due to its small size, but it will not produce much meaningful analysis for the commands below. The checked-in `results/2BPW_analysis/` folder is a larger representative analysis output set. 2BPW is a HIV-1 protease-inhibitor complex, and was chosen for this example over DiAlanine because DiAlanine is too small to have meaningful protein analysis. The original input
 
 ## 8. Analyze a Trajectory
 
