@@ -129,14 +129,14 @@ Build an Amber system from `inputs/6W63.pdb` and a docked ligand pose:
 nexus --silence 2 md build -c configs/build_config.yaml
 ```
 
+> AmberTools can be very verbose, so the flag `--silence 2` is recommended to avoid having your terminal cluttered.
+
 This command:
 - Prepare a receptor with `pdb4amber`.
 - Optionally select a docked ligand pose.
 - Add ligand hydrogens and AM1-BCC charges with `obabel` and `antechamber`.
 - Generate ligand parameters with `parmchk2`.
 - Solvate, ionize, and write Amber files with `tleap`.
-
-> AmberTools can be very verbose, so the flag `--silence 2` is recommended to avoid having your terminal cluttered.
 
 Outputs:
 

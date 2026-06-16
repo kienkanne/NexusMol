@@ -29,14 +29,14 @@ def test_ligpipeline_csv_branch(tmp_path, monkeypatch):
     cfg.common.output_dir = tmp_path / "out"
     cfg.common.suffix = "_prepared.pdbqt"
 
-    # Inject fake _smiles_to_mols and meeko charge modules
-    def fake_smiles_to_mols(path, n_jobs):
+    # Inject fake _parallel_rdkit_gen3d and meeko charge modules
+    def fake_parallel_rdkit_gen3d(path, n_jobs):
         return ([object()], ["mol1"])
 
     def fake_parallel_meeko_charge(mols, outputs, n_jobs):
         return [outputs[0]]
 
-    _inject_fake_module("nexus.prep.lig._smiles_to_mols", {"_smiles_to_mols": fake_smiles_to_mols})
+    _inject_fake_module("nexus.prep.lig._parallel_rdkit_gen3d", {"_parallel_rdkit_gen3d": fake_parallel_rdkit_gen3d})
     _inject_fake_module("nexus.prep.lig._meeko_charge", {"_parallel_meeko_charge": fake_parallel_meeko_charge})
 
     from nexus.prep.lig.lig_pipeline import LigPipeline
