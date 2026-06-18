@@ -1,6 +1,7 @@
 from pathlib import Path
 import subprocess
 import re
+import warnings
 
 # Converts either pdbqt or mol2 docked poses to individual mol2 files, making it easy for RDKIT to read
 def extract_poses(docked_poses_path: Path):
@@ -14,10 +15,21 @@ def extract_poses(docked_poses_path: Path):
 
     result = subprocess.run(cmd, text=True, capture_output=True, check=True)
 
-    match = re.search(r"(\d+)\s+files\s+output", result.stderr)
-    if match:
-        num_poses = int(match.group(1))
-    
+    num_poses = None
+    for text in (result.stderr, result.stdout):
+        if not text:
+            continue
+        match = re.search(r"(\d+)\s+molecules\s+converted", text)
+        if match:
+            num_poses = int(match.group(1))
+            break
+
+    if num_poses is None:
+        raise ValueError(
+            f"Unable to determine number of extracted poses from OpenBabel output:\n"
+            f"stdout: {result.stdout!r}\nstderr: {result.stderr!r}"
+        )
+
     poses_paths = []
     for i in range(num_poses):
         file_path = output_prefix.with_name(f"{ligand_name}_pose_{i+1}.mol2")
@@ -36,10 +48,12 @@ def _parse_mol2(file_path: Path):
         block = "@<TRIPOS>MOLECULE" + part
         try:
             from rdkit import Chem
-            mol = Chem.MolFromMol2Block(block, sanitize=False, removeHs=False)
+            mol = Chem.MolFromMol2Block(block, sanitize=False, removeHs=True)
             if mol:
                 try:
-                    Chem.SanitizeMol(mol)
+                    Chem.SanitizeMol(mol, 
+                                    Chem.SanitizeFlags.SANITIZE_ALL ^ 
+                                    Chem.SanitizeFlags.SANITIZE_KEKULIZE)
                 except Exception:
                     mol.SetProp("Sanitization_Failed", "True")
                 mols.append(mol)
@@ -71,11 +85,14 @@ def parse_mol2_pose_rmsds(pose1_path: Path, pose2_path: Path):
 
 
 import numpy as np
-from rdkit.Chem import rdMolAlign
+from scipy.spatial.distance import squareform
+from scipy.cluster.hierarchy import linkage, fcluster
 
 
 def generate_rmsd_matrix(poses: list[Path]) -> np.ndarray:
     """Parses all poses into memory and builds a symmetric RMSD matrix."""
+    from rdkit.Chem import rdMolAlign
+
     n_poses = len(poses)
     
     # 1. Parse all molecules ONCE into a list
@@ -85,6 +102,8 @@ def generate_rmsd_matrix(poses: list[Path]) -> np.ndarray:
             raise FileNotFoundError(f"Pose file not found: {path}")
         # Assuming _parse_mol2 is your custom parsing function
         parsed_mols = _parse_mol2(path)
+        if not parsed_mols:
+            raise ValueError(f"Could not parse any molecule from {path}")
         mols.append(parsed_mols[0])
         
     # 2. Initialize an empty N x N matrix
@@ -108,8 +127,31 @@ def generate_rmsd_matrix(poses: list[Path]) -> np.ndarray:
     return rmsd_matrix
 
 
-from scipy.spatial.distance import squareform
-from scipy.cluster.hierarchy import linkage, fcluster
+def _sanitize_distance_matrix(rmsd_matrix: np.ndarray, threshold: float = 2.0) -> np.ndarray:
+    if rmsd_matrix.ndim != 2 or rmsd_matrix.shape[0] != rmsd_matrix.shape[1]:
+        raise ValueError("RMSD matrix must be square")
+
+    matrix = np.array(rmsd_matrix, dtype=float, copy=True)
+    np.fill_diagonal(matrix, 0.0)
+
+    if not np.allclose(matrix, matrix.T, equal_nan=True):
+        matrix = 0.5 * (matrix + matrix.T)
+
+    if np.isnan(matrix).any():
+        finite_values = matrix[np.isfinite(matrix)]
+        if finite_values.size > 0:
+            fill_value = float(np.nanmax(finite_values)) * 10.0
+        else:
+            fill_value = float(threshold) * 10.0
+
+        warnings.warn(
+            "NaN values found in RMSD distance matrix. "
+            f"Replacing NaN with {fill_value:.3f} to enable clustering.",
+            UserWarning,
+        )
+        matrix = np.where(np.isnan(matrix), fill_value, matrix)
+
+    return matrix
 
 
 def calculate_cluster_metrics(rmsd_matrix: np.ndarray, threshold: float = 2.0) -> dict:
@@ -117,15 +159,27 @@ def calculate_cluster_metrics(rmsd_matrix: np.ndarray, threshold: float = 2.0) -
     Clusters an RMSD matrix using hierarchical clustering.
     Returns a dictionary grouping the indices of poses into clusters.
     """
-    # 1. Scipy requires a "condensed" 1D distance matrix (upper triangle only)
-    # Ensure the diagonal is exactly 0.0 to avoid floating point errors
-    np.fill_diagonal(rmsd_matrix, 0.0) 
-    condensed_dist = squareform(rmsd_matrix)
-    
+    n = rmsd_matrix.shape[0]
+    if n == 0:
+        return {}
+    if n == 1:
+        return {
+            1: {
+                "representative_idx": 0,
+                "mean_internal_distance": 0.0,
+                "cluster_diameter": 0.0,
+                "pose_indices": [0],
+                "mean_dist_to_others": 0.0,
+            }
+        }
+
+    matrix = _sanitize_distance_matrix(rmsd_matrix, threshold=threshold)
+    condensed_dist = squareform(matrix)
+
     # 2. Perform hierarchical clustering 
     # 'average' linkage is robust for grouping distinct structural families
     Z = linkage(condensed_dist, method='average')
-    
+
     # 3. Extract flat clusters based on your RMSD threshold
     # The output is an array of cluster IDs corresponding to your poses
     cluster_labels = fcluster(Z, t=threshold, criterion='distance')
@@ -149,34 +203,36 @@ def calculate_cluster_metrics(rmsd_matrix: np.ndarray, threshold: float = 2.0) -
                 "representative_idx": pose_indices[0],
                 "mean_internal_distance": 0.0,
                 "cluster_diameter": 0.0,
-                "pose_indices": pose_indices
+                "pose_indices": pose_indices,
+                "mean_dist_to_others": 0.0,
             }
             continue
             
         # Case 2: Multi-element cluster
         # Extract the submatrix containing only the distances between members of this cluster
-        submatrix = rmsd_matrix[np.ix_(pose_indices, pose_indices)]
+        submatrix = np.array(rmsd_matrix[np.ix_(pose_indices, pose_indices)], dtype=float, copy=True)
+        np.fill_diagonal(submatrix, np.nan)
         
         # Calculate the average distance from each pose to all other poses in the cluster
-        # We divide by (n_members - 1) to exclude the 0.0 distance to itself
-        cluster_pairwise_means = np.sum(submatrix, axis=1) / (n_members - 1)
+        cluster_pairwise_means = np.nanmean(submatrix, axis=1)
         
         # The medoid (representative) is the pose with the minimum average distance to others
-        relative_medoid_idx = np.argmin(cluster_pairwise_means)
+        relative_medoid_idx = int(np.nanargmin(cluster_pairwise_means))
         representative_idx = pose_indices[relative_medoid_idx]
         
         # Get the distances from this specific representative to all other members
-        rep_distances = submatrix[relative_medoid_idx]
-        mean_dist_to_rep = np.sum(rep_distances) / (n_members - 1)
+        rep_distances = np.nan_to_num(submatrix[relative_medoid_idx], nan=0.0)
+        mean_dist_to_rep = float(np.sum(rep_distances) / (n_members - 1))
         
         # The maximum distance between any two poses in the cluster (diameter)
-        cluster_diameter = np.max(submatrix)
+        cluster_diameter = float(np.nanmax(submatrix))
         
         clusters[cluster_id] = {
             "representative_idx": representative_idx,
-            "mean_internal_distance": float(mean_dist_to_rep),
-            "cluster_diameter": float(cluster_diameter),
-            "pose_indices": pose_indices
+            "mean_internal_distance": float(np.nanmean(submatrix[relative_medoid_idx])),
+            "cluster_diameter": cluster_diameter,
+            "pose_indices": pose_indices,
+            "mean_dist_to_others": 0.0,
         }
 
     cluster_ids = list(clusters.keys())
