@@ -24,7 +24,7 @@ def run_cpptraj(cfg: AnalyzeConfig, cpptraj_input: str, outputs: dict):
             pass
 
     except Exception as e:
-        raise RuntimeError(f"Failed to change working directory to {scratch_dir}: {e}")
+        raise RuntimeError(f"cpptraj crashed at {scratch_dir}: {e}")
     
     finally:
         os.chdir(cwd)

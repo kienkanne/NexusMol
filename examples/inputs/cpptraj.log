@@ -18,3 +18,17 @@ parm 2BPW.prmtop
 trajin 2BPW_seed0.nc
 hbond ProtLig_All donormask :1-198 acceptormask !(:1-198) donormask !(:1-198) acceptormask :1-198 avgout Combined_avg_${name}.dat out PL_hbvtime_${name}.dat
 help hbond
+# 06/21/26 15:48:08
+# Args:  -p 2BPW.prmtop
+# Loaded topologies:
+#   2BPW.prmtop
+trajin 2BPW_seed0.nc 1 last 1
+trajout 2BPW.pdb
+# 06/21/26 15:48:45
+# Args:  -p 2BPW.prmtop
+# Loaded topologies:
+#   2BPW.prmtop
+trajin 2BPW_seed0.nc 1 1
+trajout 2BPW.pdb
+run
+quit

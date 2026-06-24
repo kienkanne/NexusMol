@@ -47,7 +47,7 @@ def produce(cfg: MDConfig, prmtop: Path, last_eq_ncrst: Path) -> None:
     )
 
     nstlim = int((prod_time) / dt)
-    ntpr = ntwx = ntwr = int(nstlim // prod_freq) or 10000
+    ntpr = ntwx = ntwr = int((prod_freq / dt)) or 10000
 
     prod_input = Template(prod_template).substitute(
         dt=dt,
