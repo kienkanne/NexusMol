@@ -19,6 +19,7 @@ def _run_dock6(cfg: DockConfig, receptor_bundle: Dock6ReceptorBundle, prepped_li
     selected_spheres = receptor_bundle.selected_spheres
     grid_prefix = receptor_bundle.grid_prefix
     receptor_name = receptor_bundle.name
+    num_poses = cfg.engine.num_poses
     required_files = [f"{grid_prefix}.in", f"{grid_prefix}.bmp", f"{grid_prefix}.nrg", f"{grid_prefix}.out"]
     missing_files = [file_name for file_name in required_files if not Path(file_name).is_file()]
 
@@ -43,6 +44,7 @@ def _run_dock6(cfg: DockConfig, receptor_bundle: Dock6ReceptorBundle, prepped_li
         output_path_prefix=str(scratch_dir / output_prefix),
         receptor_name=receptor_name,
         max_orientations=max_orientations,
+        num_poses=num_poses
     )
 
     flex = scratch_dir / f"flex_{output_prefix}.in"

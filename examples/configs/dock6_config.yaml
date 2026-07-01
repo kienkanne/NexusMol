@@ -21,6 +21,7 @@ engine:
   program: dock6
   max_orientations: 1000 # Higher for more accuracy at more cost
   radius: 10.0 # in Angstroms, radius for sphere generation
+  num_poses: 8
 
 # You can write anything here, and they will be wrote to a JSON file in results directory
 # CSV summary file paths will also be included here for easy parsing

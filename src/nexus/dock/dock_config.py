@@ -36,6 +36,7 @@ class DOCK6Config(BaseModel):
     program: Literal["dock6"]
     max_orientations: Optional[int] = 1000
     radius: Optional[float] = 10.0
+    num_poses: Optional[int] = 8
 
 EngineConfig = Annotated[
     Union[VinaConfig, DOCK6Config],
