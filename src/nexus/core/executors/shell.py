@@ -10,8 +10,8 @@ def shell(cmd, stdin=None, title=""):
     try:
         cmd = [os.path.expandvars(i) for i in cmd]
 
-        ctx = TrackerContext.get_ctx()
         try:
+            ctx = TrackerContext.get_ctx()
             logger = ctx.logger if ctx.logger is not None else DummyLogger()
         except:
             logger = DummyLogger()
