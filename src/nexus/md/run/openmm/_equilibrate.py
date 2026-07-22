@@ -15,13 +15,13 @@ def equilibrate(cfg: MDConfig, simulation: Simulation):
     n_eq_runs = cfg.eq.n_eq_runs
     eq_time = cfg.eq.eq_time
     restraints = cfg.eq.restraints
+    friction = cfg.eq.friction
 
     # NPT equilibration is done in the heating step
     # TODO: Pressure and barostat_interval are hardcoded for now
     simulation = add_barostat(simulation, simulation.system, temp=cfg.common.temp * kelvin)
 
-    # Set gamma to 1 ps^-1 for equilibration and production
-    simulation.integrator.setFriction(1.0 / picosecond)
+    simulation.integrator.setFriction(friction / picosecond)
 
     # Reset repoters and clock
     simulation.reporters.clear()

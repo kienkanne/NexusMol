@@ -23,6 +23,7 @@ def heat(cfg: MDConfig, prmtop: Path, last_min_ncrst: Path):
     time_temp = cfg.heat.time_temp
     total_time = cfg.heat.total_time
     restraint = cfg.heat.restraint
+    friction = cfg.heat.friction
 
     nstlim = int((total_time) / dt)
     ntpr = ntwx = ntwr = int(nstlim // 100) or 10000
@@ -44,6 +45,7 @@ def heat(cfg: MDConfig, prmtop: Path, last_min_ncrst: Path):
         istep_mid_temp_plus1=int((time_mid_temp) / dt) + 1,
         istep_temp=int((time_temp) / dt),
         mask=mask,
+        friction=friction
     )
 
     _run_pmemd(heat_input, prmtop, last_min_ncrst, scratch_dir, "heat")

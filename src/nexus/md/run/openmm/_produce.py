@@ -1,6 +1,6 @@
 from nexus.md.run.md_config import MDConfig
 from openmm.app import Simulation
-from openmm.unit import kelvin
+from openmm.unit import kelvin, picosecond
 from nexus.md.run.openmm._setup import set_positional_restraint_strength
 from nexus.md.run.openmm._reporter import add_reporters
 
@@ -16,8 +16,10 @@ def produce(cfg: MDConfig, simulation: Simulation):
     rand_time = cfg.prod.rand_time
     prod_time = cfg.prod.prod_time
     prod_freq = cfg.prod.prod_freq
+    friction = cfg.prod.friction
 
     set_positional_restraint_strength(simulation, 0)
+    simulation.integrator.setFriction(friction / picosecond)
 
     # Reset all to provide a clean equilibrated STATE
     # Force & velocities are saved just as metadata padding
