@@ -1,5 +1,6 @@
 from nexus.core.executors.shell import shell
 import os
+import shutil
 
 from nexus.md.mmpbsa.mmpbsa_config import MMPBSAConfig
 
@@ -46,8 +47,8 @@ def run_mmpbsa(cfg: MMPBSAConfig, mmpbsa_input):
         energy = f"energy_{name}.csv"
         outputs["energy"] = scratch_dir / energy
 
+        decomp = f"decomp_{name}.csv"
         if cfg.decomp.run:
-            decomp = f"decomp_{name}.csv"
             outputs["decomp"] = scratch_dir / decomp
 
         mmpbsa_py_mpi_cmd = [
@@ -83,10 +84,12 @@ def run_mmpbsa(cfg: MMPBSAConfig, mmpbsa_input):
         with shell(mmpbsa_py_mpi_cmd):
             pass
         
-        # TODO
-        import shutil
         output_dir = cfg.common.output_dir
-        shutil.copy2(scratch_dir / f"mmpbsa_{name}.out", output_dir / f"mmpbsa_{name}.out")
+        files_to_copy = [f"mmpbsa_{name}.out", energy]
+        if cfg.decomp.run:
+            files_to_copy.append(decomp)
+        for file_name in files_to_copy:
+            shutil.copy2(scratch_dir / file_name, output_dir / file_name)
 
     except Exception as e:
         raise RuntimeError(f"Failed to change working directory to {scratch_dir}: {e}")
