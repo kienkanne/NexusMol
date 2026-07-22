@@ -4,33 +4,33 @@ import yaml
 import os
 
 
-def load_config(cfg_class: BaseModel, path: Path):
+def load_config(cfg_class: BaseModel, path: Path, no_setup=False):
     """Unified YAML config loader. Validate the config based on the given BaseModel class, 
     attach the global config to the object, and append `job_name` to output_dir and scratch_dir."""
     with open(path) as f:
         cfg = yaml.safe_load(f)
     cfg = cfg_class.model_validate(cfg)
 
+    if no_setup:
+        return cfg
+
     from nexus.config import load_global_config
     setattr(cfg, "_global", load_global_config())
 
     cfg = expand_paths(cfg)
 
-    try:
+    if hasattr(cfg.common, "job_name"):
         job_name = getattr(cfg.common, "job_name")
 
         cfg.common.output_dir = setup_dir(cfg.common.output_dir, job_name)
-
+        if not Path(cfg.common.output_dir).is_dir():
+            raise ValueError("output dir not found")
         if cfg._global.path.scratch_dir is None:
-            raise ValueError("Scratch directory is not yet specified in config file.")    
-        cfg._global.path.scratch_dir = setup_dir(cfg._global.path.scratch_dir, job_name)
+            raise ValueError("Scratch directory is not yet specified in config file.")
+        cfg._global.path.scratch_dir = setup_dir(Path(cfg._global.path.scratch_dir).expanduser().resolve(), job_name)
 
         from nexus.core.trackers.main_tracker import setup_context
         setup_context(cfg._global.path.scratch_dir, cfg.common.job_name)
-
-    except:
-        # Prep or fetch configs is simple, so "job_name" is not included and setting up directories is not needed.
-        pass
     
     return cfg
 
