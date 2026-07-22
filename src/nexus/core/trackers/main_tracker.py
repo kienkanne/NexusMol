@@ -1,5 +1,5 @@
 from pydantic import BaseModel
-from typing import Any, Optional
+from typing import Any, Optional, ClassVar
 
 
 def main_tracker(stage_name, checkpoint=False):
@@ -48,7 +48,7 @@ class TrackerContext(BaseModel):
 
     # internal class variable to store instance
     # hint is user read only
-    _active_context: "Optional[TrackerContext]" = None
+    _active_context: ClassVar[Optional["TrackerContext"]] = None
 
     @classmethod
     def set_ctx(cls, ctx: "TrackerContext"):

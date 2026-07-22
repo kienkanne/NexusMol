@@ -19,8 +19,8 @@ from contextlib import contextmanager
 
 @contextmanager
 def python_parallel(tasks, n_jobs=1, title="", skip=False):
-    ctx = TrackerContext.get_ctx()
     try:
+        ctx = TrackerContext.get_ctx()
         logger = ctx.logger if ctx.logger is not None else DummyLogger()
     except:
         logger = DummyLogger()
