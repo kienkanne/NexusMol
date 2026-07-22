@@ -8,6 +8,7 @@ from nexus.dock.dock_config import DockConfig
 
 @dataclass(frozen=True)
 class VinaReceptorBundle:
+    original_receptor: Path
     receptor: Path
     vina_config: Path
     pocket: Path
@@ -108,6 +109,7 @@ def _prep_rec(cfg: DockConfig, receptor_bundle: VinaReceptorBundle):
 
 
     return VinaReceptorBundle(
+        original_receptor=receptor, # For prolif processing only
         receptor=prepped_receptor_pdbqt,
         vina_config=vina_config,
         pocket=pocket, # For copy back only

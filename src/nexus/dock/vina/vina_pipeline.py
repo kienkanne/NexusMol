@@ -4,7 +4,7 @@ from nexus.dock.dock_config import DockConfig
 from nexus.dock.vina._prep_rec import vina_parallel_prep_rec
 from nexus.dock.utils.matchmixer import matchmixer
 from nexus.dock.vina._docking import vina_parallel_docking
-from nexus.dock.utils.write_summary_csv import write_summary_csv
+from nexus.dock.utils.write_summary_csv import create_master_df, write_summary_csv
 from nexus.dock.utils.final_copy import final_copy
 
 
@@ -20,8 +20,9 @@ class VinaPipeline(BaseModel):
 
         pairs = matchmixer(rec_bundles, lig_paths)
         out_files = vina_parallel_docking(self.cfg, pairs)
-        written_scores, written_clusters = write_summary_csv(self.cfg, out_files, rec_bundles)
 
-        final_copy(self.cfg, rec_bundles, written_scores, written_clusters, out_files)
+        master_df = create_master_df(self.cfg, out_files, rec_bundles)
+
+        final_copy(self.cfg, rec_bundles, master_df, out_files)
 
         clear_scratch(self.cfg)
