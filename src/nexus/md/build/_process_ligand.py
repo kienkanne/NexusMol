@@ -11,7 +11,7 @@ def _process_ligand(cfg: BuildConfig, ligand_pose: Path):
     ligand_charged = scratch_dir / f"{ligand_pose.stem}_charged.mol2"
     antechamber_cmd = ["antechamber", "-i", str(ligand_pose), "-fi", "mol2", 
                        "-o", str(ligand_charged), "-fo", "mol2", 
-                       "-c", "bcc", "-nc", str(cfg.ligand.charge), "-pf", "yes"]   
+                       "-c", "bcc", "-nc", str(cfg.ligand.charge), "-at" , "gaff2", "-pf", "yes"]   
 
     with shell(antechamber_cmd):
         pass
