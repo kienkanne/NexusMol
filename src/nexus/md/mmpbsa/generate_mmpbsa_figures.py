@@ -483,7 +483,7 @@ def _plot_per_residue_total(decomp: dict, gb: bool, pb: bool,
         ax.set_xlabel(r"$\Delta G_{\mathrm{total}}$ (kcal/mol)")
         ax.set_title(
             f"Top {n_top_res} Per-Residue Binding Contributions ({key} · {label})\n"
-            r"Blue $\Rightarrow$ favourable  |  Red $\Rightarrow$ unfavourable",
+            r"Blue $\Rightarrow$ unfavourable  |  Red $\Rightarrow$ favourable",
             fontweight="bold",
         )
 
@@ -984,8 +984,6 @@ def generate_mmpbsa_figures(
         for model, dtypes in decomp.items():
             for dtype, df in dtypes.items():
                 print(f"  [{model}][{dtype}]: {len(df)} residues")
-
-    n_top_res = 25
 
     steps = [
         ("Binding free-energy time-series",
