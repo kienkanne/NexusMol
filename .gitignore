@@ -69,6 +69,7 @@ outputs/
 results/
 trajectories/
 checkpoints/
+Covid/
 
 # MD trajectories
 
