@@ -7,6 +7,9 @@ class CommonConfig(BaseModel):
     prmtop: Path
     trajin: Path
     receptor_mask: str
+    ligand_mask: str = None
+    pca_cluster_mask: str = "@N,C,CA"
+    interval: int = 1
     
     job_name: str = "analysis"
     output_dir: Path = Path.cwd() / "results"
@@ -18,7 +21,6 @@ class RMSConfig(BaseModel):
 
 class HbondsConfig(BaseModel):
     pp: bool = False
-    pw: bool = False
     bb: bool = False
     pl: bool = False
 
