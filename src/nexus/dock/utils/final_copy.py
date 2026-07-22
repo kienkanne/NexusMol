@@ -1,12 +1,13 @@
 import shutil
 from pathlib import Path
 from nexus.core.trackers.main_tracker import main_tracker, final_copy_trackers
-
+import pickle
+import pandas as pd
 from nexus.dock.dock_config import DockConfig
 
 
 @main_tracker("Final copy to results")
-def final_copy(cfg: DockConfig, rec_bundles, written_scores, written_clusters, out_files):
+def final_copy(cfg: DockConfig, rec_bundles, master_df: pd.DataFrame, out_files):
     scratch_dir = cfg._global.path.scratch_dir
     output_dir = cfg.common.output_dir
 
@@ -43,42 +44,23 @@ def final_copy(cfg: DockConfig, rec_bundles, written_scores, written_clusters, o
         if hasattr(item, "pocket"):
             pocket = item.pocket
         if pocket and pocket.exists():
-            shutil.copy2(pocket, rec_dir)
-
-    # Copy csv files to respective receptor dirs or to root
-    csv_paths_dict = {} # Used to add to metadata
-
-    if isinstance(written_scores, (list, tuple)):
-        for csv in written_scores:
-            for rec in rec_names:
-                if rec in str(csv.stem):
-                    src = scratch_dir / csv
-                    dst = output_dir / rec / Path(csv).name
-                    if src.exists():
-                        shutil.copy2(src, dst)
-                        
-                    csv_paths_dict[f"{rec}_scores"] = dst
-                    break
-
-    if isinstance(written_clusters, (list, tuple)):
-        for csv in written_clusters:
-            for rec in rec_names:
-                if rec in str(csv.stem):
-                    src = scratch_dir / csv
-                    dst = output_dir / rec / Path(csv).name
-                    if src.exists():
-                        shutil.copy2(src, dst)
-                        
-                    csv_paths_dict[f"{rec}_clusters"] = dst
-                    break                
-
-    for name, csv_path in csv_paths_dict.items():
-        setattr(cfg.metadata, name, str(csv_path))
+            shutil.copy2(pocket, rec_dir)              
 
     final_copy_trackers(output_dir)
 
+    with open(output_dir / f"{cfg.common.job_name}_master_df.pkl", "wb") as f:
+        pickle.dump(master_df, f)
+
+    # Drop the molecule object to save a csv version
+    master_df = master_df.drop(columns=[("Molecule", "Ligand_Mol")])
+    master_df_csv_path = str(output_dir / f"{cfg.common.job_name}_master_df.csv")
+
+    master_df.to_csv(master_df_csv_path, index=False)
+
     # Finally, dump json meta with csv file paths
-    metadata_dict = cfg.metadata.model_dump() 
+    metadata_dict = cfg.metadata.model_dump()
+    metadata_dict["master_df_csv"] = master_df_csv_path
+
     metadata_path = output_dir / f"{cfg.common.job_name}_metadata.json"
 
     import json

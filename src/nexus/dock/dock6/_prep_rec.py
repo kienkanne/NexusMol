@@ -8,6 +8,7 @@ from nexus.dock.dock_config import DockConfig
 
 @dataclass(frozen=True)
 class Dock6ReceptorBundle:
+    original_receptor: Path
     receptor: Path
     selected_spheres: Path
     grid_prefix: Path
@@ -179,7 +180,8 @@ def _prep_rec(cfg: DockConfig, receptor_bundle: Dock6ReceptorBundle):
 
 
     return Dock6ReceptorBundle(
-        receptor=Path(prepped_receptor_mol2),
+        original_receptor=receptor, # For prolif processing only
+        receptor=prepped_receptor_mol2,
         selected_spheres=new_selected_spheres,
         grid_prefix=grid_prefix,
         pocket=pocket,
