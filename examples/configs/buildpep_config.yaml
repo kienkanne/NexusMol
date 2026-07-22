@@ -1,0 +1,10 @@
+common:
+  seq_file: inputs/peptide_list.txt
+  output_dir: results
+  job_name: peptide_systems
+
+system:
+  force_field: "ff19SB" # or "ff14SB" ...
+  water_model: "opc" # or "opc" ...
+  box_type: "Oct" # or "Box" ...
+  box_size: 12.0 # in Angstroms, distance from the solute to the edge of the box

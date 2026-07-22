@@ -42,3 +42,10 @@ def mmpbsa(config: Path = typer.Option(..., "-c", "--config", help="Path to md a
     from nexus.md.mmpbsa.mmpbsa_pipeline import MMPBSAPipeline
     from nexus.md.mmpbsa.mmpbsa_config import MMPBSAConfig
     MMPBSAPipeline(cfg=load_config(MMPBSAConfig, config))._run()
+
+
+@app.command()
+def buildpep(config: Path = typer.Option(..., "-c", "--config", help="Path to md build config YAML")):
+    """Run the build peptide md system pipeline"""
+    from nexus.md.buildpep.buildpep_pipeline import BuildPepPipeline, BuildPepConfig
+    BuildPepPipeline(cfg=load_config(BuildPepConfig, config))._run()
