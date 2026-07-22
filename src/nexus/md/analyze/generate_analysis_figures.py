@@ -283,17 +283,15 @@ def plot_dssp(outputs: dict, dt_frame: float = 2.0,
 
 
 # ---------------------------------------------------------------------------
-# 4. Hydrogen bonds time-series panel (PP / PW / PL / Bridge)
+# 4. Hydrogen bonds time-series panel (PP / PL / Bridge)
 # ---------------------------------------------------------------------------
 
 def plot_hbond_timeseries(outputs: dict, dt_frame: float = 2.0,
                           output_dir=None, format="pdf") -> None:
     series_map = {
         "PP_hbvtime":    ("Protein-Protein",  _DISC_COLORS[0]),
-        "BB_hbvtime":    ("Protein Backbone",  _DISC_COLORS[3]),
-        "PW_hbvtime":    ("Protein-Water",    _DISC_COLORS[2]),
-        "PL_all_hbvtime":("Protein-Ligand",   _DISC_COLORS[1]),
-        "Bridge_hvtime": ("Water Bridges",    _DISC_COLORS[4]),
+        "BB_hbvtime":    ("Protein Backbone",  _DISC_COLORS[1]),
+        "PL_all_hbvtime":("Protein-Ligand",   _DISC_COLORS[2]),
     }
     available = [(k, *v) for k, v in series_map.items() if k in outputs]
     if not available:
@@ -338,7 +336,7 @@ def plot_hbond_timeseries(outputs: dict, dt_frame: float = 2.0,
 
 
 # ---------------------------------------------------------------------------
-# 5. Hydrogen bond frequency bar charts (PP_avg, PW_avg, PL)
+# 5. Hydrogen bond frequency bar charts (PP_avg, PL)
 # ---------------------------------------------------------------------------
 
 def _parse_hb_avg(path: str | Path, top_n: int = 20,
@@ -346,7 +344,7 @@ def _parse_hb_avg(path: str | Path, top_n: int = 20,
     """
     Parse cpptraj hbond avgout file.
     Column layout (0-based): Acceptor[0] DonorH[1] Donor[2] Frames/Count[3] Frac[4] ...
-    frac_max: clip fractions above this (protein-water frac can exceed 1 for solvent counts)
+    frac_max: clip fractions above this
     Returns top_n rows sorted by occupancy fraction.
     """
     rows = []
