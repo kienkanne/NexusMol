@@ -29,12 +29,14 @@ class HeatConfig(BaseModel):
     time_temp: Optional[float] = 500.0
     total_time: Optional[float] = 2000.0
     restraint: Optional[float] = 10.0
+    friction: Optional[float] = 5.0
 
 
 class EqConfig(BaseModel):
     n_eq_runs: Optional[int] = 7
     eq_time: Optional[float] = 100.0
     restraints: Optional[List[float]] = [10.0, 5.0, 2.0, 1.0, 0.5, 0.1, 0.0]
+    friction: Optional[float] = 2.0
 
 
 class ProdConfig(BaseModel):
@@ -42,6 +44,7 @@ class ProdConfig(BaseModel):
     rand_time: Optional[float] = 200.0
     prod_time: Optional[float] = 2500.0
     prod_freq: Optional[float] = 10.0
+    friction: Optional[float] = 1.0
 
 
 class AmberConfig(BaseModel):

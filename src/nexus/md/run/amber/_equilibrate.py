@@ -23,6 +23,7 @@ def equilibrate(cfg: MDConfig, prmtop: Path, last_heat_ncrst: Path) -> Path:
     restraints = cfg.eq.restraints
     eq_time = cfg.eq.eq_time
     n_eq_runs = cfg.eq.n_eq_runs
+    friction = cfg.eq.friction
 
     nstlim = int((eq_time) / dt)
     ntpr = ntwx = ntwr = int(nstlim // 100) or 1000
@@ -42,6 +43,7 @@ def equilibrate(cfg: MDConfig, prmtop: Path, last_heat_ncrst: Path) -> Path:
             ntwx=ntwx,
             ntwr=ntwr,
             mask=mask,
+            friction=friction
         )
         if run == 1:
             ncrst = last_heat_ncrst

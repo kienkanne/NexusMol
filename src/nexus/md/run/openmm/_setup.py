@@ -42,8 +42,8 @@ def setup(cfg: MDConfig):
                               k_kcal_per_mol_a2=10)
 
     # Set high friction (5 ps^-1) initially for safe heating stage
-    # Set back to (1 ps^-1) for equilibration and production later on
-    gamma = 5.0 / picosecond
+    friction = cfg.heat.friction
+    gamma = friction / picosecond
     # Initial temperature set to 0, gradually changed by heating step to temp
     integrator = LangevinMiddleIntegrator(0, gamma, dt)
 

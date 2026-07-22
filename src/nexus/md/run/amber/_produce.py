@@ -25,6 +25,7 @@ def produce(cfg: MDConfig, prmtop: Path, last_eq_ncrst: Path) -> None:
     rand_time = cfg.prod.rand_time
     prod_time = cfg.prod.prod_time
     prod_freq = cfg.prod.prod_freq
+    friction = cfg.prod.friction
 
     nstlim = int((rand_time) / dt)
     ntpr = ntwx = ntwr = int(nstlim // 1000) or 10000
@@ -44,6 +45,7 @@ def produce(cfg: MDConfig, prmtop: Path, last_eq_ncrst: Path) -> None:
         ntwx=ntwx,
         ntwr=ntwr,
         mask=mask,
+        friction=friction,
     )
 
     nstlim = int((prod_time) / dt)
@@ -58,6 +60,7 @@ def produce(cfg: MDConfig, prmtop: Path, last_eq_ncrst: Path) -> None:
         ntwx=ntwx,
         ntwr=ntwr,
         mask=mask,
+        friction=friction,
     )
 
     outputs = []
