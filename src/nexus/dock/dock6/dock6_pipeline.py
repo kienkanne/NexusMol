@@ -4,7 +4,7 @@ from nexus.dock.dock_config import DockConfig
 from nexus.dock.dock6._prep_rec import dock6_parallel_prep_rec
 from nexus.dock.dock6._docking import dock6_parallel_docking
 from nexus.dock.utils.matchmixer import matchmixer
-from nexus.dock.utils.write_summary_csv import write_summary_csv, create_master_df
+from nexus.dock.utils.create_master_df import write_summary_csv, create_master_df
 from nexus.dock.utils.final_copy import final_copy
 
 

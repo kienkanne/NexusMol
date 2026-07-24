@@ -4,7 +4,7 @@ from nexus.dock.dock_config import DockConfig
 from nexus.dock.vina._prep_rec import vina_parallel_prep_rec
 from nexus.dock.utils.matchmixer import matchmixer
 from nexus.dock.vina._docking import vina_parallel_docking
-from nexus.dock.utils.write_summary_csv import create_master_df, write_summary_csv
+from nexus.dock.utils.create_master_df import create_master_df, write_summary_csv
 from nexus.dock.utils.final_copy import final_copy
 
 
