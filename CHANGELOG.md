@@ -38,7 +38,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ### Added
 
-- Protein-ligand interaction fingerprints (PLIF) computed for every docked pose via RDKit/ProLIF.
+- Protein-ligand interaction fingerprints (PLIF) computed for every docked pose via RDKit/ProLIF via `create_master_df()`, `write_summary_csv()` is now depreciated.
 
 ### Changed
 
@@ -46,7 +46,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ### Removed
 
-- Removed the post-docking RMSD clustering step: it added little value on top of the pose objects now retained in the master dataframe pickle.
+- Removed the post-docking RMSD clustering step: it added little value on top of the pose objects now retained in the master dataframe pickle. 
 
 ## [2.4.3] - 2026-07-22
 

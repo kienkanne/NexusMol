@@ -39,7 +39,9 @@ from nexus.dock.dock_config import DockConfig
 
 @main_tracker("Write summary csv")
 def write_summary_csv(cfg: DockConfig, out_files, rec_bundles):
-
+    """
+    Depreciated from version 2.5.0
+    """
     job_name = cfg.common.job_name
     max_poses = cfg.common.max_poses
     scratch_dir = cfg._global.path.scratch_dir
