@@ -199,33 +199,37 @@ def process_ligand(out_file, engine):
 
         for i , block in enumerate(blocks[1:]):  # Skip the first block as it is empty due to the split
             block = separate_string + block  # Add back the header for each block
-            try:
-                rdkit_mol = Chem.MolFromMol2Block(block, sanitize=False, removeHs=False)
-                rdkit_mol.UpdatePropertyCache(strict=False)
-                Chem.FastFindRings(rdkit_mol)
-                if rdkit_mol:
-                    try:
-                        Chem.SanitizeMol(rdkit_mol, Chem.SanitizeFlags.SANITIZE_ALL ^ Chem.SanitizeFlags.SANITIZE_KEKULIZE)
-                    except Exception:
-                        rdkit_mol.SetProp("Sanitization_Failed", "True")
-                        print (f"Sanitization failed for molecule in {out_file}, pose {i}.")
-            except Exception:
+
+            # RDKit's default MOL2 substructure cleanup returns None on some SYBYL
+            # typings DOCK6 emits -- notably nitro groups typed N.pl3 / O.co2 / O.2,
+            # where the carboxylate-oxygen type (O.co2) on a non-carboxyl neighbor
+            # trips the cleanup. Retry once with cleanupSubstructures=False before
+            # giving up on the pose.
+            rdkit_mol = Chem.MolFromMol2Block(block, sanitize=False, removeHs=False)
+            if rdkit_mol is None:
+                rdkit_mol = Chem.MolFromMol2Block(
+                    block, sanitize=False, removeHs=False, cleanupSubstructures=False
+                )
+            if rdkit_mol is None:
+                skipped_count += 1
                 continue
+
+            rdkit_mol.UpdatePropertyCache(strict=False)
+            Chem.FastFindRings(rdkit_mol)
+            try:
+                Chem.SanitizeMol(rdkit_mol, Chem.SanitizeFlags.SANITIZE_ALL ^ Chem.SanitizeFlags.SANITIZE_KEKULIZE)
+            except Exception:
+                rdkit_mol.SetProp("Sanitization_Failed", "True")
+                print (f"Sanitization failed for molecule in {out_file}, pose {i}.")
 
             for line in block.splitlines():
                 if "Grid_Score" in line:
                     score = line.split("Grid_Score:", 1)[1].split()[0]
                     scores.append(float(score))
 
-            if rdkit_mol is not None:
-                # Wrap it safely into a ProLIF Molecule object
-                prolif_mol = plf.Molecule.from_rdkit(rdkit_mol)
-                prolif_poses.append(prolif_mol)
-            else:
-                skipped_count += 1
-                # Remove the score corresponding to the skipped molecule
-                if scores:
-                    scores.pop()
+            # Wrap it safely into a ProLIF Molecule object
+            prolif_mol = plf.Molecule.from_rdkit(rdkit_mol)
+            prolif_poses.append(prolif_mol)
 
         if skipped_count > 0:
             print(f"Skipped {skipped_count} DOCK6 molecules due to RDKit parsing errors.")
