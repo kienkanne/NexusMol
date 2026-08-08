@@ -130,7 +130,7 @@ def generate_cpptraj_input(cfg: AnalyzeConfig):
             "cluster c1 \\",
             f" kmeans clusters {n_clusters} randompoint maxit 500 \\",
             f" {pca_cluster_mask} \\",
-            f" sieve 10 random \\",
+            f" sieve 1 random \\",
             f" out {cnumvtime} \\",
             f" summary {csummary} \\",
             f" cpopvtime {cpopvtime} normframe \\",
